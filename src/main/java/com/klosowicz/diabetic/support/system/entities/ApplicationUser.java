@@ -11,11 +11,15 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class User {
+public class ApplicationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     private String name;
 
@@ -26,6 +30,10 @@ public class User {
     private String password;
 
     private String phoneNumber;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
 }
 
