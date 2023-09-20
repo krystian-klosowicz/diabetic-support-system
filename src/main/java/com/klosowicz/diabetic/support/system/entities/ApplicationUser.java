@@ -1,9 +1,7 @@
 package com.klosowicz.diabetic.support.system.entities;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +9,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ApplicationUser {
 
     @Id

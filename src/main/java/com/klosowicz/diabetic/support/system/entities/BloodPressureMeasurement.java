@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class BloodPressureMeasurements {
+public class BloodPressureMeasurement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
