@@ -7,6 +7,7 @@ import com.klosowicz.diabetic.support.system.repositories.AddressRepository;
 import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
 import com.klosowicz.diabetic.support.system.requests.ApplicationUserRegistrationRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,12 @@ public class ApplicationUserService {
 
 
         return newUser;
+    }
+
+    public ApplicationUser getByEmail(String email) {
+        return applicationUserRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
     }
 
 }
