@@ -1,13 +1,7 @@
-package com.klosowicz.diabetic.support.system.controllers;
+package com.klosowicz.diabetic.support.system.auth;
 
-import com.klosowicz.diabetic.support.system.entities.ApplicationUser;
-import com.klosowicz.diabetic.support.system.requests.ApplicationUserRegistrationRequest;
-import com.klosowicz.diabetic.support.system.services.ApplicationUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,23 +9,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final ApplicationUserService applicationUserService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(applicationUserService.register(request));
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(applicationUserService.login(request));
+        return ResponseEntity.ok(authenticationService.login(request));
     }
-
-    @GetMapping
-    public ResponseEntity<Page<ApplicationUser>> getUsers(@RequestParam(defaultValue = "0") int page,
-                                                          @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(applicationUserService.findAllUsers(page, size));
-    }
-
 
 }
