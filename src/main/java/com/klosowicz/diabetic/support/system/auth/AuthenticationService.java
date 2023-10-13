@@ -6,6 +6,8 @@ import com.klosowicz.diabetic.support.system.entities.ApplicationUser;
 import com.klosowicz.diabetic.support.system.entities.Role;
 import com.klosowicz.diabetic.support.system.repositories.AddressRepository;
 import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
+import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
+import com.klosowicz.diabetic.support.system.services.AddressService;
 import com.klosowicz.diabetic.support.system.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,31 +20,32 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     private final ApplicationUserRepository applicationUserRepository;
-    private final AddressRepository addressRepository;
+    private final AddressService addressService;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest registerRequest) {
         Role role = roleService.findByName("ROLE_PATIENT");
 
-        Address address = Address.builder()
-                .city(request.getCity())
-                .postalCode(request.getPostalCode())
-                .street(request.getStreet())
-                .houseNumber(request.getHouseNumber())
+        SaveAddressRequest saveAddressRequest = SaveAddressRequest.builder()
+                .city(registerRequest.getCity())
+                .postalCode(registerRequest.getPostalCode())
+                .street(registerRequest.getStreet())
+                .houseNumber(registerRequest.getHouseNumber())
                 .build();
 
-        addressRepository.save(address);
+        Address address = addressService.createAddress(saveAddressRequest);
+
 
         ApplicationUser newUser = ApplicationUser.builder()
                 .role(role)
-                .name(request.getName())
-                .surname(request.getSurname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .phoneNumber(request.getPhoneNumber())
+                .name(registerRequest.getName())
+                .surname(registerRequest.getSurname())
+                .email(registerRequest.getEmail())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .phoneNumber(registerRequest.getPhoneNumber())
                 .address(address)
                 .build();
 
