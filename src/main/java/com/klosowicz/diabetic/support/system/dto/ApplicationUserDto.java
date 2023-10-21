@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class UserDto {
+public class ApplicationUserDto {
 
     private Long id;
 

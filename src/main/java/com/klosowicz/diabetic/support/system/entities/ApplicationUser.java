@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Builder
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class User implements UserDetails {
+public class ApplicationUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
