@@ -4,7 +4,6 @@ import com.klosowicz.diabetic.support.system.config.JwtService;
 import com.klosowicz.diabetic.support.system.entities.Address;
 import com.klosowicz.diabetic.support.system.entities.ApplicationUser;
 import com.klosowicz.diabetic.support.system.entities.Role;
-import com.klosowicz.diabetic.support.system.repositories.AddressRepository;
 import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
 import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
 import com.klosowicz.diabetic.support.system.services.AddressService;
