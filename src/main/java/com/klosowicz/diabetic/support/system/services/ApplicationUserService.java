@@ -2,6 +2,7 @@ package com.klosowicz.diabetic.support.system.services;
 
 import com.klosowicz.diabetic.support.system.dto.ApplicationUserDto;
 import com.klosowicz.diabetic.support.system.entities.ApplicationUser;
+import com.klosowicz.diabetic.support.system.exceptions.ResourceNotFoundException;
 import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
 import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
 import com.klosowicz.diabetic.support.system.requests.UpdateUserRequest;
@@ -49,12 +50,35 @@ public class ApplicationUserService {
                 .build();
     }
 
-    public Page<ApplicationUser> findAllUsers(int page, int size) {
+    public Page<ApplicationUserDto> findAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
         Page<ApplicationUser> pharmacyUserPage = applicationUserRepository.findAll(pageable);
 
-        return pharmacyUserPage;
+        return pharmacyUserPage.map(user -> new ApplicationUserDto(
+                user.getId(),
+                user.getRole(),
+                user.getAddress(),
+                user.getName(),
+                user.getSurname(),
+                user.getEmail(),
+                user.getPhoneNumber()
+        ));
+    }
+
+    public ApplicationUserDto getById(Long id) {
+        ApplicationUser applicationUser = applicationUserRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return  new ApplicationUserDto(
+                applicationUser.getId(),
+                applicationUser.getRole(),
+                applicationUser.getAddress(),
+                applicationUser.getName(),
+                applicationUser.getSurname(),
+                applicationUser.getEmail(),
+                applicationUser.getPhoneNumber()
+        );
     }
 
 }
