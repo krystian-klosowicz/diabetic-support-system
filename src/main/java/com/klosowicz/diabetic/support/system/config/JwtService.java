@@ -1,5 +1,7 @@
 package com.klosowicz.diabetic.support.system.config;
 
+import com.klosowicz.diabetic.support.system.entities.ApplicationUser;
+import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -7,6 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClaims;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +20,29 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+    private final ApplicationUserRepository applicationUserRepository;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public Long extractUserId(String token) {
+        Claims claims = extractAllClaims(token);
+        Object userIdObject = claims.get("userId");
+        Long userId = null;
+        if (userIdObject instanceof Long) {
+            userId = (long) userIdObject;
+        }
+
+        if (userIdObject instanceof Integer) {
+            userId = ((Integer) userIdObject).longValue();
+        }
+
+        return userId;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -34,6 +54,9 @@ public class JwtService {
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
+        ApplicationUser user = applicationUserRepository.findByEmail(userDetails.getUsername()).orElseThrow();
+        extraClaims.put("userId", user.getId());
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -69,7 +92,7 @@ public class JwtService {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-        }catch (ExpiredJwtException e) { // catching expiredJwtException
+        } catch (ExpiredJwtException e) { // catching expiredJwtException
             String subject = token;
             System.out.println("Error: " + subject + " jwt token failed validation");
             return new DefaultClaims();
