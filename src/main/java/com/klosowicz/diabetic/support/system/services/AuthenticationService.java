@@ -1,13 +1,14 @@
-package com.klosowicz.diabetic.support.system.auth;
+package com.klosowicz.diabetic.support.system.services;
 
+import com.klosowicz.diabetic.support.system.requests.AuthenticationRequest;
+import com.klosowicz.diabetic.support.system.requests.AuthenticationResponse;
+import com.klosowicz.diabetic.support.system.requests.RegisterRequest;
 import com.klosowicz.diabetic.support.system.config.JwtService;
 import com.klosowicz.diabetic.support.system.entities.Address;
 import com.klosowicz.diabetic.support.system.entities.ApplicationUser;
 import com.klosowicz.diabetic.support.system.entities.Role;
 import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
 import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
-import com.klosowicz.diabetic.support.system.services.AddressService;
-import com.klosowicz.diabetic.support.system.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -53,6 +54,7 @@ public class AuthenticationService {
         String jwtToken = jwtService.generateToken(newUser);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .role(role)
                 .build();
     }
 
@@ -68,6 +70,7 @@ public class AuthenticationService {
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .role(user.getRole())
                 .build();
     }
 }

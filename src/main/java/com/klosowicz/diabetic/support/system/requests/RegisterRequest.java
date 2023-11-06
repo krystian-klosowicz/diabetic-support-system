@@ -1,4 +1,4 @@
-package com.klosowicz.diabetic.support.system.auth;
+package com.klosowicz.diabetic.support.system.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
