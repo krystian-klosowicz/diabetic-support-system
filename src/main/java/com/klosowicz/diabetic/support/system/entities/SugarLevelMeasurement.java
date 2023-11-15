@@ -23,5 +23,5 @@ public class SugarLevelMeasurement {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private ApplicationUser user;
+    private User user;
 }

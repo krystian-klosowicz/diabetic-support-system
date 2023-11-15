@@ -1,6 +1,6 @@
 package com.klosowicz.diabetic.support.system.config;
 
-import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
+import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final ApplicationUserRepository applicationUserRepository;
+    private final UserRepository applicationUserRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {

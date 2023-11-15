@@ -1,4 +1,4 @@
-package com.klosowicz.diabetic.support.system.requests;
+package com.klosowicz.diabetic.support.system.requests.responses;
 
 import com.klosowicz.diabetic.support.system.entities.Role;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
-
+    private Long id;
     private Role role;
     private String token;
 }

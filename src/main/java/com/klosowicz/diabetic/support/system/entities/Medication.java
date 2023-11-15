@@ -24,6 +24,6 @@ public class Medication {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private ApplicationUser user;
+    private User user;
 
 }

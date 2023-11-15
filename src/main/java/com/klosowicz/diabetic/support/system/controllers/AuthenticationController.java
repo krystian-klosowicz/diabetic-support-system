@@ -1,7 +1,7 @@
 package com.klosowicz.diabetic.support.system.controllers;
 
 import com.klosowicz.diabetic.support.system.requests.AuthenticationRequest;
-import com.klosowicz.diabetic.support.system.requests.AuthenticationResponse;
+import com.klosowicz.diabetic.support.system.requests.responses.AuthenticationResponse;
 import com.klosowicz.diabetic.support.system.requests.RegisterRequest;
 import com.klosowicz.diabetic.support.system.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;

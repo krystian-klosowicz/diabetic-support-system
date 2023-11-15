@@ -1,9 +1,9 @@
 package com.klosowicz.diabetic.support.system.services;
 
 import com.klosowicz.diabetic.support.system.dto.ApplicationUserDto;
-import com.klosowicz.diabetic.support.system.entities.ApplicationUser;
+import com.klosowicz.diabetic.support.system.entities.User;
 import com.klosowicz.diabetic.support.system.exceptions.ResourceNotFoundException;
-import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
+import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
 import com.klosowicz.diabetic.support.system.requests.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ApplicationUserService {
+public class UserService {
 
-    private final ApplicationUserRepository applicationUserRepository;
+    private final UserRepository applicationUserRepository;
     private final AddressService addressService;
 
     public ApplicationUserDto updateApplicationUser(Long id, UpdateUserRequest request) {
-        ApplicationUser user = applicationUserRepository.findById(id)
+        User user = applicationUserRepository.findById(id)
                 .orElseThrow(); //TODO wyrzucic wyjatek
 
         SaveAddressRequest saveAddressRequest = SaveAddressRequest.builder()
@@ -30,8 +30,8 @@ public class ApplicationUserService {
                 .houseNumber(request.getHouseNumber())
                 .build();
 
-        user.setName(request.getName());
-        user.setSurname(request.getSurname());
+        user.setFirstName(request.getName());
+        user.setLastName(request.getSurname());
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
 
@@ -43,8 +43,8 @@ public class ApplicationUserService {
                 .id(user.getId())
                 .role(user.getRole())
                 .email(user.getEmail())
-                .name(user.getName())
-                .surname(user.getSurname())
+                .name(user.getFirstName())
+                .surname(user.getLastName())
                 .address(user.getAddress())
                 .phoneNumber(user.getPhoneNumber())
                 .build();
@@ -53,31 +53,31 @@ public class ApplicationUserService {
     public Page<ApplicationUserDto> findAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<ApplicationUser> pharmacyUserPage = applicationUserRepository.findAll(pageable);
+        Page<User> pharmacyUserPage = applicationUserRepository.findAll(pageable);
 
         return pharmacyUserPage.map(user -> new ApplicationUserDto(
                 user.getId(),
                 user.getRole(),
                 user.getAddress(),
-                user.getName(),
-                user.getSurname(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
                 user.getPhoneNumber()
         ));
     }
 
     public ApplicationUserDto getById(Long id) {
-        ApplicationUser applicationUser = applicationUserRepository.findById(id)
+        User user = applicationUserRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return  new ApplicationUserDto(
-                applicationUser.getId(),
-                applicationUser.getRole(),
-                applicationUser.getAddress(),
-                applicationUser.getName(),
-                applicationUser.getSurname(),
-                applicationUser.getEmail(),
-                applicationUser.getPhoneNumber()
+                user.getId(),
+                user.getRole(),
+                user.getAddress(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhoneNumber()
         );
     }
 

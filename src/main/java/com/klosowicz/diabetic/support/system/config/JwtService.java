@@ -1,7 +1,7 @@
 package com.klosowicz.diabetic.support.system.config;
 
-import com.klosowicz.diabetic.support.system.entities.ApplicationUser;
-import com.klosowicz.diabetic.support.system.repositories.ApplicationUserRepository;
+import com.klosowicz.diabetic.support.system.entities.User;
+import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -24,7 +24,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
-    private final ApplicationUserRepository applicationUserRepository;
+    private final UserRepository applicationUserRepository;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -54,7 +54,7 @@ public class JwtService {
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
-        ApplicationUser user = applicationUserRepository.findByEmail(userDetails.getUsername()).orElseThrow();
+        User user = applicationUserRepository.findByEmail(userDetails.getUsername()).orElseThrow();
         extraClaims.put("userId", user.getId());
 
         return Jwts
