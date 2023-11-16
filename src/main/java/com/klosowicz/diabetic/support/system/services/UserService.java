@@ -2,6 +2,7 @@ package com.klosowicz.diabetic.support.system.services;
 
 import com.klosowicz.diabetic.support.system.dto.ApplicationUserDto;
 import com.klosowicz.diabetic.support.system.entities.User;
+import com.klosowicz.diabetic.support.system.entities.page.UserPage;
 import com.klosowicz.diabetic.support.system.exceptions.ResourceNotFoundException;
 import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
@@ -50,8 +51,8 @@ public class UserService {
                 .build();
     }
 
-    public Page<ApplicationUserDto> findAllUsers(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public Page<ApplicationUserDto> findAllUsers(UserPage userPage) {
+        Pageable pageable = PageRequest.of(userPage.getPageNumber(), userPage.getPageSize());
 
         Page<User> pharmacyUserPage = applicationUserRepository.findAll(pageable);
 

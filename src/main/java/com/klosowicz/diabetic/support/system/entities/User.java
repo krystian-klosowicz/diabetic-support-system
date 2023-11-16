@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +42,9 @@ public class User implements UserDetails {
 
   @NotBlank
   private String password;
+
+  @NotNull
+  private LocalDate dateOfBirth;
 
   @NotBlank
   private String phoneNumber;

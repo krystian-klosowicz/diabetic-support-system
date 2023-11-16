@@ -1,6 +1,7 @@
 package com.klosowicz.diabetic.support.system.controllers;
 
 import com.klosowicz.diabetic.support.system.dto.ApplicationUserDto;
+import com.klosowicz.diabetic.support.system.entities.page.UserPage;
 import com.klosowicz.diabetic.support.system.exceptions.ResourceNotFoundException;
 import com.klosowicz.diabetic.support.system.requests.UpdateUserRequest;
 import com.klosowicz.diabetic.support.system.services.UserService;
@@ -23,9 +24,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ApplicationUserDto>> getUsers(@RequestParam(defaultValue = "0") int page,
-                                                             @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(userService.findAllUsers(page, size));
+    public ResponseEntity<Page<ApplicationUserDto>> getUsers(UserPage userPage) {
+        return ResponseEntity.ok(userService.findAllUsers(userPage));
     }
 
     @GetMapping("/{id}")

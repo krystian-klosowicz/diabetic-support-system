@@ -44,6 +44,7 @@ public class AuthenticationService {
             .email(registerRequest.getEmail())
             .password(passwordEncoder.encode(registerRequest.getPassword()))
             .phoneNumber(registerRequest.getPhoneNumber())
+            .dateOfBirth(registerRequest.getDateOfBirth())
             .address(address)
             .build();
 

@@ -4,6 +4,9 @@ import com.klosowicz.diabetic.support.system.entities.Address;
 import com.klosowicz.diabetic.support.system.entities.User;
 import com.klosowicz.diabetic.support.system.repositories.AddressRepository;
 import com.klosowicz.diabetic.support.system.repositories.UserRepository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -42,6 +45,7 @@ public class UserDataLoader implements CommandLineRunner {
               .password(passwordEncoder.encode("PATIENT"))
               .address(address)
               .phoneNumber("000000000")
+              .dateOfBirth(LocalDate.now())
               .build();
 
       User doctorUser =
@@ -53,6 +57,7 @@ public class UserDataLoader implements CommandLineRunner {
               .password(passwordEncoder.encode("DOCTOR"))
               .address(address)
               .phoneNumber("000000000")
+              .dateOfBirth(LocalDate.now())
               .build();
 
       User adminUser =
@@ -64,6 +69,7 @@ public class UserDataLoader implements CommandLineRunner {
               .password(passwordEncoder.encode("ADMIN"))
               .address(address)
               .phoneNumber("000000000")
+              .dateOfBirth(LocalDate.now())
               .build();
 
       addressRepository.save(address);

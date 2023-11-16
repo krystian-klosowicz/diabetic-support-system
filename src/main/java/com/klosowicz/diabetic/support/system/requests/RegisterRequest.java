@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -15,24 +16,26 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor
 public class RegisterRequest {
 
-    private String name;
+  private String name;
 
-    private String surname;
+  private String surname;
 
-    private String email;
+  private String email;
 
-    private String password;
+  private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
-    private String phoneNumber;
+  private String phoneNumber;
 
-    private String city;
+  private LocalDate dateOfBirth;
 
-    private String postalCode;
+  private String city;
 
-    private String street;
+  private String postalCode;
 
-    private String houseNumber;
+  private String street;
+
+  private String houseNumber;
 }
