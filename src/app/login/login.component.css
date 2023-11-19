@@ -1,0 +1,45 @@
+.main-div {
+  background-image: linear-gradient(to right, #005aa7, #fffde4);
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.main-div mat-card {
+  /* height: 50%; */
+  border-radius: 5px 5px 5px 5px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.main-div mat-toolbar {
+  border-radius: 5px 5px 0 0;
+  background-color: transparent;
+  font-weight: bolder;
+}
+
+.main-div mat-card {
+  padding: 0px;
+  /* background-color: transparent; */
+  /* border: 1px solid rgb(80, 80, 80); */
+}
+
+.login-form {
+  padding: 2vw;
+}
+
+.transparent-button {
+  /* background-color: transparent !important; */
+  background-color: #136ebe !important;
+  color: #ffffff !important;
+}
+.transparent-button:hover {
+  /* background-color: transparent !important; */
+  background-color: #177fda !important;
+  color: #ffffff !important;
+}
+
+/* .login-form .mat-form-field-appearance-outline {
+  background-color: aqua;
+} */
