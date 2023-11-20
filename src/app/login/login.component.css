@@ -5,7 +5,7 @@
 }
 
 .main-div mat-card {
-  /* height: 50%; */
+  min-height: 50%;
   border-radius: 5px 5px 5px 5px;
   user-select: none;
   -moz-user-select: none;
