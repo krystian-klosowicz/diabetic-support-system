@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthServiceService } from '../auth-service.service';
-import { EMPTY, catchError, of } from 'rxjs';
+import { EMPTY, catchError } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +10,7 @@ import { EMPTY, catchError, of } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
-  constructor(private authService: AuthServiceService) {}
+  constructor(private authService: AuthService) {}
   ngOnInit() {
     this.initForm();
   }
@@ -28,7 +28,9 @@ export class LoginComponent implements OnInit {
         .pipe(
           catchError((error) => {
             if (error.status === 403) {
-              //alert('Błąd 403: Brak dostępu. Sprawdź swoje dane logowania.');
+              console.log('POST 403 Forbidden');
+            } else if (error.status === 401) {
+              console.log('POST 401 Unauthorized');
             } else {
               alert('Wystąpił błąd: ' + error.message);
             }
@@ -39,9 +41,9 @@ export class LoginComponent implements OnInit {
         .subscribe((result) => {
           // Obsługa poprawnej odpowiedzi
           if (result) {
-            alert(JSON.stringify(result));
-          } else {
-            alert('Pusta odpowiedź.');
+            alert('Token zostal dodany do sessionStorage!');
+            localStorage.clear();
+            localStorage.setItem('jwtToken', 'Bearer ' + result.token); // Dodanie tokenu jwt do sesji
           }
         });
     }

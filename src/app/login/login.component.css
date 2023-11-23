@@ -8,12 +8,6 @@
 
 .main-div mat-card {
   padding-top: 35px;
-  background-color: rgba(
-    255,
-    255,
-    255,
-    1
-  ); /* Kolor biały z przejrzystością 25% */
   min-height: 75vh;
   min-width: 25vw;
   border-radius: 10px 10px 10px 10px;
@@ -29,7 +23,7 @@
   border-radius: 5px 5px 0 0;
   background-color: transparent;
   font-weight: 600;
-  color: #333;
+  color: #000000;
 }
 
 .login-form {
