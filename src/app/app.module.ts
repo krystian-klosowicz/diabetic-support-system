@@ -14,8 +14,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestComponent } from './test/test.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 @NgModule({
-  declarations: [AppComponent, LoginComponent, TestComponent],
+  declarations: [AppComponent, LoginComponent, TestComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

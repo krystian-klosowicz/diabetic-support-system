@@ -1,6 +1,10 @@
 <div fxLayoutAlign="center center" class="main-div">
   <mat-card>
-    <mat-toolbar fxLayoutAlign="center center">Login</mat-toolbar>
+    <mat-toolbar fxLayoutAlign="center center" style="margin-bottom: 1vh"
+      ><div class="logo">D</div></mat-toolbar
+    >
+    <mat-toolbar fxLayoutAlign="center center">Login to continue</mat-toolbar>
+
     <form
       fxLayoutAlign="stretch"
       fxLayout="column"
@@ -9,12 +13,8 @@
       (ngSubmit)="loginProcess()"
     >
       <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input
-          matInput
-          placeholder="Enter a username"
-          formControlName="email"
-        />
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Enter a email" formControlName="email" />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
@@ -29,5 +29,9 @@
         Login
       </button>
     </form>
+
+    <a fxLayoutAlign="center" [routerLink]="['/register']">
+      Don't have an account? Sign up</a
+    >
   </mat-card>
 </div>

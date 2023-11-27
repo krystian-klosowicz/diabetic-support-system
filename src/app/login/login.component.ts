@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, catchError } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private _router: Router) {}
   ngOnInit() {
     this.initForm();
   }
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
             alert('Token zostal dodany do sessionStorage!');
             localStorage.clear();
             localStorage.setItem('jwtToken', 'Bearer ' + result.token); // Dodanie tokenu jwt do sesji
+            this._router.navigate(['/home']);
           }
         });
     }

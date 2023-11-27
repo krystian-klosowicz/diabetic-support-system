@@ -7,7 +7,7 @@
 }
 
 .main-div mat-card {
-  padding-top: 40px;
+  padding-top: 35px;
   min-height: 75vh;
   min-width: 25vw;
   border-radius: 10px 10px 10px 10px;
@@ -19,51 +19,49 @@
 
 .main-div mat-toolbar {
   font-family: "Poppins", sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 28px;
   border-radius: 5px 5px 0 0;
   background-color: transparent;
   color: #000000;
 }
 
-.login-form {
-  padding: 2vw;
+.main-div mat-toolbar-row {
+  font-family: "Roboto", sans-serif;
+  margin-top: 2vh;
+  font-size: 15px;
+}
+
+.main-div img {
+  margin: 0 auto;
+  width: 125px;
 }
 
 .transparent-button {
   background-color: #136ebe !important;
   color: #ffffff !important;
-  font-size: large;
+  min-width: 10vw;
+  font-size: 16px;
+  margin: 0 auto;
 }
 .transparent-button:hover {
   background-color: #177fda !important;
   color: #ffffff !important;
 }
 
-.logo {
-  font-family: "Cinzel", sans-serif;
-  width: 85px; /* dostosuj szerokość */
-  height: 85px; /* dostosuj wysokość */
-  background-color: #206eaf; /* kolor tła */
-  color: #fffde4; /* kolor tekstu (biały) */
-  font-size: 2em; /* rozmiar czcionki */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px; /* zaokrąglenie narożników */
-}
+@media only screen and (max-width: 415px) {
+  .main-div {
+    background-color: #005aa7 !important;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
+  }
 
-.logo:hover {
-  background-color: #004080; /* kolor tła po najechaniu myszą */
-}
-
-a {
-  font-family: "Poppins", sans-serif;
-  text-decoration: none;
-  color: #858484;
-}
-
-a:hover {
-  text-decoration: none;
-  color: inherit;
+  .main-div mat-toolbar-row {
+    font-family: "Roboto", sans-serif;
+    font-size: 8px;
+  }
 }

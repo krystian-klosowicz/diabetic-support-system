@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { TestComponent } from './test/test.component';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -40,7 +41,8 @@ const routes: Routes = [
       },
     ],
   },
-  //{ path: '**', component: TestComponent }, // Wildcard route for a 404 page
+  { path: 'not-found', component: NotFoundComponent, title: 'Not found' },
+  { path: '**', redirectTo: '/not-found' }, // Wildcard route for a 404 page
 ];
 
 @NgModule({
