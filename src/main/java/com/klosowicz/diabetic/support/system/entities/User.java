@@ -1,6 +1,8 @@
 package com.klosowicz.diabetic.support.system.entities;
 
+import com.klosowicz.diabetic.support.system.entities.enums.Role;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,14 +17,15 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-@Builder
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "_user")
-@AllArgsConstructor
-@RequiredArgsConstructor
-public class User implements UserDetails {
+@SuperBuilder(toBuilder = true)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type")
+public abstract class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

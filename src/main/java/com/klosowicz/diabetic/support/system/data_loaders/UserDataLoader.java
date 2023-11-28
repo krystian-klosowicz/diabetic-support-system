@@ -1,32 +1,31 @@
 package com.klosowicz.diabetic.support.system.data_loaders;
 
-import com.klosowicz.diabetic.support.system.entities.Address;
-import com.klosowicz.diabetic.support.system.entities.User;
+import com.klosowicz.diabetic.support.system.entities.*;
+import com.klosowicz.diabetic.support.system.entities.enums.DiabetesType;
 import com.klosowicz.diabetic.support.system.repositories.AddressRepository;
 import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static com.klosowicz.diabetic.support.system.entities.Role.*;
+import static com.klosowicz.diabetic.support.system.entities.enums.Role.*;
 
 @Component
 @RequiredArgsConstructor
 public class UserDataLoader implements CommandLineRunner {
 
-  private final UserRepository applicationUserRepository;
+  private final UserRepository userRepository;
   private final AddressRepository addressRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Override
   public void run(String... args) {
 
-    if (applicationUserRepository.count() == 0) {
+    if (userRepository.count() == 0) {
 
       Address address =
           Address.builder()
@@ -37,43 +36,43 @@ public class UserDataLoader implements CommandLineRunner {
               .build();
 
       User patientUser =
-          User.builder()
+          Patient.builder()
               .role(ROLE_PATIENT)
               .firstName("patName")
               .lastName("patSurname")
               .email("patient@gmail.com")
               .password(passwordEncoder.encode("PATIENT"))
-              .address(address)
               .phoneNumber("000000000")
               .dateOfBirth(LocalDate.now())
+              .diabetesType(DiabetesType.TYPE_1)
               .build();
 
       User doctorUser =
-          User.builder()
+          Doctor.builder()
               .role(ROLE_DOCTOR)
               .firstName("docName")
               .lastName("docSurname")
               .email("doctor@gmail.com")
               .password(passwordEncoder.encode("DOCTOR"))
-              .address(address)
               .phoneNumber("000000000")
               .dateOfBirth(LocalDate.now())
+              .pwzNumber("1234567")
               .build();
 
       User adminUser =
-          User.builder()
+          Admin.builder()
               .role(ROLE_ADMIN)
               .firstName("admName")
               .lastName("admSurname")
               .email("admin@gmail.com")
               .password(passwordEncoder.encode("ADMIN"))
-              .address(address)
               .phoneNumber("000000000")
               .dateOfBirth(LocalDate.now())
+              .adminSince(LocalDate.now())
               .build();
 
       addressRepository.save(address);
-      applicationUserRepository.saveAll(List.of(patientUser, doctorUser, adminUser));
+      userRepository.saveAll(List.of(patientUser, doctorUser, adminUser));
     }
   }
 }

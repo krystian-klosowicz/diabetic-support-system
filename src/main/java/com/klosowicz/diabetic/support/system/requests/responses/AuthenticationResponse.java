@@ -1,6 +1,6 @@
 package com.klosowicz.diabetic.support.system.requests.responses;
 
-import com.klosowicz.diabetic.support.system.entities.Role;
+import com.klosowicz.diabetic.support.system.entities.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

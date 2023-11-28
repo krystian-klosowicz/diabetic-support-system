@@ -1,6 +1,7 @@
 package com.klosowicz.diabetic.support.system.requests;
 
-import com.klosowicz.diabetic.support.system.entities.Role;
+import com.klosowicz.diabetic.support.system.entities.enums.DiabetesType;
+import com.klosowicz.diabetic.support.system.entities.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Data
@@ -16,9 +18,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RegisterRequest {
 
-  private String name;
+  private String firstName;
 
-  private String surname;
+  private String lastName;
 
   private String email;
 
@@ -31,11 +33,21 @@ public class RegisterRequest {
 
   private LocalDate dateOfBirth;
 
-  private String city;
+//  // Address
+//  Chyba do rejestacji jednak nie będzie adresu
+//  private String city;
+//
+//  private String postalCode;
+//
+//  private String street;
+//
+//  private String houseNumber;
 
-  private String postalCode;
+  // Doctor
+  private String pwzNumber;
 
-  private String street;
+  // Patient
 
-  private String houseNumber;
+  @Enumerated(EnumType.STRING)
+  private DiabetesType diabetesType;
 }

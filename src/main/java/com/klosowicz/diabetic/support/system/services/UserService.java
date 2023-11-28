@@ -20,66 +20,66 @@ public class UserService {
     private final UserRepository applicationUserRepository;
     private final AddressService addressService;
 
-    public ApplicationUserDto updateApplicationUser(Long id, UpdateUserRequest request) {
-        User user = applicationUserRepository.findById(id)
-                .orElseThrow(); //TODO wyrzucic wyjatek
-
-        SaveAddressRequest saveAddressRequest = SaveAddressRequest.builder()
-                .city(request.getCity())
-                .postalCode(request.getPostalCode())
-                .street(request.getStreet())
-                .houseNumber(request.getHouseNumber())
-                .build();
-
-        user.setFirstName(request.getName());
-        user.setLastName(request.getSurname());
-        user.setEmail(request.getEmail());
-        user.setPhoneNumber(request.getPhoneNumber());
-
-        addressService.updateAddress(user.getAddress().getId(), saveAddressRequest);
-
-        applicationUserRepository.save(user);
-
-        return ApplicationUserDto.builder()
-                .id(user.getId())
-                .role(user.getRole())
-                .email(user.getEmail())
-                .name(user.getFirstName())
-                .surname(user.getLastName())
-                .address(user.getAddress())
-                .phoneNumber(user.getPhoneNumber())
-                .build();
-    }
-
-    public Page<ApplicationUserDto> findAllUsers(UserPage userPage) {
-        Pageable pageable = PageRequest.of(userPage.getPageNumber(), userPage.getPageSize());
-
-        Page<User> pharmacyUserPage = applicationUserRepository.findAll(pageable);
-
-        return pharmacyUserPage.map(user -> new ApplicationUserDto(
-                user.getId(),
-                user.getRole(),
-                user.getAddress(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getPhoneNumber()
-        ));
-    }
-
-    public ApplicationUserDto getById(Long id) {
-        User user = applicationUserRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        return  new ApplicationUserDto(
-                user.getId(),
-                user.getRole(),
-                user.getAddress(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getPhoneNumber()
-        );
-    }
+//    public ApplicationUserDto updateApplicationUser(Long id, UpdateUserRequest request) {
+//        User user = applicationUserRepository.findById(id)
+//                .orElseThrow(); //TODO wyrzucic wyjatek
+//
+//        SaveAddressRequest saveAddressRequest = SaveAddressRequest.builder()
+//                .city(request.getCity())
+//                .postalCode(request.getPostalCode())
+//                .street(request.getStreet())
+//                .houseNumber(request.getHouseNumber())
+//                .build();
+//
+//        user.setFirstName(request.getName());
+//        user.setLastName(request.getSurname());
+//        user.setEmail(request.getEmail());
+//        user.setPhoneNumber(request.getPhoneNumber());
+//
+//        addressService.updateAddress(user.getAddress().getId(), saveAddressRequest);
+//
+//        applicationUserRepository.save(user);
+//
+//        return ApplicationUserDto.builder()
+//                .id(user.getId())
+//                .role(user.getRole())
+//                .email(user.getEmail())
+//                .name(user.getFirstName())
+//                .surname(user.getLastName())
+//                .address(user.getAddress())
+//                .phoneNumber(user.getPhoneNumber())
+//                .build();
+//    }
+//
+//    public Page<ApplicationUserDto> findAllUsers(UserPage userPage) {
+//        Pageable pageable = PageRequest.of(userPage.getPageNumber(), userPage.getPageSize());
+//
+//        Page<User> pharmacyUserPage = applicationUserRepository.findAll(pageable);
+//
+//        return pharmacyUserPage.map(user -> new ApplicationUserDto(
+//                user.getId(),
+//                user.getRole(),
+//                user.getAddress(),
+//                user.getFirstName(),
+//                user.getLastName(),
+//                user.getEmail(),
+//                user.getPhoneNumber()
+//        ));
+//    }
+//
+//    public ApplicationUserDto getById(Long id) {
+//        User user = applicationUserRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+//
+//        return  new ApplicationUserDto(
+//                user.getId(),
+//                user.getRole(),
+//                user.getAddress(),
+//                user.getFirstName(),
+//                user.getLastName(),
+//                user.getEmail(),
+//                user.getPhoneNumber()
+//        );
+//    }
 
 }
