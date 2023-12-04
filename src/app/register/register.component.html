@@ -1,0 +1,89 @@
+<div fxLayoutAlign="center center" class="main-div">
+  <mat-card>
+    <mat-toolbar fxLayoutAlign="center center" style="margin-bottom: 1vh"
+      ><div class="logo">D</div></mat-toolbar
+    >
+    <mat-toolbar fxLayoutAlign="center center">Register here</mat-toolbar>
+
+    <form fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select
+          placeholder="Select your role"
+          name="role"
+          [(ngModel)]="model.role"
+        >
+          <mat-option value="DOCTOR">Doctor</mat-option>
+          <mat-option value="PATIENT">Patient</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Enter your email" name="email" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Enter your password"
+          name="password"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="model.role === 'DOCTOR'">
+        <mat-label>PWZ Number</mat-label>
+        <input
+          matInput
+          placeholder="Enter your PWZ number"
+          name="pwzNumber"
+          [(ngModel)]="model.pwzNumber"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="model.role === 'PATIENT'">
+        <mat-label>Diabetes Type</mat-label>
+        <mat-select
+          placeholder="Select your diabetes type"
+          name="diabetesType"
+          [(ngModel)]="model.diabetesType"
+        >
+          <mat-option value="TYPE1">Type 1</mat-option>
+          <mat-option value="TYPE2">Type 2</mat-option>
+          <mat-option value="PATIENT">Gestational</mat-option>
+          <mat-option value="PATIENT">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="Enter your first name" name="firstName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Enter your last name" name="lastName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>PESEL</mat-label>
+        <input matInput placeholder="Enter your PESEL" name="pesel" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input
+          matInput
+          placeholder="Enter your phone number"
+          name="phoneNumber"
+        />
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" class="transparent-button">
+        Register
+      </button>
+    </form>
+  </mat-card>
+</div>

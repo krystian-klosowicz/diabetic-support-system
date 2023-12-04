@@ -10,6 +10,7 @@ import { TestComponent } from './test/test.component';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,6 +18,15 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     title: 'Login Page',
+    canActivate: [
+      (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+        inject(AuthGuard).canActivate(next, state),
+    ],
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    title: 'Register Page',
     canActivate: [
       (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
         inject(AuthGuard).canActivate(next, state),

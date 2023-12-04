@@ -1,0 +1,58 @@
+.main-div {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-image: linear-gradient(to right, #005aa7, #fffde4);
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.main-div mat-card {
+  padding-top: 40px;
+  min-height: 75vh;
+  min-width: 25vw;
+  border-radius: 10px 10px 10px 10px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.main-div mat-toolbar {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  border-radius: 5px 5px 0 0;
+  background-color: transparent;
+  color: #000000;
+}
+
+.login-form {
+  padding: 2vw;
+}
+
+.transparent-button {
+  background-color: #136ebe !important;
+  color: #ffffff !important;
+  font-size: large;
+}
+.transparent-button:hover {
+  background-color: #177fda !important;
+  color: #ffffff !important;
+}
+
+.logo {
+  font-family: "Cinzel", sans-serif;
+  width: 85px; /* dostosuj szerokość */
+  height: 85px; /* dostosuj wysokość */
+  background-color: #206eaf; /* kolor tła */
+  color: #fffde4; /* kolor tekstu (biały) */
+  font-size: 2em; /* rozmiar czcionki */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px; /* zaokrąglenie narożników */
+}
+
+.logo:hover {
+  background-color: #004080; /* kolor tła po najechaniu myszą */
+}

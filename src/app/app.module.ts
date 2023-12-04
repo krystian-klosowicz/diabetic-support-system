@@ -15,8 +15,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestComponent } from './test/test.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RegisterComponent } from './register/register.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 @NgModule({
-  declarations: [AppComponent, LoginComponent, TestComponent, NotFoundComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    TestComponent,
+    NotFoundComponent,
+    RegisterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,7 +36,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    MatSelectModule,
     MatToolbarModule,
+    MatDatepickerModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
