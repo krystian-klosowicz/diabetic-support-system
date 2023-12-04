@@ -40,6 +40,7 @@ public class AuthenticationService {
         user =
             Patient.builder()
                 .role(request.getRole())
+                .pesel(request.getPesel())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
@@ -55,6 +56,7 @@ public class AuthenticationService {
         user =
             Doctor.builder()
                 .role(request.getRole())
+                .pesel(request.getPesel())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
@@ -67,27 +69,18 @@ public class AuthenticationService {
         userRepository.save(user);
         break;
       default:
-         throw new InvalidRoleException("Provided role is not supported for registration.");
+        throw new InvalidRoleException("Provided role is not supported for registration.");
     }
     return authenticationResponse(user);
   }
 
   public AuthenticationResponse login(AuthenticationRequest request) {
-//    authenticationManager.authenticate(
-//        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-//    User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-//    String jwtToken = jwtService.generateToken(user);
-//    return AuthenticationResponse.builder()
-//        .token(jwtToken)
-//        .role(user.getRole())
-//        .id(user.getId())
-//        .build();
     authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
     var user =
-            userRepository
-                    .findByEmail(request.getEmail())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        userRepository
+            .findByEmail(request.getEmail())
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
     return authenticationResponse(user);
   }

@@ -1,18 +1,16 @@
 package com.klosowicz.diabetic.support.system.data_loaders;
 
+import static com.klosowicz.diabetic.support.system.entities.enums.Role.*;
+
 import com.klosowicz.diabetic.support.system.entities.*;
 import com.klosowicz.diabetic.support.system.entities.enums.DiabetesType;
 import com.klosowicz.diabetic.support.system.repositories.AddressRepository;
 import com.klosowicz.diabetic.support.system.repositories.UserRepository;
-
 import java.time.LocalDate;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import static com.klosowicz.diabetic.support.system.entities.enums.Role.*;
 
 @Component
 @RequiredArgsConstructor
@@ -35,21 +33,26 @@ public class UserDataLoader implements CommandLineRunner {
               .street("TEST USER'S STREET")
               .build();
 
-      User patientUser =
-          Patient.builder()
-              .role(ROLE_PATIENT)
-              .firstName("patName")
-              .lastName("patSurname")
-              .email("patient@gmail.com")
-              .password(passwordEncoder.encode("PATIENT"))
+      addressRepository.save(address);
+
+      User adminUser =
+          Admin.builder()
+              .role(ROLE_ADMIN)
+              .pesel("99051600000")
+              .firstName("admName")
+              .lastName("admSurname")
+              .email("admin@gmail.com")
+              .password(passwordEncoder.encode("ADMIN"))
               .phoneNumber("000000000")
               .dateOfBirth(LocalDate.now())
-              .diabetesType(DiabetesType.TYPE_1)
+              .adminSince(LocalDate.now())
               .build();
+      userRepository.save(adminUser);
 
       User doctorUser =
           Doctor.builder()
               .role(ROLE_DOCTOR)
+              .pesel("99051600000")
               .firstName("docName")
               .lastName("docSurname")
               .email("doctor@gmail.com")
@@ -59,20 +62,23 @@ public class UserDataLoader implements CommandLineRunner {
               .pwzNumber("1234567")
               .build();
 
-      User adminUser =
-          Admin.builder()
-              .role(ROLE_ADMIN)
-              .firstName("admName")
-              .lastName("admSurname")
-              .email("admin@gmail.com")
-              .password(passwordEncoder.encode("ADMIN"))
+      userRepository.save(doctorUser);
+
+      User patientUser =
+          Patient.builder()
+              .role(ROLE_PATIENT)
+              .pesel("99051600000")
+              .firstName("patName")
+              .lastName("patSurname")
+              .email("patient@gmail.com")
+              .password(passwordEncoder.encode("PATIENT"))
               .phoneNumber("000000000")
               .dateOfBirth(LocalDate.now())
-              .adminSince(LocalDate.now())
+              .diabetesType(DiabetesType.TYPE_1)
+              .assignedDoctor((Doctor) doctorUser)
               .build();
 
-      addressRepository.save(address);
-      userRepository.saveAll(List.of(patientUser, doctorUser, adminUser));
+      userRepository.save(patientUser);
     }
   }
 }

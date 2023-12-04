@@ -1,11 +1,9 @@
 package com.klosowicz.diabetic.support.system.entities;
 
 import com.klosowicz.diabetic.support.system.entities.enums.DiabetesType;
+import javax.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter

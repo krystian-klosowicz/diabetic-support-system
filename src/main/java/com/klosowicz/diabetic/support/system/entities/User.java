@@ -35,6 +35,9 @@ public abstract class User implements UserDetails {
   private Role role;
 
   @NotBlank
+  private String pesel;
+
+  @NotBlank
   private String firstName;
 
   @NotBlank

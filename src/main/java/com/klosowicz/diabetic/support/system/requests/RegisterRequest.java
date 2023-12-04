@@ -18,6 +18,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RegisterRequest {
 
+  @Enumerated(EnumType.STRING)
+  private Role role;
+
+  @NotBlank private String pesel;
+
   private String firstName;
 
   private String lastName;
@@ -26,22 +31,9 @@ public class RegisterRequest {
 
   private String password;
 
-  @Enumerated(EnumType.STRING)
-  private Role role;
-
   private String phoneNumber;
 
   private LocalDate dateOfBirth;
-
-//  // Address
-//  Chyba do rejestacji jednak nie będzie adresu
-//  private String city;
-//
-//  private String postalCode;
-//
-//  private String street;
-//
-//  private String houseNumber;
 
   // Doctor
   private String pwzNumber;

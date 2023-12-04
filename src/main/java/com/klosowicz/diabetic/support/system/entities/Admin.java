@@ -1,12 +1,9 @@
 package com.klosowicz.diabetic.support.system.entities;
 
+import java.time.LocalDate;
+import javax.persistence.Entity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Getter
 @Setter
