@@ -16,6 +16,11 @@ export class AuthService {
     return this.http.post(`${baseUrl}v1/auth/authenticate/`, user);
   }
 
+  register(user: any): Observable<any> {
+    console.log('Im a server. Im trying to register.');
+    return this.http.post(`${baseUrl}v1/auth/register/`, user);
+  }
+
   isLoggedIn(): boolean {
     // Sprawdź, czy token JWT jest dostępny w sesji
     return !!localStorage.getItem(this.tokenKey);

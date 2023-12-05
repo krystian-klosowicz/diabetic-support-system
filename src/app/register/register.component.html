@@ -5,71 +5,91 @@
     >
     <mat-toolbar fxLayoutAlign="center center">Register here</mat-toolbar>
 
-    <form fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+    <form
+      fxLayoutAlign="stretch"
+      fxLayout="column"
+      class="login-form"
+      [formGroup]="formGroup"
+      (ngSubmit)="registerProcess()"
+    >
       <mat-form-field appearance="outline">
         <mat-label>Role</mat-label>
         <mat-select
           placeholder="Select your role"
-          name="role"
+          formControlName="role"
           [(ngModel)]="model.role"
         >
-          <mat-option value="DOCTOR">Doctor</mat-option>
-          <mat-option value="PATIENT">Patient</mat-option>
+          <mat-option value="ROLE_DOCTOR">Doctor</mat-option>
+          <mat-option value="ROLE_PATIENT">Patient</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Enter your email" name="email" required />
+        <input matInput placeholder="Enter a email" formControlName="email" />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <input
           matInput
           type="password"
-          placeholder="Enter your password"
-          name="password"
-          required
+          placeholder="Enter a password"
+          formControlName="password"
         />
       </mat-form-field>
 
-      <mat-form-field appearance="outline" *ngIf="model.role === 'DOCTOR'">
+      <mat-form-field appearance="outline" *ngIf="model.role === 'ROLE_DOCTOR'">
         <mat-label>PWZ Number</mat-label>
         <input
           matInput
           placeholder="Enter your PWZ number"
-          name="pwzNumber"
+          formControlName="pwzNumber"
           [(ngModel)]="model.pwzNumber"
         />
       </mat-form-field>
 
-      <mat-form-field appearance="outline" *ngIf="model.role === 'PATIENT'">
+      <mat-form-field
+        appearance="outline"
+        *ngIf="model.role === 'ROLE_PATIENT'"
+      >
         <mat-label>Diabetes Type</mat-label>
         <mat-select
           placeholder="Select your diabetes type"
-          name="diabetesType"
+          formControlName="diabetesType"
           [(ngModel)]="model.diabetesType"
         >
-          <mat-option value="TYPE1">Type 1</mat-option>
-          <mat-option value="TYPE2">Type 2</mat-option>
-          <mat-option value="PATIENT">Gestational</mat-option>
-          <mat-option value="PATIENT">Other</mat-option>
+          <mat-option value="TYPE_1">Type 1</mat-option>
+          <mat-option value="TYPE_2">Type 2</mat-option>
+          <mat-option value="GESTATIONAL">Gestational</mat-option>
+          <mat-option value="OTHER">Other</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>First Name</mat-label>
-        <input matInput placeholder="Enter your first name" name="firstName" />
+        <input
+          matInput
+          placeholder="Enter your first name"
+          formControlName="firstName"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Enter your last name" name="lastName" />
+        <input
+          matInput
+          placeholder="Enter your last name"
+          formControlName="lastName"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>PESEL</mat-label>
-        <input matInput placeholder="Enter your PESEL" name="pesel" />
+        <input
+          matInput
+          placeholder="Enter your PESEL"
+          formControlName="pesel"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -77,7 +97,7 @@
         <input
           matInput
           placeholder="Enter your phone number"
-          name="phoneNumber"
+          formControlName="phoneNumber"
         />
       </mat-form-field>
 
