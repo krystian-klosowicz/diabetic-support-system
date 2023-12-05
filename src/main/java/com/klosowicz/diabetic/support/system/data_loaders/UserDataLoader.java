@@ -44,7 +44,6 @@ public class UserDataLoader implements CommandLineRunner {
               .email("admin@gmail.com")
               .password(passwordEncoder.encode("ADMIN"))
               .phoneNumber("000000000")
-              .dateOfBirth(LocalDate.now())
               .adminSince(LocalDate.now())
               .build();
       userRepository.save(adminUser);
@@ -58,7 +57,6 @@ public class UserDataLoader implements CommandLineRunner {
               .email("doctor@gmail.com")
               .password(passwordEncoder.encode("DOCTOR"))
               .phoneNumber("000000000")
-              .dateOfBirth(LocalDate.now())
               .pwzNumber("1234567")
               .build();
 
@@ -73,7 +71,6 @@ public class UserDataLoader implements CommandLineRunner {
               .email("patient@gmail.com")
               .password(passwordEncoder.encode("PATIENT"))
               .phoneNumber("000000000")
-              .dateOfBirth(LocalDate.now())
               .diabetesType(DiabetesType.TYPE_1)
               .assignedDoctor((Doctor) doctorUser)
               .build();

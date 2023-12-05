@@ -49,9 +49,6 @@ public abstract class User implements UserDetails {
   @NotBlank
   private String password;
 
-  @NotNull
-  private LocalDate dateOfBirth;
-
   @NotBlank
   private String phoneNumber;
 

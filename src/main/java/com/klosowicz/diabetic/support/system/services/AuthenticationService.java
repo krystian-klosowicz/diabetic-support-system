@@ -45,7 +45,6 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .dateOfBirth(request.getDateOfBirth())
                 .phoneNumber(request.getPhoneNumber())
                 .diabetesType(request.getDiabetesType())
                 .build();
@@ -61,7 +60,6 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .dateOfBirth(request.getDateOfBirth())
                 .phoneNumber(request.getPhoneNumber())
                 .pwzNumber(request.getPwzNumber())
                 .build();
