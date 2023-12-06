@@ -21,9 +21,9 @@ export class AuthGuard {
 
     switch (next.routeConfig?.path) {
       case 'login':
+      case 'register':
         if (this.authService.isLoggedIn()) this.router.navigate(['/home']);
         return true;
-        break;
       case 'home':
         if (this.authService.isLoggedIn()) {
           return true;

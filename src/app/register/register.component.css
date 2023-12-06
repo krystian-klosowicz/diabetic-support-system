@@ -11,10 +11,10 @@
   min-height: 75vh;
   min-width: 25vw;
   border-radius: 10px 10px 10px 10px;
-  user-select: none;
+  /* user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  -ms-user-select: none;
+  -ms-user-select: none; to do skrolowania*/
 }
 
 .main-div mat-toolbar {
@@ -59,4 +59,32 @@
 
 .logo:hover {
   background-color: #004080; /* kolor tła po najechaniu myszą */
+}
+
+@media only screen and (max-width: 415px) {
+  .main-div {
+    background-color: #005aa7 !important;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .main-div mat-toolbar-row {
+    font-family: "Roboto", sans-serif;
+    font-size: 8px;
+  }
+
+  .main-div mat-card {
+    padding-top: 40px;
+    min-height: 75vh;
+    min-width: 90vw;
+    border-radius: 10px 10px 10px 10px;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
 }
