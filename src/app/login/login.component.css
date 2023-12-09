@@ -42,15 +42,15 @@
 
 .logo {
   font-family: "Cinzel", sans-serif;
-  width: 85px; /* dostosuj szerokość */
-  height: 85px; /* dostosuj wysokość */
-  background-color: #206eaf; /* kolor tła */
-  color: #fffde4; /* kolor tekstu (biały) */
-  font-size: 2em; /* rozmiar czcionki */
+  width: 85px;
+  height: 85px;
+  background-color: #206eaf;
+  color: #fffde4;
+  font-size: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px; /* zaokrąglenie narożników */
+  border-radius: 5px;
 }
 
 .logo:hover {

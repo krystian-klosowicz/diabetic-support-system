@@ -17,6 +17,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { HomeComponent } from './home/home.component';
 
@@ -41,6 +42,7 @@ import { HomeComponent } from './home/home.component';
     MatToolbarModule,
     MatDatepickerModule,
     MatIconModule,
+    MatMenuModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

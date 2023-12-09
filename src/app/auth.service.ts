@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private readonly tokenKey = 'jwtToken';
+  private readonly role = 'role';
 
   constructor(private http: HttpClient, private _router: Router) {}
   login(user: any): Observable<any> {
@@ -34,5 +35,9 @@ export class AuthService {
   getToken() {
     // Pobierz token JWT
     return localStorage.getItem(this.tokenKey);
+  }
+
+  getRole() {
+    return localStorage.getItem(this.role);
   }
 }

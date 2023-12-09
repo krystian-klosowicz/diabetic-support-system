@@ -1,9 +1,31 @@
-<mat-toolbar color="primary">
-  <span><mat-icon>vaccines</mat-icon> DiabeticSupportSystem</span>
-  <div class="spacer"></div>
-  <a mat-button>Home</a>
-  <a mat-button>Patients</a>
-  <a mat-button>Messages</a>
-  <a mat-button>Settings</a>
-  <a mat-raised-button color="accent" [routerLink]="['/logout']">Logout</a>
-</mat-toolbar>
+<div fxLayoutAlign class="main-div">
+  <mat-toolbar color="primary">
+    <span><mat-icon>vaccines</mat-icon> DiabeticSupportSystem</span>
+    <div class="spacer"></div>
+
+    <!-- Menu na większych ekranach -->
+    <div fxHide fxShow.gt-xs>
+      <a mat-button [routerLink]="['/home']">Home</a>
+      <a mat-button *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
+      <a mat-button *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
+      <a mat-button>Messages</a>
+      <a mat-button *ngIf="userRole === 'ROLE_ADMIN'">Admin Panel</a>
+      <a mat-button>Settings</a>
+      <a mat-raised-button color="accent" [routerLink]="['/logout']">Logout</a>
+    </div>
+
+    <!-- Hamburger na małych ekranach -->
+    <div fxHide fxShow.xs>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item [routerLink]="['/home']">Home</a>
+        <a mat-button *ngIf="userRole === 'doctor'">Patients</a>
+        <a mat-menu-item>Messages</a>
+        <a mat-menu-item>Settings</a>
+        <a mat-menu-item [routerLink]="['/logout']">Logout</a>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+</div>
