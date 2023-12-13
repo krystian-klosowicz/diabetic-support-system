@@ -2,6 +2,8 @@ package com.klosowicz.diabetic.support.system.entities;
 
 import java.time.LocalDate;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,5 +16,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @Entity
 public class Admin extends User {
-  private LocalDate adminSince;
+  @NotNull private LocalDate adminSince;
 }

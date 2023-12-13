@@ -76,6 +76,19 @@ public class UserDataLoader implements CommandLineRunner {
               .build();
 
       userRepository.save(patientUser);
+
+      User fastUser =
+              Admin.builder()
+                      .role(ROLE_ADMIN)
+                      .pesel("99051600000")
+                      .firstName("admName")
+                      .lastName("admSurname")
+                      .email("string")
+                      .password(passwordEncoder.encode("string"))
+                      .phoneNumber("000000000")
+                      .adminSince(LocalDate.now())
+                      .build();
+      userRepository.save(fastUser);
     }
   }
 }
