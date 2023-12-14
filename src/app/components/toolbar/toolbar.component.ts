@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  selector: 'app-toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrl: './toolbar.component.css',
 })
-export class HomeComponent implements OnInit {
+export class ToolbarComponent implements OnInit {
+  http: any;
   constructor(private authService: AuthService) {}
 
   userRole: string = '';

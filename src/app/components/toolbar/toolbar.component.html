@@ -21,8 +21,10 @@
       </button>
       <mat-menu #menu="matMenu">
         <a mat-menu-item [routerLink]="['/home']">Home</a>
-        <a mat-button *ngIf="userRole === 'doctor'">Patients</a>
+        <a mat-menu-item *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
+        <a mat-menu-item *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
         <a mat-menu-item>Messages</a>
+        <a mat-menu-item *ngIf="userRole === 'ROLE_ADMIN'">Admin Panel</a>
         <a mat-menu-item>Settings</a>
         <a mat-menu-item [routerLink]="['/logout']">Logout</a>
       </mat-menu>

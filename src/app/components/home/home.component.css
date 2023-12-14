@@ -1,0 +1,72 @@
+.main-div {
+  /* padding-top: 15px; */
+  /* padding-bottom: 15px; */
+  /* background-image: linear-gradient(to right, #005aa7, #fffde4); */
+  min-height: 94.9%;
+  min-width: 100%;
+}
+
+/* Stylowanie całej tabeli */
+.table {
+  font-size: 1vh;
+  background-color: #dee2e6;
+  width: 100%;
+  color: #212529;
+  border-collapse: collapse;
+}
+
+/* Stylowanie nagłówka tabeli */
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  background-color: #f8f9fa;
+  text-align: left;
+  padding: 0.75rem;
+}
+
+/* Stylowanie wierszy tabeli */
+.table tbody tr {
+  border-top: 1px solid #dee2e6;
+}
+
+/* Stylowanie komórek tabeli */
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Stylowanie wierszy tabeli przy hoverze */
+.table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Odpowiednie marginesy i padding dla lepszej czytelności */
+.table th,
+.table td {
+  padding: 12px 15px;
+}
+
+/* Dodatkowe stylowanie dla szerokości kolumn, jeśli jest potrzebne */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 5%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2),
+.table th:nth-child(6),
+.table td:nth-child(6) {
+  width: 10%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3),
+.table th:nth-child(4),
+.table td:nth-child(4),
+.table th:nth-child(5),
+.table td:nth-child(5),
+.table th:nth-child(7),
+.table td:nth-child(7) {
+  width: 15%;
+}

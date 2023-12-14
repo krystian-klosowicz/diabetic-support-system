@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../environments/environment.development';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,11 @@ export class AuthService {
   private readonly tokenKey = 'jwtToken';
   private readonly role = 'role';
 
-  constructor(private http: HttpClient, private _router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private _router: Router,
+    private jwtHelper: JwtHelperService
+  ) {}
   login(user: any): Observable<any> {
     console.log('Im a server. Im trying to login.');
     return this.http.post(`${baseUrl}v1/auth/authenticate/`, user);
@@ -37,7 +42,14 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  getRole() {
-    return localStorage.getItem(this.role);
+  getRole(): string | null {
+    const token = this.getToken();
+
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken['role'];
+    } else {
+      return null;
+    }
   }
 }

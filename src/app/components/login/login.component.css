@@ -11,10 +11,10 @@
   min-height: 75vh;
   min-width: 25vw;
   border-radius: 10px 10px 10px 10px;
-  /* user-select: none;
+  user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  -ms-user-select: none; to do skrolowania*/
+  -ms-user-select: none;
 }
 
 .main-div mat-toolbar {
@@ -26,12 +26,8 @@
   color: #000000;
 }
 
-.main-div mat-form-field {
-  margin: 0;
-}
-
 .login-form {
-  padding: 0 2vw 1vw 2vw;
+  padding: 2vw;
 }
 
 .transparent-button {
@@ -46,19 +42,35 @@
 
 .logo {
   font-family: "Cinzel", sans-serif;
-  width: 85px; /* dostosuj szerokość */
-  height: 85px; /* dostosuj wysokość */
-  background-color: #206eaf; /* kolor tła */
-  color: #fffde4; /* kolor tekstu (biały) */
-  font-size: 2em; /* rozmiar czcionki */
+  width: 85px;
+  height: 85px;
+  background-color: #206eaf;
+  color: #fffde4;
+  font-size: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px; /* zaokrąglenie narożników */
+  border-radius: 5px;
 }
 
 .logo:hover {
   background-color: #004080; /* kolor tła po najechaniu myszą */
+}
+
+a {
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  color: #858484;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.error-message {
+  padding-top: 10px;
+  color: red;
 }
 
 @media only screen and (max-width: 415px) {
@@ -69,22 +81,20 @@
     -o-background-size: cover;
     background-size: cover;
     height: 100%;
-    overflow: hidden;
+    overflow: scroll;
+  }
+  .main-div mat-card {
+    margin-top: 150px;
+  }
+
+  .main-div mat-toolbar {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
   }
 
   .main-div mat-toolbar-row {
     font-family: "Roboto", sans-serif;
-    font-size: 8px;
-  }
-
-  .main-div mat-card {
-    padding-top: 40px;
-    min-height: 75vh;
-    min-width: 90vw;
-    border-radius: 10px 10px 10px 10px;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+    font-size: 15px;
   }
 }

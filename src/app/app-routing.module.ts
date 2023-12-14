@@ -5,12 +5,12 @@ import {
   RouterStateSnapshot,
   Routes,
 } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

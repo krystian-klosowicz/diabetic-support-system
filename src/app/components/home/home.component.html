@@ -1,0 +1,27 @@
+<app-toolbar></app-toolbar>
+<div class="main-div">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>User id</th>
+        <th>Role</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Pesel</th>
+        <th>Phoner number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.pesel }}</td>
+        <td>{{ user.phoneNumber }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, catchError } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
+  loginError: boolean = false;
   constructor(private authService: AuthService, private _router: Router) {}
   ngOnInit() {
     this.initForm();
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
           catchError((error) => {
             if (error.status === 403) {
               console.log('POST 403 Forbidden');
+              this.loginError = true;
             } else if (error.status === 401) {
               console.log('POST 401 Unauthorized');
             } else {
