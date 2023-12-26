@@ -1,5 +1,11 @@
 <div fxLayoutAlign class="main-div">
-  <mat-toolbar color="primary">
+  <mat-toolbar
+    style="
+      background-color: #116bb9;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    "
+  >
     <span><mat-icon>vaccines</mat-icon> DiabeticSupportSystem</span>
     <div class="spacer"></div>
 
@@ -9,7 +15,12 @@
       <a mat-button *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
       <a mat-button *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
       <a mat-button>Messages</a>
-      <a mat-button *ngIf="userRole === 'ROLE_ADMIN'">Admin Panel</a>
+      <a
+        mat-button
+        *ngIf="userRole === 'ROLE_ADMIN'"
+        [routerLink]="['/admin-panel']"
+        >Admin Panel</a
+      >
       <a mat-button>Settings</a>
       <a mat-raised-button color="accent" [routerLink]="['/logout']">Logout</a>
     </div>
@@ -24,7 +35,12 @@
         <a mat-menu-item *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
         <a mat-menu-item *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
         <a mat-menu-item>Messages</a>
-        <a mat-menu-item *ngIf="userRole === 'ROLE_ADMIN'">Admin Panel</a>
+        <a
+          mat-menu-item
+          *ngIf="userRole === 'ROLE_ADMIN'"
+          [routerLink]="['/admin-panel']"
+          >Admin Panel</a
+        >
         <a mat-menu-item>Settings</a>
         <a mat-menu-item [routerLink]="['/logout']">Logout</a>
       </mat-menu>

@@ -24,6 +24,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { MatTableModule } from '@angular/material/table';
     MatIconModule,
     MatMenuModule,
     MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

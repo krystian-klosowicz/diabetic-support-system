@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../../../environments/environment.development';
 import { User } from '../../_model/user';
 import { UserService } from '../../_service/user.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +15,8 @@ import { UserService } from '../../_service/user.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  responseData: any;
   users: User[] = [];
-  private apiUrl = 'http://localhost:8080';
-  userToken: string = '';
+  dataSource: any;
   displayedColumns: string[] = [
     'id',
     'role',
@@ -24,7 +25,10 @@ export class HomeComponent implements OnInit {
     'email',
     'pesel',
     'phoneNumber',
+    'action',
   ];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private authService: AuthService,
@@ -33,30 +37,16 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.takeData().subscribe((data) => {
-      this.responseData = data;
-    });
     this.userService.getUsers().subscribe((response) => {
       this.users = response;
+      this.dataSource = new MatTableDataSource<User>(this.users);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
-  takeData(): Observable<any> {
-    // Pobierz token z miejsca, gdzie jest przechowywany w twojej aplikacji
-    const token = this.authService.getToken();
-    this.userToken = token !== null ? token : 'defaultRole';
-
-    // Sprawdź czy token ma prefiks "Bearer", jeśli nie, dodaj go
-    const finalToken = this.userToken.startsWith('Bearer ')
-      ? this.userToken
-      : `Bearer ${this.userToken}`;
-
-    // Ustaw nagłówek z tokenem Bearer
-    const headers = new HttpHeaders({
-      Authorization: finalToken,
-    });
-
-    // Wyślij żądanie HTTP typu GET z nagłówkiem
-    return this.http.get(`${baseUrl}v1/users/`, { headers });
+  filterChange(data: Event) {
+    const value = (data.target as HTMLInputElement).value;
+    this.dataSource.filter = value;
   }
 }

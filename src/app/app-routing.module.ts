@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -35,6 +36,14 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [
+      (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+        inject(AuthGuard).canActivate(next, state),
+    ],
+  },
+  {
+    path: 'admin-panel',
+    component: AdminPanelComponent,
     canActivate: [
       (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
         inject(AuthGuard).canActivate(next, state),

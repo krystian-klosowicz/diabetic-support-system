@@ -31,6 +31,17 @@ export class AuthGuard {
           this.router.navigate(['/login']);
           return false;
         }
+      case 'admin-panel':
+        if (this.authService.isLoggedIn()) {
+          if (this.authService.getRole() == 'ROLE_ADMIN') return true;
+          else {
+            this.router.navigate(['/not-found']);
+            return false;
+          }
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
     }
 
     return true;
