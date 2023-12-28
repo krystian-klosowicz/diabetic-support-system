@@ -5,6 +5,22 @@
   background-image: linear-gradient(to right, #005aa7, #fffde4);
 }
 
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  padding-left: 1%;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 1.5vw;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
 .table-container {
   overflow-x: auto; /* Dodaje poziomy pasek przewijania, gdy zawartość jest zbyt szeroka */
 }

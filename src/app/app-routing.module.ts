@@ -12,6 +12,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -36,6 +37,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    title: 'Home Page',
     canActivate: [
       (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
         inject(AuthGuard).canActivate(next, state),
@@ -44,6 +46,16 @@ const routes: Routes = [
   {
     path: 'admin-panel',
     component: AdminPanelComponent,
+    title: 'Admin Page',
+    canActivate: [
+      (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+        inject(AuthGuard).canActivate(next, state),
+    ],
+  },
+  {
+    path: 'admin-panel/edit-user/:userId',
+    component: EditUserComponent,
+    title: 'Admin Page',
     canActivate: [
       (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
         inject(AuthGuard).canActivate(next, state),
@@ -61,7 +73,7 @@ const routes: Routes = [
     ],
   },
   { path: 'not-found', component: NotFoundComponent, title: 'Not found' },
-  { path: '**', redirectTo: '/not-found' }, // Wildcard route for a 404 page
+  { path: '**', redirectTo: '/not-found' }, // Przekierowanie każdego złego linku do not-found page
 ];
 
 @NgModule({

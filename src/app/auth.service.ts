@@ -42,6 +42,12 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  getBearerToken(): HttpHeaders {
+    const token = this.getToken() || 'defaultRole';
+    const finalToken = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
+    return new HttpHeaders({ Authorization: finalToken });
+  }
+
   getRole(): string | null {
     const token = this.getToken();
 

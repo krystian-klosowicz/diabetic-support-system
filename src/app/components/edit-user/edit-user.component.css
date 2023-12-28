@@ -4,6 +4,9 @@
   margin: 0 auto;
   background-image: linear-gradient(to right, #005aa7, #fffde4);
 }
+.table-container {
+  overflow-x: auto; /* Dodaje poziomy pasek przewijania, gdy zawartość jest zbyt szeroka */
+}
 
 mat-card {
   min-width: 96vw;

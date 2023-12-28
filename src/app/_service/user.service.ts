@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { baseUrl } from '../../environments/environment.development';
 import { User } from '../_model/user';
 import { AuthService } from '../auth.service';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,19 +15,14 @@ export class UserService {
   userToken: string = '';
 
   getUsers() {
-    const token = this.authService.getToken();
-    this.userToken = token !== null ? token : 'defaultRole';
-    // Sprawdź czy token ma prefiks "Bearer", jeśli nie, dodaj go
-    const finalToken = this.userToken.startsWith('Bearer ')
-      ? this.userToken
-      : `Bearer ${this.userToken}`;
-
-    // Ustaw nagłówek z tokenem Bearer
-    const headers = new HttpHeaders({
-      Authorization: finalToken,
-    });
+    const headers = this.authService.getBearerToken();
     return this.http
       .get<any>(this.url, { headers })
       .pipe(map((response) => response.content));
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    const headers = this.authService.getBearerToken();
+    return this.http.delete(`${this.url}${userId}`, { headers });
   }
 }

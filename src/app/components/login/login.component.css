@@ -84,7 +84,9 @@ a:hover {
     overflow: scroll;
   }
   .main-div mat-card {
-    margin-top: 150px;
+    /* min-height: 90vh;
+    min-width: 75vw; */
+    margin-top: 10px;
   }
 
   .main-div mat-toolbar {

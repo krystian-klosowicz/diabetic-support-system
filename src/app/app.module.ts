@@ -26,6 +26,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatSortModule } from '@angular/material/sort';
     HomeComponent,
     ToolbarComponent,
     AdminPanelComponent,
+    EditUserComponent,
   ],
   imports: [
     JwtModule.forRoot({
