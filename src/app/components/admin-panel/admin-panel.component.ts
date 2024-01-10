@@ -74,8 +74,6 @@ export class AdminPanelComponent implements OnInit {
   }
 
   editUser(userId: number) {
-    alert(userId);
-    // this._router.navigate(['/admin-panel/edit-user', userId]); // Zmień na właściwą ścieżkę
     this._router.navigate(['/admin-panel/edit-user', userId]);
   }
 }

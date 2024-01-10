@@ -58,4 +58,15 @@ export class AuthService {
       return null;
     }
   }
+
+  getUserId(): string | null {
+    const token = this.getToken();
+
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken['userId'];
+    } else {
+      return null;
+    }
+  }
 }

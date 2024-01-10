@@ -42,6 +42,13 @@ export class AuthGuard {
           this.router.navigate(['/login']);
           return false;
         }
+      case 'my-profile':
+        if (this.authService.isLoggedIn()) {
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
     }
 
     return true;

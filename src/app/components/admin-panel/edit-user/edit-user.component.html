@@ -1,0 +1,28 @@
+<div class="main-div">
+  <app-toolbar></app-toolbar>
+  <mat-card style="display: flex; flex-direction: row">
+    <div class="left-panel">
+      <mat-nav-list>
+        <mat-list-item (click)="setMatItem('1')">
+          <button mat-button>
+            <mat-icon>perm_identity</mat-icon>Personal Data
+          </button>
+        </mat-list-item>
+        <mat-list-item (click)="setMatItem('2')">
+          <button mat-button><mat-icon>location_on</mat-icon>Address</button>
+        </mat-list-item>
+        <mat-list-item (click)="setMatItem('3')"
+          ><button mat-button>
+            <mat-icon>healing</mat-icon>Assigned doctor
+          </button></mat-list-item
+        >
+      </mat-nav-list>
+    </div>
+
+    <div class="right-panel" *ngIf="matItem === '1'">
+      To jest użytkownik o id: {{ userId }}
+    </div>
+    <div class="right-panel" *ngIf="matItem === '2'">Address</div>
+    <div class="right-panel" *ngIf="matItem === '3'">Assigned doctor</div>
+  </mat-card>
+</div>

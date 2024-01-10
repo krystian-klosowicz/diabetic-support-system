@@ -1,0 +1,65 @@
+<div class="main-div">
+  <app-toolbar></app-toolbar>
+  <mat-card style="display: flex; flex-direction: row">
+    <div class="left-panel">
+      <mat-nav-list>
+        <mat-list-item (click)="setMatItem('1')">
+          <button mat-button>
+            <mat-icon>perm_identity</mat-icon>Personal information
+          </button>
+        </mat-list-item>
+        <mat-list-item (click)="setMatItem('2')">
+          <button mat-button><mat-icon>location_on</mat-icon>Address</button>
+        </mat-list-item>
+        <mat-list-item (click)="setMatItem('3')"
+          ><button mat-button>
+            <mat-icon>healing</mat-icon>Assigned doctor
+          </button></mat-list-item
+        >
+      </mat-nav-list>
+    </div>
+    <!-- personal information -->
+    <div
+      class="right-panel"
+      fxLayoutAlign="center center"
+      *ngIf="matItem === '1'"
+    >
+      <form fxLayout="column" class="login-form">
+        <!-- Email Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput value="{{ userId }}" readonly />
+        </mat-form-field>
+
+        <!-- PESEL Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>PESEL</mat-label>
+          <input matInput readonly />
+        </mat-form-field>
+
+        <!-- First Name Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput readonly />
+        </mat-form-field>
+
+        <!-- Last Name Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput readonly />
+        </mat-form-field>
+
+        <!-- Password Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="Enter a password" />
+        </mat-form-field>
+
+        <!-- Edit Button -->
+        <button mat-raised-button type="button">Edit</button>
+      </form>
+    </div>
+    <div class="right-panel" *ngIf="matItem === '2'">Address</div>
+    <div class="right-panel" *ngIf="matItem === '3'">Assigned doctor</div>
+  </mat-card>
+</div>

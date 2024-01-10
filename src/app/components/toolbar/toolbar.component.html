@@ -21,7 +21,7 @@
         [routerLink]="['/admin-panel']"
         >Admin Panel</a
       >
-      <a mat-button>Settings</a>
+      <a mat-button [routerLink]="['/my-profile']">My profile</a>
       <a mat-raised-button color="accent" [routerLink]="['/logout']">Logout</a>
     </div>
 
@@ -41,7 +41,7 @@
           [routerLink]="['/admin-panel']"
           >Admin Panel</a
         >
-        <a mat-menu-item>Settings</a>
+        <a mat-menu-item [routerLink]="['/my-profile']">My profile</a>
         <a mat-menu-item [routerLink]="['/logout']">Logout</a>
       </mat-menu>
     </div>

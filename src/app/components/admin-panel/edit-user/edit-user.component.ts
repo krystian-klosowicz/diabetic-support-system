@@ -8,11 +8,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditUserComponent {
   userId: string | null = null;
+  matItem: string | null = '1';
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('userId');
-    // Teraz możesz użyć this.userId do ładowania danych użytkownika
+  }
+
+  setMatItem(itemNumber: string) {
+    this.matItem = itemNumber;
   }
 }

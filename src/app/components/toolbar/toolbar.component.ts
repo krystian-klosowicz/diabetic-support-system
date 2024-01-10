@@ -7,7 +7,6 @@ import { AuthService } from '../../auth.service';
   styleUrl: './toolbar.component.css',
 })
 export class ToolbarComponent implements OnInit {
-  http: any;
   constructor(private authService: AuthService) {}
 
   userRole: string = '';

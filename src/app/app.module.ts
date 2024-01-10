@@ -26,7 +26,10 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { EditUserComponent } from './components/admin-panel/edit-user/edit-user.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     ToolbarComponent,
     AdminPanelComponent,
     EditUserComponent,
+    MyProfileComponent,
   ],
   imports: [
     JwtModule.forRoot({
@@ -63,6 +67,8 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSidenavModule,
+    MatListModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
