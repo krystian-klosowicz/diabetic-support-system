@@ -3,7 +3,7 @@ import { AuthService } from '../../auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../../../environments/environment.development';
-import { User } from '../../_model/user';
+import { User } from '../../_model/user.interface';
 import { UserService } from '../../_service/user.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';

@@ -22,14 +22,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { HomeComponent } from './components/home/home.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { EditUserComponent } from './components/admin-panel/edit-user/edit-user.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { AdminPanelComponent, EditUserComponent } from './components';
 
 @NgModule({
   declarations: [

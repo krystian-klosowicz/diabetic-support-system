@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, catchError } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
+import { Role } from '../../_model';
 
 @Component({
   selector: 'app-register',
@@ -10,19 +11,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  model: any = {
-    role: 'ROLE_PATIENT', // Ustawienie wartości domyślnej na 'ROLE_PATIENT'
+  //to jest inline interfejs
+  model: { role: Role; pwzNumber?: string; diabetesType?: string } = {
+    role: Role.ROLE_PATIENT,
   };
 
   formGroup: FormGroup;
 
-  constructor(private authService: AuthService, private _router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.initForm();
   }
 
   initForm() {
+    //to ma być ztypowane generyk
+    //wszedzie gdzie FormGroup, FormControl <typ>
     this.formGroup = new FormGroup({
       role: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -79,7 +83,7 @@ export class RegisterComponent implements OnInit {
           // Obsługa poprawnej odpowiedzi
           if (result) {
             alert('Użytkownik został zarejestrowany!');
-            this._router.navigate(['/login']);
+            this.router.navigate(['/login']);
           }
         });
     }

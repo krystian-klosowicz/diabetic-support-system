@@ -2,6 +2,7 @@
   padding-top: 15px;
   padding-bottom: 15px;
   background-image: linear-gradient(to right, #005aa7, #fffde4);
+  /* background-image: red; */
   min-height: 100%;
   min-width: 100%;
 }
@@ -41,6 +42,7 @@
 }
 
 .logo {
+  margin: 0 auto;
   font-family: "Cinzel", sans-serif;
   width: 85px;
   height: 85px;
@@ -84,9 +86,10 @@ a:hover {
     overflow: scroll;
   }
   .main-div mat-card {
-    /* min-height: 90vh;
-    min-width: 75vw; */
-    margin-top: 10px;
+    padding: 10px;
+    min-height: 100vh;
+    min-width: 100vw;
+    padding-top: 60px;
   }
 
   .main-div mat-toolbar {

@@ -1,9 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { baseUrl } from '../environments/environment.development';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Role } from './_model';
+
+//klepie interfejs
+interface LoginResponse {
+  id: number;
+  token: string;
+  role: Role;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -14,41 +22,43 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private _router: Router,
+    private router: Router,
     private jwtHelper: JwtHelperService
   ) {}
-  login(user: any): Observable<any> {
+  public login(user: any): Promise<LoginResponse> {
     console.log('Im a server. Im trying to login.');
-    return this.http.post(`${baseUrl}v1/auth/authenticate/`, user);
+    return firstValueFrom(
+      this.http.post<LoginResponse>(`${baseUrl}v1/auth/authenticate/`, user)
+    );
   }
 
-  register(user: any): Observable<any> {
+  public register(user: any): Observable<any> {
     console.log('Im a server. Im trying to register.');
     return this.http.post(`${baseUrl}v1/auth/register/`, user);
   }
 
-  isLoggedIn(): boolean {
+  public isLoggedIn(): boolean {
     // Sprawdź, czy token JWT jest dostępny w sesji
     return !!localStorage.getItem(this.tokenKey);
   }
 
-  logoutUser() {
+  public logoutUser() {
     localStorage.removeItem(this.tokenKey);
-    this._router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 
-  getToken() {
+  private getToken() {
     // Pobierz token JWT
     return localStorage.getItem(this.tokenKey);
   }
 
-  getBearerToken(): HttpHeaders {
+  public getBearerToken(): HttpHeaders {
     const token = this.getToken() || 'defaultRole';
     const finalToken = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
     return new HttpHeaders({ Authorization: finalToken });
   }
 
-  getRole(): string | null {
+  public getRole(): string | null {
     const token = this.getToken();
 
     if (token) {
@@ -59,7 +69,7 @@ export class AuthService {
     }
   }
 
-  getUserId(): string | null {
+  public getUserId(): string | null {
     const token = this.getToken();
 
     if (token) {

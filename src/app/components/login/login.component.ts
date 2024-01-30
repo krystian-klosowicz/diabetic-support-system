@@ -27,28 +27,25 @@ export class LoginComponent implements OnInit {
     if (this.formGroup.valid) {
       this.authService
         .login(this.formGroup.value)
-        .pipe(
-          catchError((error) => {
-            if (error.status === 403) {
-              console.log('POST 403 Forbidden');
-              this.loginError = true;
-            } else if (error.status === 401) {
-              console.log('POST 401 Unauthorized');
-            } else {
-              alert('Wystąpił błąd: ' + error.message);
-            }
-
-            return EMPTY;
-          })
-        )
-        .subscribe((result) => {
-          // Obsługa poprawnej odpowiedzi
+        .then((result) => {
           if (result) {
             alert('Token zostal dodany do sessionStorage!');
             localStorage.clear();
             localStorage.setItem('jwtToken', 'Bearer ' + result.token); // Dodanie tokenu jwt do sesji
             this._router.navigate(['/home']);
           }
+        })
+        .catch((error) => {
+          if (error.status === 403) {
+            console.log('POST 403 Forbidden');
+            this.loginError = true;
+          } else if (error.status === 401) {
+            console.log('POST 401 Unauthorized');
+          } else {
+            alert('Wystąpił błąd: ' + error.message);
+          }
+
+          return EMPTY;
         });
     }
   }
