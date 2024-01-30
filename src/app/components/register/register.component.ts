@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
   }
 
   initForm() {
+    //TODO:
     //to ma być ztypowane generyk
     //wszedzie gdzie FormGroup, FormControl <typ>
     this.formGroup = new FormGroup({
