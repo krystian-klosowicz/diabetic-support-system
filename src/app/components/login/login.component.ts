@@ -1,29 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { EMPTY, catchError } from 'rxjs';
 import { AuthService } from '../../auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { FlexModule } from '@angular/flex-layout/flex';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  standalone: true,
+  imports: [
+    FlexModule,
+    MatCardModule,
+    MatToolbarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    RouterLink,
+    CommonModule,
+  ],
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
   loginError: boolean = false;
-  constructor(private authService: AuthService, private _router: Router) {}
-  ngOnInit() {
+  constructor(private authService: AuthService, private router: Router) {}
+  public ngOnInit() {
     this.initForm();
   }
-  initForm() {
+
+  private initForm() {
     this.formGroup = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
   }
 
-  loginProcess() {
+  public loginProcess() {
     if (this.formGroup.valid) {
       this.authService
         .login(this.formGroup.value)
@@ -32,7 +59,7 @@ export class LoginComponent implements OnInit {
             alert('Token zostal dodany do sessionStorage!');
             localStorage.clear();
             localStorage.setItem('jwtToken', 'Bearer ' + result.token); // Dodanie tokenu jwt do sesji
-            this._router.navigate(['/home']);
+            this.router.navigate(['/home']);
           }
         })
         .catch((error) => {

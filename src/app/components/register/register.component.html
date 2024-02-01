@@ -1,8 +1,6 @@
 <div fxLayoutAlign="center center" class="main-div">
   <mat-card>
-    <mat-toolbar fxLayoutAlign="center center" style="margin-bottom: 1vh"
-      ><div class="logo">D</div></mat-toolbar
-    >
+    <div class="logo">D</div>
     <mat-toolbar fxLayoutAlign="center center">Register here</mat-toolbar>
 
     <form
@@ -39,7 +37,7 @@
         />
       </mat-form-field>
 
-      <mat-form-field appearance="outline" *ngIf="model.role === 'ROLE_DOCTOR'">
+      <mat-form-field *ngIf="model.role === 'ROLE_DOCTOR'" appearance="outline">
         <mat-label>PWZ Number</mat-label>
         <input
           matInput
@@ -50,8 +48,8 @@
       </mat-form-field>
 
       <mat-form-field
-        appearance="outline"
         *ngIf="model.role === 'ROLE_PATIENT'"
+        appearance="outline"
       >
         <mat-label>Diabetes Type</mat-label>
         <mat-select

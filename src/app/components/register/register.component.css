@@ -35,7 +35,7 @@
 }
 
 .transparent-button {
-  background-color: #136ebe !important;
+  background-color: #1976d2 !important;
   color: #ffffff !important;
   font-size: large;
 }
@@ -45,23 +45,24 @@
 }
 
 .logo {
+  margin: 0 auto;
   font-family: "Cinzel", sans-serif;
-  width: 85px; /* dostosuj szerokość */
-  height: 85px; /* dostosuj wysokość */
-  background-color: #206eaf; /* kolor tła */
-  color: #fffde4; /* kolor tekstu (biały) */
-  font-size: 2em; /* rozmiar czcionki */
+  width: 85px;
+  height: 85px;
+  background-color: #1976d2;
+  color: #fffde4;
+  font-size: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px; /* zaokrąglenie narożników */
+  border-radius: 5px;
 }
 
 .logo:hover {
-  background-color: #004080; /* kolor tła po najechaniu myszą */
+  background-color: #004080;
 }
 
-@media only screen and (max-width: 415px) {
+@media only screen and (max-width: 430px) {
   .main-div {
     background-color: #005aa7 !important;
     -webkit-background-size: cover;
@@ -69,7 +70,8 @@
     -o-background-size: cover;
     background-size: cover;
     height: 100%;
-    overflow: hidden;
+    overflow: scroll;
+    padding: 0;
   }
 
   .main-div mat-toolbar-row {
@@ -78,13 +80,21 @@
   }
 
   .main-div mat-card {
-    padding-top: 40px;
-    min-height: 75vh;
-    min-width: 90vw;
-    border-radius: 10px 10px 10px 10px;
-    user-select: none;
+    padding: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    border-radius: 0;
+    padding-top: 60px;
+    padding-bottom: 30px;
+
+    /* user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select: none;
+    -ms-user-select: none; */
+  }
+
+  .logo {
+    font-size: 10vw;
+    font-weight: 500;
   }
 }

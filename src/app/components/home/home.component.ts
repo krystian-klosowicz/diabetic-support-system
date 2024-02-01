@@ -8,11 +8,16 @@ import { UserService } from '../../_service/user.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  standalone: true,
+  imports: [ToolbarComponent, MatCardModule, CommonModule],
 })
 export class HomeComponent implements OnInit {
   users: User[] = [];
@@ -36,17 +41,17 @@ export class HomeComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  ngOnInit() {
-    this.userService.getUsers().subscribe((response) => {
-      this.users = response;
-      this.dataSource = new MatTableDataSource<User>(this.users);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+  public ngOnInit() {
+    // this.userService.getUsers().subscribe((response) => {
+    //   this.users = response;
+    //   this.dataSource = new MatTableDataSource<User>(this.users);
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    // });
   }
 
-  filterChange(data: Event) {
-    const value = (data.target as HTMLInputElement).value;
-    this.dataSource.filter = value;
-  }
+  // private filterChange(data: Event) {
+  //   const value = (data.target as HTMLInputElement).value;
+  //   this.dataSource.filter = value;
+  // }
 }

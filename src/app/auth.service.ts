@@ -32,13 +32,15 @@ export class AuthService {
     );
   }
 
-  public register(user: any): Observable<any> {
+  public register(user: any): Promise<LoginResponse> {
     console.log('Im a server. Im trying to register.');
-    return this.http.post(`${baseUrl}v1/auth/register/`, user);
+    return firstValueFrom(
+      this.http.post<LoginResponse>(`${baseUrl}v1/auth/register/`, user)
+    );
   }
 
+  // Sprawdź, czy token JWT jest dostępny w sesji
   public isLoggedIn(): boolean {
-    // Sprawdź, czy token JWT jest dostępny w sesji
     return !!localStorage.getItem(this.tokenKey);
   }
 
@@ -47,8 +49,8 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  // Pobierz token JWT
   private getToken() {
-    // Pobierz token JWT
     return localStorage.getItem(this.tokenKey);
   }
 

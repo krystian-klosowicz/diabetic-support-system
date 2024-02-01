@@ -38,3 +38,10 @@ button:hover {
 .login-form {
   padding-bottom: 4vh;
 }
+
+@media only screen and (max-width: 615px) {
+  mat-card {
+    min-height: 94vh;
+    margin: 0;
+  }
+}

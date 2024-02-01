@@ -32,7 +32,7 @@
 }
 
 .transparent-button {
-  background-color: #136ebe !important;
+  background-color: #1976d2 !important;
   color: #ffffff !important;
   font-size: large;
 }
@@ -46,9 +46,9 @@
   font-family: "Cinzel", sans-serif;
   width: 85px;
   height: 85px;
-  background-color: #206eaf;
+  background-color: #1976d2;
   color: #fffde4;
-  font-size: 2em;
+  font-size: 2vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,7 +75,7 @@ a:hover {
   color: red;
 }
 
-@media only screen and (max-width: 415px) {
+@media only screen and (max-width: 430px) {
   .main-div {
     background-color: #005aa7 !important;
     -webkit-background-size: cover;
@@ -84,11 +84,13 @@ a:hover {
     background-size: cover;
     height: 100%;
     overflow: scroll;
+    padding: 0;
   }
   .main-div mat-card {
-    padding: 10px;
+    padding: 0;
     min-height: 100vh;
     min-width: 100vw;
+    border-radius: 0;
     padding-top: 60px;
   }
 
@@ -101,5 +103,10 @@ a:hover {
   .main-div mat-toolbar-row {
     font-family: "Roboto", sans-serif;
     font-size: 15px;
+  }
+
+  .logo {
+    font-size: 10vw;
+    font-weight: 500;
   }
 }

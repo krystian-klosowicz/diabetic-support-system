@@ -1,14 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { EMPTY, catchError } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { Role } from '../../_model';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { FlexModule } from '@angular/flex-layout/flex';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+  standalone: true,
+  imports: [
+    FlexModule,
+    MatCardModule,
+    MatToolbarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatInputModule,
+    MatButtonModule,
+    CommonModule,
+  ],
 })
 export class RegisterComponent implements OnInit {
   //to jest inline interfejs
@@ -20,11 +49,11 @@ export class RegisterComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.initForm();
   }
 
-  initForm() {
+  private initForm() {
     //TODO:
     //to ma być ztypowane generyk
     //wszedzie gdzie FormGroup, FormControl <typ>
@@ -63,29 +92,26 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  registerProcess() {
+  public registerProcess() {
     if (this.formGroup.valid) {
       this.authService
         .register(this.formGroup.value)
-        .pipe(
-          catchError((error) => {
-            if (error.status === 403) {
-              console.log('POST 403 Forbidden');
-            } else if (error.status === 401) {
-              console.log('POST 401 Unauthorized');
-            } else {
-              alert('Wystąpił błąd: ' + error.message);
-            }
-
-            return EMPTY;
-          })
-        )
-        .subscribe((result) => {
-          // Obsługa poprawnej odpowiedzi
+        .then((result) => {
           if (result) {
             alert('Użytkownik został zarejestrowany!');
             this.router.navigate(['/login']);
           }
+        })
+        .catch((error) => {
+          if (error.status === 403) {
+            console.log('POST 403 Forbidden');
+          } else if (error.status === 401) {
+            console.log('POST 401 Unauthorized');
+          } else {
+            alert('Wystąpił błąd: ' + error.message);
+          }
+
+          return EMPTY;
         });
     }
   }

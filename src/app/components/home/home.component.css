@@ -11,3 +11,10 @@ mat-card {
   margin: 2%;
   /* padding: 1%; */
 }
+
+@media only screen and (max-width: 615px) {
+  mat-card {
+    min-height: 94vh;
+    margin: 0;
+  }
+}
