@@ -6,7 +6,6 @@ public enum Role {
   ROLE_ADMIN; // ADMINISTRATOR
 
 
-
   public boolean isTypeEnablesRegistration() {
     return this == ROLE_PATIENT || this == ROLE_DOCTOR;
   }

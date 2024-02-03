@@ -10,7 +10,7 @@ public class UserPage {
 
   private int pageNumber = 0;
 
-  private int pageSize = 10;
+  private int pageSize = 100;
 
   private Sort.Direction sortDirection = Sort.Direction.ASC;
 

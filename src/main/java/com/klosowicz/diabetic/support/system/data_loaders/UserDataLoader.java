@@ -25,15 +25,42 @@ public class UserDataLoader implements CommandLineRunner {
 
     if (userRepository.count() == 0) {
 
-      Address address =
+      Address address1 =
           Address.builder()
-              .city("TEST USER'S ADDRESS")
+              .city("TEST ADMIN ADDRESS")
               .houseNumber("0")
               .postalCode("00-000")
-              .street("TEST USER'S STREET")
+              .street("TEST ADMIN STREET")
               .build();
 
-      addressRepository.save(address);
+      Address address2 =
+          Address.builder()
+              .city("TEST DOCTOR ADDRESS")
+              .houseNumber("0")
+              .postalCode("00-000")
+              .street("TEST DOCTOR STREET")
+              .build();
+
+      Address address3 =
+          Address.builder()
+              .city("TEST PATIENT ADDRESS")
+              .houseNumber("0")
+              .postalCode("00-000")
+              .street("TEST PATIENT STREET")
+              .build();
+
+      Address address4 =
+          Address.builder()
+              .city("TEST STRING ADDRESS")
+              .houseNumber("0")
+              .postalCode("00-000")
+              .street("TEST STRING STREET")
+              .build();
+
+      addressRepository.save(address1);
+      addressRepository.save(address2);
+      addressRepository.save(address3);
+      addressRepository.save(address4);
 
       User adminUser =
           Admin.builder()
@@ -45,6 +72,7 @@ public class UserDataLoader implements CommandLineRunner {
               .password(passwordEncoder.encode("ADMIN"))
               .phoneNumber("000000000")
               .adminSince(LocalDate.now())
+              .address(address1)
               .build();
       userRepository.save(adminUser);
 
@@ -58,6 +86,7 @@ public class UserDataLoader implements CommandLineRunner {
               .password(passwordEncoder.encode("DOCTOR"))
               .phoneNumber("000000000")
               .pwzNumber("1234567")
+              .address(address2)
               .build();
 
       userRepository.save(doctorUser);
@@ -73,21 +102,23 @@ public class UserDataLoader implements CommandLineRunner {
               .phoneNumber("000000000")
               .diabetesType(DiabetesType.TYPE_1)
               .assignedDoctor((Doctor) doctorUser)
+              .address(address3)
               .build();
 
       userRepository.save(patientUser);
 
       User fastUser =
-              Admin.builder()
-                      .role(ROLE_ADMIN)
-                      .pesel("99051600000")
-                      .firstName("admName")
-                      .lastName("admSurname")
-                      .email("string")
-                      .password(passwordEncoder.encode("string"))
-                      .phoneNumber("000000000")
-                      .adminSince(LocalDate.now())
-                      .build();
+          Admin.builder()
+              .role(ROLE_ADMIN)
+              .pesel("99051600000")
+              .firstName("admName")
+              .lastName("admSurname")
+              .email("string")
+              .password(passwordEncoder.encode("string"))
+              .phoneNumber("000000000")
+              .adminSince(LocalDate.now())
+              .address(address4)
+              .build();
       userRepository.save(fastUser);
     }
   }

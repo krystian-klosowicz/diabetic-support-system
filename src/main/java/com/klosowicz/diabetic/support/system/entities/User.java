@@ -1,6 +1,11 @@
 package com.klosowicz.diabetic.support.system.entities;
 
 import com.klosowicz.diabetic.support.system.entities.enums.Role;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,14 +13,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 @Data
 @NoArgsConstructor

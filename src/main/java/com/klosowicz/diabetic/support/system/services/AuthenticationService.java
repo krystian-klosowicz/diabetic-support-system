@@ -1,11 +1,13 @@
 package com.klosowicz.diabetic.support.system.services;
 
 import com.klosowicz.diabetic.support.system.config.JwtService;
+import com.klosowicz.diabetic.support.system.entities.Address;
 import com.klosowicz.diabetic.support.system.entities.Doctor;
 import com.klosowicz.diabetic.support.system.entities.Patient;
 import com.klosowicz.diabetic.support.system.entities.User;
 import com.klosowicz.diabetic.support.system.exceptions.EmailExistsException;
 import com.klosowicz.diabetic.support.system.exceptions.InvalidRoleException;
+import com.klosowicz.diabetic.support.system.repositories.AddressRepository;
 import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 import com.klosowicz.diabetic.support.system.requests.AuthenticationRequest;
 import com.klosowicz.diabetic.support.system.requests.RegisterRequest;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthenticationService {
 
   private final UserRepository userRepository;
+  private final AddressRepository addressRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
@@ -33,6 +36,9 @@ public class AuthenticationService {
     if (userRepository.existsByEmail(request.getEmail())) {
       throw new EmailExistsException("Email already exists: " + request.getEmail());
     }
+
+    Address address = Address.builder().build();
+    addressRepository.save(address);
 
     User user;
     switch (request.getRole()) {
@@ -47,6 +53,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
                 .diabetesType(request.getDiabetesType())
+                .address(address)
                 .build();
 
         userRepository.save(user);
@@ -62,6 +69,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
                 .pwzNumber(request.getPwzNumber())
+                .address(address)
                 .build();
 
         userRepository.save(user);
