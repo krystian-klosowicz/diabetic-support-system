@@ -46,6 +46,7 @@ export class RegisterComponent implements OnInit {
   };
 
   formGroup: FormGroup;
+  DiabetesType: any;
 
   constructor(private authService: AuthService, private router: Router) {}
 

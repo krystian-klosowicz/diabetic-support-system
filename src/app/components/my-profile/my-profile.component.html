@@ -13,7 +13,12 @@
         </mat-list-item>
         <mat-list-item (click)="setMatItem('3')"
           ><button mat-button>
-            <mat-icon>healing</mat-icon>Assigned doctor
+            <mat-icon>healing</mat-icon>My doctor
+          </button></mat-list-item
+        >
+        <mat-list-item (click)="setMatItem('4')"
+          ><button mat-button>
+            <mat-icon>password</mat-icon>Change password
           </button></mat-list-item
         >
       </mat-nav-list>
@@ -24,42 +29,129 @@
       fxLayoutAlign="center center"
       *ngIf="matItem === '1'"
     >
-      <form fxLayout="column" class="login-form">
+      <form fxLayout="column" class="login-form" [formGroup]="profileForm">
         <!-- Email Field -->
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput [value]="userId" readonly />
-        </mat-form-field>
-
-        <!-- PESEL Field -->
-        <mat-form-field appearance="outline">
-          <mat-label>PESEL</mat-label>
-          <input matInput readonly />
+          <input matInput formControlName="email" />
         </mat-form-field>
 
         <!-- First Name Field -->
         <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
-          <input matInput readonly />
+          <input
+            matInput
+            formControlName="firstName"
+            [disabled]="!isEditMode"
+          />
         </mat-form-field>
 
         <!-- Last Name Field -->
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
-          <input matInput readonly />
+          <input matInput formControlName="lastName" [disabled]="!isEditMode" />
         </mat-form-field>
 
-        <!-- Password Field -->
+        <!-- PESEL Field -->
         <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" placeholder="Enter a password" />
+          <mat-label>PESEL</mat-label>
+          <input matInput formControlName="pesel" [disabled]="!isEditMode" />
         </mat-form-field>
 
-        <!-- Edit Button -->
-        <button mat-raised-button type="button">Edit</button>
+        <!-- Phone Number Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Phone number</mat-label>
+          <input
+            matInput
+            formControlName="phoneNumber"
+            [disabled]="!isEditMode"
+          />
+        </mat-form-field>
+
+        <!-- Diabetes Type Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Diabetes Type</mat-label>
+          <input
+            matInput
+            formControlName="diabetesType"
+            [disabled]="!isEditMode"
+          />
+        </mat-form-field>
+
+        <!-- Pwz Number Field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Pwz number</mat-label>
+          <input
+            matInput
+            formControlName="pwzNumber"
+            [disabled]="!isEditMode"
+          />
+        </mat-form-field>
+
+        <!-- Edit and Save Buttons -->
+        <button mat-raised-button color="warn" (click)="toggleEditMode()">
+          Edit
+        </button>
+        <button
+          mat-raised-button
+          type="button"
+          class="save-button"
+          color="primary"
+          (click)="toggleSave()"
+        >
+          Save
+        </button>
       </form>
     </div>
-    <div class="right-panel" *ngIf="matItem === '2'">Address</div>
+    <div
+      class="right-panel"
+      fxLayoutAlign="center center"
+      *ngIf="matItem === '2'"
+    >
+      <form fxLayout="column" class="login-form">
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <input matInput [value]="user?.address?.city" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Postal Code</mat-label>
+          <input
+            matInput
+            [value]="user?.address?.postalCode"
+            [disabled]="!isEditMode"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Street</mat-label>
+          <input
+            matInput
+            [value]="user?.address?.street"
+            [disabled]="!isEditMode"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>House Number</mat-label>
+          <input
+            matInput
+            [value]="user?.address?.houseNumber"
+            [disabled]="!isEditMode"
+          />
+        </mat-form-field>
+        <button mat-raised-button color="warn" (click)="toggleEditMode()">
+          Edit
+        </button>
+        <button
+          mat-raised-button
+          type="submit"
+          class="save-button"
+          color="primary"
+          (click)="toggleSave()"
+        >
+          Save
+        </button>
+      </form>
+    </div>
     <div class="right-panel" *ngIf="matItem === '3'">Assigned doctor</div>
+    <div class="right-panel" *ngIf="matItem === '4'">Change password here</div>
   </mat-card>
 </div>

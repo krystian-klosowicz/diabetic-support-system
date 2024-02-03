@@ -1,2 +1,4 @@
 export * from './role.enum';
+export * from './diabetes-type.enum';
 export * from './user.interface';
+export * from './my-profile.interface';
