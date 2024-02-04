@@ -29,7 +29,6 @@ public class MyProfileResponse {
   @NotBlank
   private String lastName;
 
-  @NotBlank
   private String email;
 
   @Pattern(regexp = "[1-9]\\d{8}")
