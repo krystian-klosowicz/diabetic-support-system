@@ -22,6 +22,17 @@ export class UserService {
       .pipe(map((response) => response.content));
   }
 
+  public updateUser(profile: MyProfile): Promise<MyProfile> {
+    const headers = this.authService.getBearerToken();
+    console.log('Im a server. Im trying to update my profile.');
+    console.log(profile);
+    return firstValueFrom(
+      this.http
+        .put<MyProfile>(this.url, profile, { headers })
+        .pipe(map((response) => response))
+    );
+  }
+
   public deleteUser(userId: number): Observable<any> {
     const headers = this.authService.getBearerToken();
     return this.http.delete(`${this.url}${userId}`, { headers });

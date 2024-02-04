@@ -35,7 +35,7 @@ mat-card {
   box-shadow: none; /* Wyłącza cień (jeśli jest stosowany) */
 }
 
-.login-form {
+.form {
   padding-bottom: 4vh;
 }
 
