@@ -1,21 +1,16 @@
 package com.klosowicz.diabetic.support.system.services;
 
 import com.klosowicz.diabetic.support.system.config.JwtAuthenticationFilter;
-import com.klosowicz.diabetic.support.system.entities.Admin;
-import com.klosowicz.diabetic.support.system.entities.Doctor;
-import com.klosowicz.diabetic.support.system.entities.Patient;
-import com.klosowicz.diabetic.support.system.entities.User;
+import com.klosowicz.diabetic.support.system.entities.*;
 import com.klosowicz.diabetic.support.system.entities.criteria.UserSearchCriteria;
 import com.klosowicz.diabetic.support.system.entities.enums.DiabetesType;
 import com.klosowicz.diabetic.support.system.entities.page.UserPage;
 import com.klosowicz.diabetic.support.system.exceptions.InvalidRoleException;
-import com.klosowicz.diabetic.support.system.repositories.AdminRepository;
-import com.klosowicz.diabetic.support.system.repositories.PatientRepository;
-import com.klosowicz.diabetic.support.system.repositories.UserRepository;
-import com.klosowicz.diabetic.support.system.repositories.DoctorRepository;
+import com.klosowicz.diabetic.support.system.repositories.*;
 import com.klosowicz.diabetic.support.system.repositories.criteria.UserCriteriaRepository;
 import java.util.Optional;
 
+import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
 import com.klosowicz.diabetic.support.system.requests.responses.DoctorProfileResponse;
 import com.klosowicz.diabetic.support.system.requests.responses.MyProfileResponse;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +44,20 @@ public class UserService {
 
     return createProfileRespnse(user);
   }
+
+  public MyProfileResponse updateAddress(HttpServletRequest request, SaveAddressRequest response){
+    Long userId = jwtAuthenticationFilter.getUserIdFromToken(request);
+    User user = userRepository.findById(userId).orElseThrow();
+    Address address = user.getAddress();
+    address.setCity(response.getCity());
+    address.setStreet(response.getStreet());
+    address.setPostalCode(response.getPostalCode());
+    address.setHouseNumber(response.getHouseNumber());
+    user.setAddress(address);
+    userRepository.save(user);
+    return createProfileRespnse(user);
+  }
+
 
   public MyProfileResponse updateUser(HttpServletRequest request, MyProfileResponse response) {
     Long userId = jwtAuthenticationFilter.getUserIdFromToken(request);

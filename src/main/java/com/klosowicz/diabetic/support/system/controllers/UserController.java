@@ -3,6 +3,7 @@ package com.klosowicz.diabetic.support.system.controllers;
 import com.klosowicz.diabetic.support.system.entities.User;
 import com.klosowicz.diabetic.support.system.entities.criteria.UserSearchCriteria;
 import com.klosowicz.diabetic.support.system.entities.page.UserPage;
+import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
 import com.klosowicz.diabetic.support.system.requests.responses.MyProfileResponse;
 import com.klosowicz.diabetic.support.system.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,11 @@ public class UserController {
   @PutMapping
   public ResponseEntity<MyProfileResponse> updateUser(HttpServletRequest request, @Valid @RequestBody MyProfileResponse response) {
     return ResponseEntity.ok(userService.updateUser(request, response));
+  }
+
+  @PutMapping("/update-address")
+  public ResponseEntity<MyProfileResponse> updateAddress(HttpServletRequest request, @Valid @RequestBody SaveAddressRequest saveAddressRequest) {
+    return ResponseEntity.ok(userService.updateAddress(request, saveAddressRequest));
   }
 
   @DeleteMapping("/{id}")
