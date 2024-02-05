@@ -73,6 +73,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AdminPanelComponent,
     EditUserComponent,
     MyProfileComponent,
+    MatSelectModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

@@ -61,12 +61,26 @@
           <input matInput formControlName="phoneNumber" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+          *ngIf="user?.role === 'ROLE_PATIENT'"
+          appearance="outline"
+        >
           <mat-label>Diabetes Type</mat-label>
-          <input matInput formControlName="diabetesType" />
+          <mat-select
+            placeholder="Select your diabetes type"
+            formControlName="diabetesType"
+          >
+            <mat-option value="TYPE_1">Type 1</mat-option>
+            <mat-option value="TYPE_2">Type 2</mat-option>
+            <mat-option value="GESTATIONAL">Gestational</mat-option>
+            <mat-option value="OTHER">Other</mat-option>
+          </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field
+          appearance="outline"
+          *ngIf="user?.role === Role.ROLE_DOCTOR"
+        >
           <mat-label>Pwz number</mat-label>
           <input matInput formControlName="pwzNumber" />
         </mat-form-field>
@@ -151,6 +165,34 @@
         </mat-form-field>
       </form>
     </div>
-    <div class="right-panel" *ngIf="matItem === '4'">Change password here</div>
+    <div
+      class="right-panel"
+      fxLayoutAlign="center center"
+      *ngIf="matItem === '4'"
+    >
+      <form fxLayout="column" class="form" [formGroup]="passwordForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Old password</mat-label>
+          <input matInput formControlName="oldPassword" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>New password</mat-label>
+          <input matInput formControlName="newPassword" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Repeat new password</mat-label>
+          <input matInput formControlName="newPasswordRepeat" />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          type="submit"
+          class="save-button"
+          color="primary"
+          (click)="toggleSave()"
+        >
+          Change password
+        </button>
+      </form>
+    </div>
   </mat-card>
 </div>

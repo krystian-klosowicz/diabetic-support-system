@@ -4,7 +4,8 @@ import { baseUrl } from '../../environments/environment.development';
 import { User } from '../_model/user.interface';
 import { AuthService } from '../auth.service';
 import { Observable, firstValueFrom, map } from 'rxjs';
-import { MyProfile } from '../_model';
+import { Address, MyProfile } from '../_model';
+import { Password } from '../_model/password.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,27 @@ export class UserService {
     return firstValueFrom(
       this.http
         .put<MyProfile>(this.url, profile, { headers })
+        .pipe(map((response) => response))
+    );
+  }
+
+  public updateAddress(address: Address): Promise<MyProfile> {
+    const headers = this.authService.getBearerToken();
+    console.log('Im a server. Im trying to update my profile.');
+    console.log(address);
+    return firstValueFrom(
+      this.http
+        .put<MyProfile>(`${this.url}update-address/`, address, { headers })
+        .pipe(map((response) => response))
+    );
+  }
+
+  public changePassword(password: Password) {
+    const headers = this.authService.getBearerToken();
+    console.log('Im a server. Im trying to change password.');
+    return firstValueFrom(
+      this.http
+        .put<MyProfile>(`${this.url}change-password/`, password, { headers })
         .pipe(map((response) => response))
     );
   }

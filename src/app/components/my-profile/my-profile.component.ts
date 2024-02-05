@@ -19,6 +19,7 @@ import { MyProfile, Role } from '../../_model';
 import { UserService } from '../../_service/user.service';
 import { EMPTY } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-my-profile',
@@ -37,18 +38,20 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     CommonModule,
     ReactiveFormsModule,
+    MatSelectModule,
   ],
 })
 export class MyProfileComponent implements OnInit {
   constructor(private userService: UserService, private fb: FormBuilder) {}
 
+  public Role = Role; // Expose the enum to the template
   user: MyProfile | undefined;
   matItem: string | null = '1';
   isEditMode: boolean = false;
   profileForm: FormGroup;
   addressForm: FormGroup;
   doctorForm: FormGroup;
-  public Role = Role; // Expose the enum to the template
+  passwordForm: FormGroup;
 
   public ngOnInit() {
     this.initializeForm(); // najpierw inicjuje czyste formsy
@@ -86,6 +89,29 @@ export class MyProfileComponent implements OnInit {
       phoneNumber: [{ value: '', disabled: true }],
       pwzNumber: [{ value: '', disabled: true }],
     });
+
+    this.passwordForm = this.fb.group(
+      {
+        oldPassword: [{ value: '', disabled: false }, Validators.required],
+        newPassword: [
+          { value: '', disabled: false },
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/),
+          ],
+        ],
+        newPasswordRepeat: [
+          { value: '', disabled: false },
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/),
+          ],
+        ],
+      },
+      { validators: this.passwordsMatchValidator }
+    );
   }
 
   public loadMyProfile() {
@@ -188,9 +214,13 @@ export class MyProfileComponent implements OnInit {
         { value: this.user?.lastName, disabled: !this.isEditMode },
         Validators.required,
       ],
-      pesel: [{ value: this.user?.pesel, disabled: !this.isEditMode }],
+      pesel: [
+        { value: this.user?.pesel, disabled: !this.isEditMode },
+        Validators.required,
+      ],
       phoneNumber: [
         { value: this.user?.phoneNumber, disabled: !this.isEditMode },
+        Validators.required,
       ],
       diabetesType: [
         { value: this.user?.diabetesType, disabled: !this.isEditMode },
@@ -214,31 +244,106 @@ export class MyProfileComponent implements OnInit {
     });
   }
 
+  private updateProfile() {
+    if (this.profileForm.valid) {
+      this.userService
+        .updateUser(this.profileForm.value)
+        .then((result) => {
+          if (result) {
+            this.isEditMode = false;
+            this.user = result;
+            this.loadForm();
+            alert('Saved.');
+          }
+        })
+        .catch((error) => {
+          if (error.status === 403) {
+            console.log('POST 403 Forbidden');
+          } else if (error.status === 401) {
+            console.log('POST 401 Unauthorized');
+          } else {
+            alert('Wystąpił błąd: ' + error.message);
+          }
+
+          return EMPTY;
+        });
+    }
+  }
+
+  private updateAddress() {
+    if (this.addressForm.valid) {
+      this.userService
+        .updateAddress(this.addressForm.value)
+        .then((result) => {
+          if (result) {
+            this.isEditMode = false;
+            this.user = result;
+            this.loadForm();
+            alert('Saved.');
+          }
+        })
+        .catch((error) => {
+          if (error.status === 403) {
+            console.log('POST 403 Forbidden');
+          } else if (error.status === 401) {
+            console.log('POST 401 Unauthorized');
+          } else {
+            alert('Wystąpił błąd: ' + error.message);
+          }
+
+          return EMPTY;
+        });
+    }
+  }
+
+  private changePassword() {
+    if (this.passwordForm.valid) {
+      this.userService
+        .changePassword(this.passwordForm.value)
+        .then((result) => {
+          if (result) {
+            alert('Password has been changed.');
+          }
+        })
+        .catch((error) => {
+          if (error.status === 403) {
+            console.log('POST 403 Forbidden');
+          } else if (error.status === 401) {
+            console.log('POST 401 Unauthorized');
+          } else {
+            alert('Wystąpił błąd: ' + error.message);
+          }
+
+          return EMPTY;
+        });
+    }
+  }
+
   public toggleSave() {
     if (this.isEditMode) {
-      if (this.profileForm.valid) {
-        this.userService
-          .updateUser(this.profileForm.value)
-          .then((result) => {
-            if (result) {
-              this.isEditMode = false;
-              this.user = result;
-              this.loadForm();
-              alert('Saved.');
-            }
-          })
-          .catch((error) => {
-            if (error.status === 403) {
-              console.log('POST 403 Forbidden');
-            } else if (error.status === 401) {
-              console.log('POST 401 Unauthorized');
-            } else {
-              alert('Wystąpił błąd: ' + error.message);
-            }
-
-            return EMPTY;
-          });
+      switch (this.matItem) {
+        case '1': {
+          this.updateProfile();
+          break;
+        }
+        case '2': {
+          this.updateAddress();
+          break;
+        }
       }
+    } else if (this.matItem == '4') {
+      this.changePassword();
     }
+  }
+
+  private passwordsMatchValidator(
+    group: FormGroup
+  ): { [key: string]: boolean } | null {
+    const newPassword = group.get('newPassword')?.value;
+    const newPasswordRepeat = group.get('newPasswordRepeat')?.value;
+
+    return newPassword === newPasswordRepeat
+      ? null
+      : { passwordsNotMatch: true };
   }
 }
