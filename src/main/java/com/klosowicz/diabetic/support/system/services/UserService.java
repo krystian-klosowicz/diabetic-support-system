@@ -10,11 +10,15 @@ import com.klosowicz.diabetic.support.system.repositories.*;
 import com.klosowicz.diabetic.support.system.repositories.criteria.UserCriteriaRepository;
 import java.util.Optional;
 
+import com.klosowicz.diabetic.support.system.requests.PasswordRequest;
 import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
 import com.klosowicz.diabetic.support.system.requests.responses.DoctorProfileResponse;
 import com.klosowicz.diabetic.support.system.requests.responses.MyProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +33,8 @@ public class UserService {
   private final AdminRepository adminRepository;
   private final UserCriteriaRepository userCriteriaRepository;
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final AuthenticationManager authenticationManager;
+  private final PasswordEncoder passwordEncoder;
 
   public Page<User> getUsers(UserPage userPage, UserSearchCriteria userSearchCriteria) {
     return userCriteriaRepository.findAllWithFilters(userPage, userSearchCriteria);
@@ -42,26 +48,25 @@ public class UserService {
     Long userId = jwtAuthenticationFilter.getUserIdFromToken(request);
     User user = userRepository.findById(userId).orElseThrow();
 
-    return createProfileRespnse(user);
+    return createProfileResponse(user);
   }
 
-  public MyProfileResponse updateAddress(HttpServletRequest request, SaveAddressRequest response){
-    Long userId = jwtAuthenticationFilter.getUserIdFromToken(request);
-    User user = userRepository.findById(userId).orElseThrow();
+  public MyProfileResponse updateAddress(HttpServletRequest request, SaveAddressRequest response) {
+    User user = getUserFromToken(request);
+
     Address address = user.getAddress();
     address.setCity(response.getCity());
     address.setStreet(response.getStreet());
     address.setPostalCode(response.getPostalCode());
     address.setHouseNumber(response.getHouseNumber());
     user.setAddress(address);
+
     userRepository.save(user);
-    return createProfileRespnse(user);
+    return createProfileResponse(user);
   }
 
-
   public MyProfileResponse updateUser(HttpServletRequest request, MyProfileResponse response) {
-    Long userId = jwtAuthenticationFilter.getUserIdFromToken(request);
-    User user = userRepository.findById(userId).orElseThrow();
+    User user = getUserFromToken(request);
     switch (user.getRole()) {
       case ROLE_PATIENT:
         Patient patient = patientRepository.findById(user.getId()).orElseThrow();
@@ -96,14 +101,14 @@ public class UserService {
         throw new InvalidRoleException("Provided role is not supported.");
     }
     userRepository.save(user);
-    return createProfileRespnse(user);
+    return createProfileResponse(user);
   }
 
   public void deleteUser(Long id) {
     userRepository.deleteById(id);
   }
 
-  private MyProfileResponse createProfileRespnse(User user) {
+  private MyProfileResponse createProfileResponse(User user) {
     DoctorProfileResponse doctorProfileResponse = null;
     DiabetesType diabetesType = null;
     String pwzNumber = null;
@@ -115,20 +120,32 @@ public class UserService {
     } else if (user instanceof Doctor) {
       Doctor doctor = (Doctor) user;
       pwzNumber = doctor.getPwzNumber();
-      ;
     }
 
     return MyProfileResponse.builder()
-            .role(user.getRole())
-            .pesel(user.getPesel())
-            .firstName(user.getFirstName())
-            .lastName(user.getLastName())
-            .email(user.getEmail())
-            .phoneNumber(user.getPhoneNumber())
-            .address(user.getAddress())
-            .assignedDoctor(doctorProfileResponse)
-            .diabetesType(diabetesType)
-            .pwzNumber(pwzNumber)
-            .build();
+        .role(user.getRole())
+        .pesel(user.getPesel())
+        .firstName(user.getFirstName())
+        .lastName(user.getLastName())
+        .email(user.getEmail())
+        .phoneNumber(user.getPhoneNumber())
+        .address(user.getAddress())
+        .assignedDoctor(doctorProfileResponse)
+        .diabetesType(diabetesType)
+        .pwzNumber(pwzNumber)
+        .build();
+  }
+
+  public void updatePassword(HttpServletRequest request, PasswordRequest passwordRequest) {
+    User user = getUserFromToken(request);
+    authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(user.getEmail(), passwordRequest.getOldPassword()));
+    user.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
+    userRepository.save(user);
+  }
+
+  private User getUserFromToken(HttpServletRequest request) {
+    Long userId = jwtAuthenticationFilter.getUserIdFromToken(request);
+    return userRepository.findById(userId).orElseThrow();
   }
 }

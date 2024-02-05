@@ -3,6 +3,7 @@ package com.klosowicz.diabetic.support.system.controllers;
 import com.klosowicz.diabetic.support.system.entities.User;
 import com.klosowicz.diabetic.support.system.entities.criteria.UserSearchCriteria;
 import com.klosowicz.diabetic.support.system.entities.page.UserPage;
+import com.klosowicz.diabetic.support.system.requests.PasswordRequest;
 import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
 import com.klosowicz.diabetic.support.system.requests.responses.MyProfileResponse;
 import com.klosowicz.diabetic.support.system.services.UserService;
@@ -55,6 +56,11 @@ public class UserController {
   @PutMapping("/update-address")
   public ResponseEntity<MyProfileResponse> updateAddress(HttpServletRequest request, @Valid @RequestBody SaveAddressRequest saveAddressRequest) {
     return ResponseEntity.ok(userService.updateAddress(request, saveAddressRequest));
+  }
+  @PutMapping("/change-password")
+  public ResponseEntity<?> updatePassword(HttpServletRequest request, @Valid @RequestBody PasswordRequest passwordRequest) {
+    userService.updatePassword(request, passwordRequest);
+    return ResponseEntity.ok().build();
   }
 
   @DeleteMapping("/{id}")
