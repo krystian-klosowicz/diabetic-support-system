@@ -11,15 +11,25 @@ import { MatSort } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { CommonModule } from '@angular/common';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbPaginationModule,
+  NgbAlertModule,
+} from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [ToolbarComponent, MatCardModule, CommonModule],
+  imports: [ToolbarComponent, MatCardModule, CommonModule, NgbCarouselModule],
 })
 export class HomeComponent implements OnInit {
+  public images = [700, 533, 807, 124].map(
+    (n) => `https://picsum.photos/id/${n}/900/500`
+  );
   users: User[] = [];
   dataSource: any;
   displayedColumns: string[] = [
@@ -38,8 +48,15 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private http: HttpClient,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    config: NgbCarouselConfig
+  ) {
+    // customize default values of carousels used by this component tree
+    config.interval = 10000;
+    config.wrap = false;
+    config.keyboard = false;
+    config.pauseOnHover = false;
+  }
 
   public ngOnInit() {
     // this.userService.getUsers().subscribe((response) => {

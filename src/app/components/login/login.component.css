@@ -71,6 +71,7 @@ a:hover {
 }
 
 .error-message {
+  font-family: "Poppins", sans-serif;
   padding-top: 10px;
   color: red;
 }
@@ -92,6 +93,10 @@ a:hover {
     min-width: 100vw;
     border-radius: 0;
     padding-top: 60px;
+  }
+
+  .error-message {
+    font-size: 4vw;
   }
 
   .main-div mat-toolbar {

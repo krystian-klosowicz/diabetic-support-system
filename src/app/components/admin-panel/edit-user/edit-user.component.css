@@ -1,35 +1,70 @@
-.main-div {
-  min-height: 100vh;
-  max-width: 100vw;
-  margin: 0 auto;
-  background-image: linear-gradient(to right, #005aa7, #fffde4);
-}
-.table-container {
-  overflow-x: auto; /* Dodaje poziomy pasek przewijania, gdy zawartość jest zbyt szeroka */
-}
-
 mat-card {
-  min-width: 96vw;
-  min-height: 86vh;
-  margin: 2%;
-  /* padding: 1%; */
+  height: 84vh;
+  padding: 2%;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.25rem;
+  overflow-y: auto;
+  display: flex;
 }
 
-.left-panel {
-  background-color: #fafafa;
-  width: 15%;
-  min-height: 86vh;
-  border-radius: 5px 5px 5px 5px;
-  /* border-right: 1px solid #252525; */
-  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.3);
+mat-label {
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+hr {
+  margin: 0;
+  width: 35%;
+  color: black;
+  margin-bottom: 10px; /* Dodatkowy margines poniżej danych */
+}
+
+.type {
+  font-weight: bold; /* Pogrubienie dla etykiety typu */
+  display: block; /* Nowa linia dla etykiety typu */
+  margin-bottom: 5px; /* Dodatkowy margines poniżej etykiety typu */
+}
+
+.data {
+  font-style: italic;
+  display: block; /* Nowa linia dla danych */
+}
+
+button {
+  margin-bottom: 5px;
+  background-color: #007bff; /* Kolor tła przycisku */
+  color: #fff; /* Kolor tekstu przycisku */
+  padding: 10px 20px; /* Wewnętrzny margines przycisku */
+  border: none; /* Usuń obramowanie przycisku */
+  border-radius: 4px; /* Zaokrąglenie narożników przycisku */
+  cursor: pointer; /* Zmień kursor na wskaźnik przy najechaniu */
 }
 
 button:hover {
-  background-color: #fafafa;
-  box-shadow: none; /* Wyłącza cień (jeśli jest stosowany) */
+  background-color: #0056b3; /* Kolor tła przycisku po najechaniu */
 }
 
-.right-panel {
-  margin-left: 15px;
-  background-color: #ffffff;
+.button-status {
+  height: 25px;
+  padding-top: 5px;
+}
+
+.button-status:hover {
+  cursor: default;
+}
+
+.active {
+  background-color: #28a745; /* Kolor tła przycisku dla aktywnego statusu */
+  color: #fff; /* Kolor tekstu przycisku dla aktywnego statusu */
+}
+
+.inactive {
+  background-color: #dc3545; /* Kolor tła przycisku dla nieaktywnego statusu */
+  color: #fff; /* Kolor tekstu przycisku dla nieaktywnego statusu */
+}
+
+@media only screen and (max-width: 430px) {
+  mat-card {
+    min-height: 100vh;
+  }
 }

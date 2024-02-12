@@ -6,7 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { EMPTY, catchError } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';

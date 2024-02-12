@@ -14,6 +14,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { LoginComponent } from '../login';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-admin-panel',
@@ -53,7 +57,9 @@ export class AdminPanelComponent implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    public dialog: MatDialog,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   public ngOnInit() {
@@ -69,10 +75,6 @@ export class AdminPanelComponent implements OnInit {
     if (confirm('Are you sure you want to delete this user?')) {
       this.deleteUser(userId);
     }
-  }
-
-  public editUser(userId: number) {
-    this.router.navigate(['/admin-panel/edit-user', userId]);
   }
 
   private loadUsers() {
@@ -93,6 +95,37 @@ export class AdminPanelComponent implements OnInit {
       error: (err) => {
         console.error('Error deleting user: ', err);
       },
+    });
+  }
+
+  public getRoleDisplayName(role: string): string {
+    switch (role) {
+      case 'ROLE_DOCTOR':
+        return 'DOCTOR';
+      case 'ROLE_ADMIN':
+        return 'ADMIN';
+      case 'ROLE_PATIENT':
+        return 'PATIENT';
+      default:
+        return role;
+    }
+  }
+
+  public openEditDialog(element: any): void {
+    let maxWidth = '40vw'; // Domyślna szerokość dla większych ekranów
+
+    // Sprawdzanie, czy ekran jest mniejszy niż określony punkt przerwania (np. mobile)
+    if (this.breakpointObserver.isMatched([Breakpoints.Handset])) {
+      maxWidth = '100vw'; // Dla małych ekranów ustawiaj 100vw
+    }
+
+    const dialogRef = this.dialog.open(EditUserComponent, {
+      minWidth: maxWidth,
+      data: { element: element },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // Tutaj możesz dodać logikę obsługi zamknięcia modala
     });
   }
 }

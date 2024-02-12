@@ -1,28 +1,32 @@
-<div class="main-div">
-  <app-toolbar></app-toolbar>
-  <mat-card style="display: flex; flex-direction: row">
-    <div class="left-panel">
-      <mat-nav-list>
-        <mat-list-item (click)="setMatItem('1')">
-          <button mat-button>
-            <mat-icon>perm_identity</mat-icon>Personal Data
-          </button>
-        </mat-list-item>
-        <mat-list-item (click)="setMatItem('2')">
-          <button mat-button><mat-icon>location_on</mat-icon>Address</button>
-        </mat-list-item>
-        <mat-list-item (click)="setMatItem('3')"
-          ><button mat-button>
-            <mat-icon>healing</mat-icon>Assigned doctor
-          </button></mat-list-item
-        >
-      </mat-nav-list>
-    </div>
-
-    <div class="right-panel" *ngIf="matItem === '1'">
-      To jest użytkownik o id: {{ userId }}
-    </div>
-    <div class="right-panel" *ngIf="matItem === '2'">Address</div>
-    <div class="right-panel" *ngIf="matItem === '3'">Assigned doctor</div>
-  </mat-card>
-</div>
+<mat-card>
+  <mat-label>Profile</mat-label>
+  <span class="type">Role</span
+  ><span class="data">{{ getRoleDisplayName(user.role) }}</span>
+  <hr />
+  <span class="type">First name</span
+  ><span class="data">{{ user.firstName }}</span>
+  <hr />
+  <span class="type">Last name</span
+  ><span class="data"> {{ user.lastName }}</span>
+  <hr />
+  <span class="type">Email</span><span class="data"> {{ user.email }}</span>
+  <hr />
+  <span class="type">Pesel</span><span class="data"> {{ user.pesel }}</span>
+  <hr />
+  <span class="type">Phone number</span
+  ><span class="data"> {{ user.phoneNumber }}</span>
+  <hr />
+  <span class="type">Account status</span
+  ><span class="data">
+    <button
+      class="button-status"
+      [ngClass]="{ active: user.active, inactive: !user.active }"
+    >
+      {{ getAccountStatus(user.active) }}
+    </button>
+  </span>
+  <hr />
+  <button (click)="changeStatus()">Change account status</button>
+  <button (click)="onCancel()">Reset password</button>
+  <button (click)="onCancel()">Back</button>
+</mat-card>

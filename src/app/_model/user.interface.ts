@@ -6,4 +6,5 @@ export interface User {
   email: string;
   pesel: string;
   phoneNumber: string;
+  isActive: boolean;
 }

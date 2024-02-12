@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { baseUrl } from '../../environments/environment.development';
 import { User } from '../_model/user.interface';
 import { AuthService } from '../auth.service';
-import { Observable, firstValueFrom, map } from 'rxjs';
+import { Observable, catchError, firstValueFrom, map, throwError } from 'rxjs';
 import { Address, MyProfile } from '../_model';
 import { Password } from '../_model/password.interface';
 
@@ -41,6 +41,16 @@ export class UserService {
     return firstValueFrom(
       this.http
         .put<MyProfile>(`${this.url}update-address/`, address, { headers })
+        .pipe(map((response) => response))
+    );
+  }
+
+  public changeAcoountStatus(userId: number) {
+    const headers = this.authService.getBearerToken();
+    console.log('Im a server. Im trying to change password.');
+    return firstValueFrom(
+      this.http
+        .put(`${this.url}status/${userId}`, {}, { headers })
         .pipe(map((response) => response))
     );
   }

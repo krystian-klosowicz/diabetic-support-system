@@ -24,7 +24,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import {
   AdminPanelComponent,
-  EditUserComponent,
   LoginComponent,
   MyProfileComponent,
   NotFoundComponent,
@@ -33,9 +32,10 @@ import {
   ToolbarComponent,
 } from './components';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { EditUserComponent } from './components/admin-panel/edit-user/edit-user.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EditUserComponent],
   imports: [
     JwtModule.forRoot({
       config: {
@@ -71,9 +71,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     HomeComponent,
     ToolbarComponent,
     AdminPanelComponent,
-    EditUserComponent,
     MyProfileComponent,
     MatSelectModule,
+
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
