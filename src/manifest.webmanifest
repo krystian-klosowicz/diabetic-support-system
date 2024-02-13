@@ -1,12 +1,24 @@
 {
-  "name": "diabetic-support-system",
-  "short_name": "diabetic-support-system",
+  "name": "DiabeticSupportSystem",
+  "short_name": "DiabeticApp",
   "theme_color": "#116bb9",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
   "icons": [
+    {
+      "src": "assets/icons/icon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
     {
       "src": "assets/icons/icon-72x72.png",
       "sizes": "72x72",
