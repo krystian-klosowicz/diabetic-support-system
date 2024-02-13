@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
@@ -53,6 +55,9 @@ public abstract class User implements UserDetails {
   @JoinColumn(name = "address_id")
   private Address address;
 
+  @NotNull
+  private boolean isActive;
+
   @Column(name = "created_at", nullable = false, updatable = false)
   @CreatedDate
   private LocalDateTime createdAt;
@@ -93,7 +98,7 @@ public abstract class User implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return isActive;
   }
 
   @PrePersist

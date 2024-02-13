@@ -21,7 +21,7 @@ public class DiabeticSupportSystemApplication {
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200","http://192.168.33.2:4200"));//do ng serva i http serv
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200","http://192.168.33.2:4200", "http://192.168.0.67:4200", "http://192.168.1.73:4200"));//do ng serva i http serv
         corsConfiguration.setAllowedHeaders(
                 Arrays.asList(
                         "Origin",

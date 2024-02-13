@@ -54,6 +54,7 @@ public class AuthenticationService {
                 .phoneNumber(request.getPhoneNumber())
                 .diabetesType(request.getDiabetesType())
                 .address(address)
+                    .isActive(true)
                 .build();
 
         userRepository.save(user);
@@ -70,6 +71,7 @@ public class AuthenticationService {
                 .phoneNumber(request.getPhoneNumber())
                 .pwzNumber(request.getPwzNumber())
                 .address(address)
+                    .isActive(true)
                 .build();
 
         userRepository.save(user);

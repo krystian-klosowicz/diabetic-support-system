@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.klosowicz.diabetic.support.system.services.PasswordGenerator.generatePassword;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -32,6 +34,7 @@ public class UserService {
   private final DoctorRepository doctorRepository;
   private final AdminRepository adminRepository;
   private final UserCriteriaRepository userCriteriaRepository;
+  private final EmailService emailService;
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
   private final AuthenticationManager authenticationManager;
   private final PasswordEncoder passwordEncoder;
@@ -115,7 +118,7 @@ public class UserService {
 
     if (user instanceof Patient) {
       Patient patient = (Patient) user;
-      doctorProfileResponse = DoctorProfileResponse.fromDoctor(patient.getAssignedDoctor());
+      if (patient.getAssignedDoctor()!= null) doctorProfileResponse = DoctorProfileResponse.fromDoctor(patient.getAssignedDoctor());
       diabetesType = patient.getDiabetesType();
     } else if (user instanceof Doctor) {
       Doctor doctor = (Doctor) user;
@@ -142,6 +145,21 @@ public class UserService {
             new UsernamePasswordAuthenticationToken(user.getEmail(), passwordRequest.getOldPassword()));
     user.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
     userRepository.save(user);
+  }
+
+  public void changeAccountStatus(Long userId) {
+    User user = userRepository.findById(userId).orElseThrow();
+    user.setActive(!user.isEnabled());
+    userRepository.save(user);
+  }
+
+  public void sendPasswordReset(Long userId) {
+    User user = userRepository.findById(userId).orElseThrow();
+    int passwordLength = 8;
+    String generatedPassword = generatePassword(passwordLength);
+    user.setPassword(passwordEncoder.encode(generatedPassword));
+    userRepository.save(user);
+    emailService.sendEmail(user.getEmail(), "Your password has been reset", "Hello, your password has been reset.\nYour new password: " + generatedPassword);
   }
 
   private User getUserFromToken(HttpServletRequest request) {

@@ -73,6 +73,7 @@ public class UserDataLoader implements CommandLineRunner {
               .phoneNumber("000000000")
               .adminSince(LocalDate.now())
               .address(address1)
+                  .isActive(true)
               .build();
       userRepository.save(adminUser);
 
@@ -87,6 +88,7 @@ public class UserDataLoader implements CommandLineRunner {
               .phoneNumber("000000000")
               .pwzNumber("1234567")
               .address(address2)
+                  .isActive(true)
               .build();
 
       userRepository.save(doctorUser);
@@ -103,6 +105,7 @@ public class UserDataLoader implements CommandLineRunner {
               .diabetesType(DiabetesType.TYPE_1)
               .assignedDoctor((Doctor) doctorUser)
               .address(address3)
+                  .isActive(true)
               .build();
 
       userRepository.save(patientUser);
@@ -118,6 +121,7 @@ public class UserDataLoader implements CommandLineRunner {
               .phoneNumber("000000000")
               .adminSince(LocalDate.now())
               .address(address4)
+                  .isActive(true)
               .build();
       userRepository.save(fastUser);
     }

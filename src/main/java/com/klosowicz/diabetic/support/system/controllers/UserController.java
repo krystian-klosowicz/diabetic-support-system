@@ -63,6 +63,18 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
+  @PutMapping("/change-account-status/{id}")
+  public ResponseEntity<?> changeAccountStatus(@PathVariable Long id) {
+    userService.changeAccountStatus(id);
+    return ResponseEntity.ok().build();
+  }
+
+  @PutMapping("/reset-password/{id}")
+  public ResponseEntity<?> sendPasswordReset(@PathVariable Long id) {
+    userService.sendPasswordReset(id);
+    return ResponseEntity.ok().build();
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteUser(@PathVariable Long id) {
     return userService
