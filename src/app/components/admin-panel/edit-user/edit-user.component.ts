@@ -47,10 +47,11 @@ export class EditUserComponent {
 
   public changeStatus() {
     this.userService
-      .changeAcoountStatus(3)
+      .changeAcoountStatus(this.user.id)
       .then((result) => {
         if (!result) {
-          alert('Password has been changed.');
+          alert('Account status has been changed.');
+          this.user.active = !this.user.active;
         }
       })
       .catch((error) => {
@@ -64,6 +65,33 @@ export class EditUserComponent {
 
         return EMPTY;
       });
+  }
+
+  private resetPassword() {
+    this.userService
+      .resetPassword(this.user.id)
+      .then((result) => {
+        if (!result) {
+          alert('Passowrd has been reset.');
+        }
+      })
+      .catch((error) => {
+        if (error.status === 403) {
+          console.log('POST 403 Forbidden');
+        } else if (error.status === 401) {
+          console.log('POST 401 Unauthorized');
+        } else {
+          alert('Wystąpił błąd: ' + error.message);
+        }
+
+        return EMPTY;
+      });
+  }
+
+  public resetPasswordWithConfirmation() {
+    if (confirm('Are you sure you want to reset password?')) {
+      this.resetPassword();
+    }
   }
 
   onSave(): void {

@@ -47,10 +47,20 @@ export class UserService {
 
   public changeAcoountStatus(userId: number) {
     const headers = this.authService.getBearerToken();
-    console.log('Im a server. Im trying to change password.');
+    console.log('Im a server. Im trying to change account status.');
     return firstValueFrom(
       this.http
-        .put(`${this.url}status/${userId}`, {}, { headers })
+        .put(`${this.url}change-account-status/${userId}`, {}, { headers })
+        .pipe(map((response) => response))
+    );
+  }
+
+  public resetPassword(userId: number) {
+    const headers = this.authService.getBearerToken();
+    console.log('Im a server. Im trying to reset user password.');
+    return firstValueFrom(
+      this.http
+        .put(`${this.url}reset-password/${userId}`, {}, { headers })
         .pipe(map((response) => response))
     );
   }

@@ -63,8 +63,40 @@ button:hover {
   color: #fff; /* Kolor tekstu przycisku dla nieaktywnego statusu */
 }
 
+.green-button {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.green-button:hover {
+  background-color: #1a7a30;
+}
+
+.blue-button {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.blue-button:hover {
+  background-color: #0061c9;
+}
+
+.gray-button {
+  background-color: #6c757d;
+  color: #ffffff;
+}
+
+.gray-button:hover {
+  background-color: #4d5257;
+}
+
 @media only screen and (max-width: 430px) {
   mat-card {
     min-height: 100vh;
+  }
+
+  mat-label {
+    margin: 0 auto;
+    margin-bottom: 50px;
   }
 }

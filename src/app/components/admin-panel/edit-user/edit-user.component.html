@@ -26,7 +26,11 @@
     </button>
   </span>
   <hr />
-  <button (click)="changeStatus()">Change account status</button>
-  <button (click)="onCancel()">Reset password</button>
-  <button (click)="onCancel()">Back</button>
+  <button (click)="changeStatus()" class="green-button">
+    Change account status
+  </button>
+  <button (click)="resetPasswordWithConfirmation()" class="blue-button">
+    Reset password
+  </button>
+  <button (click)="onCancel()" class="gray-button">Back</button>
 </mat-card>
