@@ -8,7 +8,7 @@
       <a mat-button [routerLink]="['/home']">Home</a>
       <a mat-button *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
       <a mat-button *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
-      <a mat-button>Messages</a>
+      <a mat-button [routerLink]="['/messages']">Messages</a>
       <a
         mat-button
         *ngIf="userRole === 'ROLE_ADMIN'"
@@ -28,7 +28,7 @@
         <a mat-menu-item [routerLink]="['/home']">Home</a>
         <a mat-menu-item *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
         <a mat-menu-item *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
-        <a mat-menu-item>Messages</a>
+        <a mat-menu-item [routerLink]="['/messages']">Messages</a>
         <a
           mat-menu-item
           *ngIf="userRole === 'ROLE_ADMIN'"

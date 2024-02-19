@@ -54,6 +54,17 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  public getUserName(): string {
+    const token = this.getToken();
+
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken['username'];
+    } else {
+      return '';
+    }
+  }
+
   public getBearerToken(): HttpHeaders {
     const token = this.getToken() || 'defaultRole';
     const finalToken = token.startsWith('Bearer ') ? token : `Bearer ${token}`;

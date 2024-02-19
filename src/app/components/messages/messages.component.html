@@ -1,0 +1,95 @@
+<div class="main-div">
+  <app-toolbar></app-toolbar>
+  <mat-card class="conversation-card">
+    <div class="conversation-content">
+      <div class="conversation-content-header">
+        <div
+          class="circle"
+          style="background-color: #bebebe; width: 40px; height: 40px"
+        >
+          {{ getEmailInitial2(loaderChatUserName) }}
+        </div>
+        {{ loaderChatUserName }}
+      </div>
+      <div class="conversation-messages" id="conversation-messages">
+        <ng-container *ngIf="messages && messages.length > 0">
+          <ng-container *ngFor="let message of messages">
+            <div
+              class="message"
+              [ngClass]="{
+                'sender-a': message.senderEmail === userName,
+              }"
+            >
+              {{ message.senderEmail }}: {{ message.replyMessage }}
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="conversation-input">
+        <div class="conversation-input">
+          <mat-form-field
+            *ngIf="loadedChat"
+            appearance="outline"
+            style="width: 100%"
+          >
+            <input
+              matInput
+              placeholder="Type your message.."
+              [(ngModel)]="newMessage"
+              (keyup.enter)="sendMessage(loadedChat.chatId)"
+            />
+            @if (newMessage) {
+            <button
+              matSuffix
+              mat-icon-button
+              aria-label="Send"
+              (click)="sendMessage(loadedChat.chatId)"
+              style="background-color: transparent; border: none"
+            >
+              <mat-icon>send</mat-icon>
+            </button>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="conversation-list">
+      <div class="conversation-list-header">Chat list</div>
+      <div class="conversation-list-content">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Write to</mat-label>
+          <input
+            matInput
+            [(ngModel)]="newChat"
+            placeholder="Enter the email"
+            (keyup.enter)="createChat()"
+          />
+          @if (newChat) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Send"
+            (click)="createChat()"
+            style="background-color: transparent; border: none"
+          >
+            <mat-icon>send</mat-icon>
+          </button>
+          }
+        </mat-form-field>
+        <mat-list role="list">
+          <ng-container *ngIf="chats && chats.length > 0">
+            <ng-container *ngFor="let chat of chats">
+              <mat-list-item role="listitem" (click)="openChat(chat)">
+                <div class="circle">
+                  {{ getEmailInitial(chat) }}
+                </div>
+                {{ getUserName(chat) }}
+              </mat-list-item>
+              <hr />
+            </ng-container>
+          </ng-container>
+        </mat-list>
+      </div>
+    </div>
+  </mat-card>
+</div>

@@ -16,7 +16,6 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import { LoginComponent } from '../login';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
