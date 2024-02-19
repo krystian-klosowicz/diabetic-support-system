@@ -108,4 +108,29 @@ mat-list-item:hover {
     min-height: 94vh;
     margin: 0;
   }
+
+  .conversation-card {
+    min-width: 96vw;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .conversation-list-header {
+    border-radius: 0;
+  }
+
+  .conversation-list {
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .conversation-content-header {
+    padding-left: 20px;
+    width: calc(100% - 20px);
+    border-radius: 0;
+  }
+
+  .conversation-content {
+    border-radius: 0;
+  }
 }

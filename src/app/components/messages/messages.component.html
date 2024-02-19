@@ -1,7 +1,7 @@
 <div class="main-div">
   <app-toolbar></app-toolbar>
   <mat-card class="conversation-card">
-    <div class="conversation-content">
+    <div class="conversation-content" *ngIf="!isMobile || isSectorVisible">
       <div class="conversation-content-header">
         <div
           class="circle"
@@ -10,6 +10,20 @@
           {{ getEmailInitial2(loaderChatUserName) }}
         </div>
         {{ loaderChatUserName }}
+        <button
+          *ngIf="isMobile"
+          matSuffix
+          mat-icon-button
+          aria-label="Send"
+          (click)="returnOnMobile()"
+          style="
+            background-color: transparent;
+            border: none;
+            padding-left: 55px;
+          "
+        >
+          <mat-icon>keyboard_return</mat-icon>
+        </button>
       </div>
       <div class="conversation-messages" id="conversation-messages">
         <ng-container *ngIf="messages && messages.length > 0">
@@ -53,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div class="conversation-list">
+    <div class="conversation-list" *ngIf="!isMobile || !isSectorVisible">
       <div class="conversation-list-header">Chat list</div>
       <div class="conversation-list-content">
         <mat-form-field appearance="outline" style="width: 100%">

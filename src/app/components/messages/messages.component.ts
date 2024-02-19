@@ -13,6 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { ChatRequest } from '../../_model/chat-request';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-messages',
@@ -32,6 +33,8 @@ import { ChatRequest } from '../../_model/chat-request';
   ],
 })
 export class MessagesComponent implements OnInit {
+  isMobile: boolean;
+  isSectorVisible: boolean = false;
   userName: string = '';
   chats: ChatResponse[] = [];
   loadedChat: ChatResponse;
@@ -43,9 +46,11 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private chatService: ChatService,
-    private authService: AuthService
+    private authService: AuthService,
+    private breakpointObserver: BreakpointObserver
   ) {}
   public ngOnInit() {
+    this.checkDevice();
     this.userName = this.authService.getUserName();
     this.loadChats();
   }
@@ -69,6 +74,7 @@ export class MessagesComponent implements OnInit {
   }
 
   public openChat(chat: ChatResponse) {
+    if (this.isMobile) this.isSectorVisible = true;
     this.loadMessages(chat.chatId);
     this.loadedChat = chat;
     this.loaderChatUserName = this.getUserName(chat);
@@ -185,5 +191,18 @@ export class MessagesComponent implements OnInit {
           return EMPTY;
         });
     }
+  }
+
+  public checkDevice(): void {
+    if (this.breakpointObserver.isMatched([Breakpoints.Handset])) {
+      this.isMobile = true;
+      this.isSectorVisible = false;
+    } else {
+      this.isMobile = false;
+    }
+  }
+
+  public returnOnMobile() {
+    this.isSectorVisible = false;
   }
 }
