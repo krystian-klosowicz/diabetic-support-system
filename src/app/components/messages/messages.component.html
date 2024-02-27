@@ -9,21 +9,21 @@
         >
           {{ getEmailInitial2(loaderChatUserName) }}
         </div>
-        {{ loaderChatUserName }}
-        <button
-          *ngIf="isMobile"
-          matSuffix
-          mat-icon-button
-          aria-label="Send"
-          (click)="returnOnMobile()"
-          style="
-            background-color: transparent;
-            border: none;
-            padding-left: 55px;
-          "
-        >
-          <mat-icon>keyboard_return</mat-icon>
-        </button>
+        <span class="chat-user-name">
+          {{ loaderChatUserName }}
+        </span>
+        <div class="button-container">
+          <button
+            *ngIf="isMobile"
+            matSuffix
+            mat-icon-button
+            aria-label="Send"
+            (click)="returnOnMobile()"
+            style="background-color: transparent; border: none"
+          >
+            <mat-icon>keyboard_return</mat-icon>
+          </button>
+        </div>
       </div>
       <div class="conversation-messages" id="conversation-messages">
         <ng-container *ngIf="messages && messages.length > 0">
@@ -40,31 +40,29 @@
         </ng-container>
       </div>
       <div class="conversation-input">
-        <div class="conversation-input">
-          <mat-form-field
-            *ngIf="loadedChat"
-            appearance="outline"
-            style="width: 100%"
+        <mat-form-field
+          *ngIf="loadedChat"
+          appearance="outline"
+          style="width: 100%"
+        >
+          <input
+            matInput
+            placeholder="Type your message.."
+            [(ngModel)]="newMessage"
+            (keyup.enter)="sendMessage(loadedChat.chatId)"
+          />
+          @if (newMessage) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Send"
+            (click)="sendMessage(loadedChat.chatId)"
+            style="background-color: transparent; border: none"
           >
-            <input
-              matInput
-              placeholder="Type your message.."
-              [(ngModel)]="newMessage"
-              (keyup.enter)="sendMessage(loadedChat.chatId)"
-            />
-            @if (newMessage) {
-            <button
-              matSuffix
-              mat-icon-button
-              aria-label="Send"
-              (click)="sendMessage(loadedChat.chatId)"
-              style="background-color: transparent; border: none"
-            >
-              <mat-icon>send</mat-icon>
-            </button>
-            }
-          </mat-form-field>
-        </div>
+            <mat-icon>send</mat-icon>
+          </button>
+          }
+        </mat-form-field>
       </div>
     </div>
     <div class="conversation-list" *ngIf="!isMobile || !isSectorVisible">

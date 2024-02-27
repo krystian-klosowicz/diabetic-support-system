@@ -25,7 +25,7 @@
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <a mat-menu-item [routerLink]="['/home']">Home</a>
+        <a mat-menu-item [routerLink]="['/home']" style="width: 150px">Home</a>
         <a mat-menu-item *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
         <a mat-menu-item *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
         <a mat-menu-item [routerLink]="['/messages']">Messages</a>

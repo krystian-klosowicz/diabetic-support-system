@@ -104,9 +104,14 @@ mat-list-item:hover {
 }
 
 @media only screen and (max-width: 615px) {
+  .main-div {
+    max-width: 100vw;
+    overflow: hidden;
+  }
   mat-card {
     min-height: 94vh;
     margin: 0;
+    max-width: 100vw;
   }
 
   .conversation-card {
@@ -125,12 +130,30 @@ mat-list-item:hover {
   }
 
   .conversation-content-header {
+    display: flex;
+    align-items: center;
     padding-left: 20px;
     width: calc(100% - 20px);
     border-radius: 0;
+    overflow: auto;
+  }
+  .button-container {
+    flex: 0 0 auto; /* element nie będzie się rozszerzał */
+    margin-right: 40px; /* dostosuj odstęp do własnych preferencji */
   }
 
   .conversation-content {
+    padding-bottom: 25px;
     border-radius: 0;
+  }
+
+  .chat-user-name {
+    padding-top: 5px;
+    height: 30px;
+    min-width: 65vw;
+    max-width: 65vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
