@@ -70,7 +70,7 @@ public class ChatService {
                 .collect(Collectors.toList());
     }
 
-    public List<ChatResponse> getChatByFirstUserNameOrSecondUserName(String username) {
+    public List<Chat> getChatByFirstUserNameOrSecondUserName(String username) {
         List<Chat> chats = chatRepository.findByFirstUserName(username);
         List<Chat> chats1 = chatRepository.findBySecondUserName(username);
 
@@ -78,9 +78,19 @@ public class ChatService {
         if(chats1.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Chat not found.");
         }
-           return chats1.stream()
-                .map(chat -> mapToChatResponse(chat))
-                .collect(Collectors.toList());
+//           return chats1.stream()
+//                .map(chat -> mapToChatResponse(chat))
+//                .collect(Collectors.toList());
+        return chats1;
+    }
+
+    public ChatResponse getChatById(Long id) {
+        Chat chat = chatRepository.findById(id).orElseThrow();
+        return ChatResponse.builder().chatId(chat.getChatId())
+                .firstUserName(chat.getFirstUserName())
+                .secondUserName(chat.getSecondUserName())
+                .messageList(messageRepository.findAllByChatId(chat.getChatId()))
+                .build();
     }
 
     private boolean validateUsersAndChatExists(String firstUser, String secondUser) {

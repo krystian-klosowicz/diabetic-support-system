@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -13,15 +14,15 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class SugarLevelMeasurement {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private int sugar_level;
+  private int sugar_level;
 
-    private LocalDate measurement_date;
+  private LocalDateTime measurement_date;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 }

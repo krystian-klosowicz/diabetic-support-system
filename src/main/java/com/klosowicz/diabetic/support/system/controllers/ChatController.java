@@ -36,8 +36,13 @@ public class ChatController {
   }
 
   @GetMapping("/first-or-second-username/{username}")
-  public ResponseEntity<List<ChatResponse>> getChatByFirstAndSecondUserName(@PathVariable String username) {
-    return new ResponseEntity<List<ChatResponse>>(chatService.getChatByFirstUserNameOrSecondUserName(username), HttpStatus.OK);
+  public ResponseEntity<List<Chat>> getChatByFirstOrSecondUserName(@PathVariable String username) {
+    return new ResponseEntity<List<Chat>>(chatService.getChatByFirstUserNameOrSecondUserName(username), HttpStatus.OK);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<ChatResponse> getChatById(@PathVariable Long id) {
+    return new ResponseEntity<ChatResponse>(chatService.getChatById(id), HttpStatus.OK);
   }
 
   @PostMapping("/add")
