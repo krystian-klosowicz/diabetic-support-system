@@ -33,9 +33,12 @@ import {
 } from './components';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { EditUserComponent } from './components/admin-panel/edit-user/edit-user.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MeasurmentsComponent } from './components/measurments/measurments.component';
+import { SugarDialogComponent } from './components/measurments/sugar-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, EditUserComponent],
+  declarations: [AppComponent, EditUserComponent, MeasurmentsComponent],
   imports: [
     JwtModule.forRoot({
       config: {
@@ -73,6 +76,7 @@ import { EditUserComponent } from './components/admin-panel/edit-user/edit-user.
     AdminPanelComponent,
     MyProfileComponent,
     MatSelectModule,
+    SugarDialogComponent,
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
@@ -80,6 +84,7 @@ import { EditUserComponent } from './components/admin-panel/edit-user/edit-user.
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

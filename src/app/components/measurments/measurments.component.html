@@ -1,0 +1,144 @@
+<div class="main-div">
+  <mat-toolbar>
+    <span>
+      <button
+        mat-icon-button
+        *ngIf="sidenav.mode === 'over'"
+        (click)="sidenav.toggle()"
+      >
+        <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+        <mat-icon *ngIf="sidenav.opened">close</mat-icon></button
+      ><mat-icon *ngIf="sidenav.mode != 'over'">vaccines</mat-icon>
+      DiabeticSupportSystem</span
+    >
+    <div class="spacer"></div>
+
+    <!-- Menu na większych ekranach -->
+    <div fxHide fxShow.gt-xs>
+      <a mat-button [routerLink]="['/home']">Home</a>
+      <a mat-button *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
+      <a
+        mat-button
+        *ngIf="userRole === 'ROLE_PATIENT'"
+        [routerLink]="['/mesurments']"
+        >Measurments</a
+      >
+      <a mat-button [routerLink]="['/messages']">Messages</a>
+      <a
+        mat-button
+        *ngIf="userRole === 'ROLE_ADMIN'"
+        [routerLink]="['/admin-panel']"
+        >Admin Panel</a
+      >
+      <a mat-button [routerLink]="['/my-profile']">My profile</a>
+      <a mat-raised-button color="accent" [routerLink]="['/logout']">Logout</a>
+    </div>
+
+    <!-- Hamburger na małych ekranach -->
+    <div fxHide fxShow.xs>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item [routerLink]="['/home']" style="width: 150px">Home</a>
+        <a mat-menu-item *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
+        <a mat-menu-item *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
+        <a mat-menu-item [routerLink]="['/messages']">Messages</a>
+        <a
+          mat-menu-item
+          *ngIf="userRole === 'ROLE_ADMIN'"
+          [routerLink]="['/admin-panel']"
+          >Admin Panel</a
+        >
+        <a mat-menu-item [routerLink]="['/my-profile']">My profile</a>
+        <a mat-menu-item [routerLink]="['/logout']">Logout</a>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+  <mat-sidenav-container style="background-color: transparent">
+    <mat-sidenav #sidenav="matSidenav">
+      <span style="font-size: 18px; font-weight: 500">Measurements</span>
+      <mat-divider></mat-divider>
+      <button mat-button class="menu-button" (click)="setMatItem('1')">
+        <mat-icon>favorite</mat-icon>
+        <span>Sugar level</span>
+      </button>
+
+      <button mat-button class="menu-button" (click)="setMatItem('2')">
+        <mat-icon> dataset</mat-icon>
+        <span>Insulin doses</span>
+      </button>
+
+      <button mat-button class="menu-button" (click)="setMatItem('3')">
+        <mat-icon>medications</mat-icon>
+        <span>Medications</span>
+      </button>
+
+      <button mat-button class="menu-button" (click)="setMatItem('4')">
+        <mat-icon>monitor_heart</mat-icon>
+        <span>Blood pressure</span>
+      </button>
+      <mat-divider></mat-divider>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content">
+        <div *ngIf="matItem === '1'">
+          <table matSort mat-table [dataSource]="sugarMeasurements">
+            <ng-container matColumnDef="sugar_level">
+              <th mat-header-cell *matHeaderCellDef>Sugar level</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.sugar_level }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Date</th>
+              <td mat-cell *matCellDef="let element">
+                {{ formatDateTime(element.measurement_date, "date") }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="hour">
+              <th mat-header-cell *matHeaderCellDef>Hour</th>
+              <td mat-cell *matCellDef="let element">
+                {{ formatDateTime(element.measurement_date, "time") }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Action</th>
+              <td mat-cell *matCellDef="let element" class="action-buttons">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="editMeasurement(element)"
+                >
+                  Edit
+                </button>
+                <button
+                  mat-raised-button
+                  color="warn"
+                  (click)="deleteMeasurement(element.id)"
+                >
+                  Delete
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns; let odd = odd"
+              [ngClass]="{ gray: odd }"
+            ></tr>
+          </table>
+        </div>
+        <div *ngIf="matItem === '2'">bb</div>
+
+        <div *ngIf="matItem === '3'">cc</div>
+
+        <div *ngIf="matItem === '4'">dd</div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

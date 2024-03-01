@@ -4,22 +4,24 @@
     <div class="left-panel">
       <mat-nav-list>
         <mat-list-item (click)="setMatItem('1')">
-          <button mat-button>
+          <button mat-button matTooltip="Personal information">
             <mat-icon>perm_identity</mat-icon>Personal information
           </button>
         </mat-list-item>
         <mat-list-item (click)="setMatItem('2')">
-          <button mat-button><mat-icon>location_on</mat-icon>Address</button>
+          <button mat-button matTooltip="Address">
+            <mat-icon>location_on</mat-icon>Address
+          </button>
         </mat-list-item>
         <mat-list-item
           (click)="setMatItem('3')"
           *ngIf="user?.role === Role.ROLE_PATIENT"
-          ><button mat-button>
+          ><button mat-button matTooltip="My Doctor">
             <mat-icon>healing</mat-icon>My doctor
           </button></mat-list-item
         >
         <mat-list-item (click)="setMatItem('4')"
-          ><button mat-button>
+          ><button mat-button matTooltip="Change password">
             <mat-icon>password</mat-icon>Change password
           </button></mat-list-item
         >

@@ -1,30 +1,34 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../auth.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { baseUrl } from '../../../environments/environment.development';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../../_model/user.interface';
 import { UserService } from '../../_service/user.service';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { CommonModule } from '@angular/common';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlert, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   NgbPaginationModule,
   NgbAlertModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [ToolbarComponent, MatCardModule, CommonModule, NgbCarouselModule],
+  imports: [
+    ToolbarComponent,
+    MatCardModule,
+    CommonModule,
+    NgbCarouselModule,
+    NgbPaginationModule,
+    NgbAlertModule,
+    NgbAlert,
+  ],
 })
 export class HomeComponent implements OnInit {
   public images = [700, 533, 807, 124].map(

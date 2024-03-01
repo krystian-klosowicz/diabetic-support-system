@@ -14,6 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { MeasurmentsComponent } from './components/measurments/measurments.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -65,6 +66,15 @@ const routes: Routes = [
   {
     path: 'messages',
     component: MessagesComponent,
+    title: 'Messages Page',
+    canActivate: [
+      (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+        inject(AuthGuard).canActivate(next, state),
+    ],
+  },
+  {
+    path: 'mesurments',
+    component: MeasurmentsComponent,
     title: 'Messages Page',
     canActivate: [
       (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>

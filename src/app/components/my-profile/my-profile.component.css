@@ -10,7 +10,7 @@
 
 mat-card {
   min-width: 96vw;
-  min-height: 84vh;
+  min-height: 86vh;
   margin: 2%;
   /* padding: 1%; */
 }
@@ -25,12 +25,23 @@ mat-card {
 }
 
 .right-panel {
+  padding-top: 10px;
   width: 85%;
   margin-left: 15px;
   background-color: #ffffff;
 }
 
 .left-panel button:hover {
+  background-color: #fafafa;
+  box-shadow: none; /* Wyłącza cień (jeśli jest stosowany) */
+}
+
+.left-panel button:active {
+  background-color: #ffffff;
+  box-shadow: none; /* Wyłącza cień (jeśli jest stosowany) */
+}
+
+mat-icon {
   background-color: #fafafa;
   box-shadow: none; /* Wyłącza cień (jeśli jest stosowany) */
 }

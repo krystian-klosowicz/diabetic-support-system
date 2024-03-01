@@ -7,7 +7,12 @@
     <div fxHide fxShow.gt-xs>
       <a mat-button [routerLink]="['/home']">Home</a>
       <a mat-button *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
-      <a mat-button *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
+      <a
+        mat-button
+        *ngIf="userRole === 'ROLE_PATIENT'"
+        [routerLink]="['/mesurments']"
+        >Measurments</a
+      >
       <a mat-button [routerLink]="['/messages']">Messages</a>
       <a
         mat-button
@@ -27,7 +32,12 @@
       <mat-menu #menu="matMenu">
         <a mat-menu-item [routerLink]="['/home']" style="width: 150px">Home</a>
         <a mat-menu-item *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
-        <a mat-menu-item *ngIf="userRole === 'ROLE_PATIENT'">Measurments</a>
+        <a
+          mat-menu-item
+          *ngIf="userRole === 'ROLE_PATIENT'"
+          [routerLink]="['/mesurments']"
+          >Measurments</a
+        >
         <a mat-menu-item [routerLink]="['/messages']">Messages</a>
         <a
           mat-menu-item
