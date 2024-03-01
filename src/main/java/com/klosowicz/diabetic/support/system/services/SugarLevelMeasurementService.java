@@ -7,6 +7,7 @@ import com.klosowicz.diabetic.support.system.repositories.SugarLevelMeasurementR
 import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 import com.klosowicz.diabetic.support.system.requests.SugarLevelAddRequest;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,10 @@ public class SugarLevelMeasurementService {
     User user = getUserFromToken(request);
     List<SugarLevelMeasurement> measurements = sugarRepository.findAllByUser(user);
 
-    return measurements.stream().map(this::mapToSugarResponse).collect(Collectors.toList());
+    return measurements.stream()
+            .sorted(Comparator.comparing(SugarLevelMeasurement::getId))
+            .map(this::mapToSugarResponse)
+            .collect(Collectors.toList());
   }
 
   public SugarLevelResponse updateMeasurement(
