@@ -1,9 +1,8 @@
 package com.klosowicz.diabetic.support.system.entities;
 
-import lombok.*;
-
+import java.time.LocalDateTime;
 import javax.persistence.*;
-import java.time.LocalDate;
+import lombok.*;
 
 @Entity
 @Getter
@@ -23,7 +22,7 @@ public class BloodPressureMeasurement {
 
     private int pulse;
 
-    private LocalDate measurement_date;
+    private LocalDateTime measurement_date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
