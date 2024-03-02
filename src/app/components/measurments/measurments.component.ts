@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthService } from '../../auth.service';
@@ -8,16 +8,27 @@ import { EMPTY } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { SugarDialogComponent } from './sugar-dialog.component';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { FormControl } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { ChartDialogComponent } from './chart-dialog/chart-dialog.component';
 @Component({
   selector: 'app-measurments',
   templateUrl: './measurments.component.html',
   styleUrl: './measurments.component.css',
-  providers: [DatePipe],
+  providers: [DatePipe, provideNativeDateAdapter()],
 })
 export class MeasurmentsComponent implements AfterViewInit {
+  dataSourceSugar: any;
+  dateControl = new FormControl();
+  selectedDate: Date;
+
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private observer: BreakpointObserver,
@@ -39,8 +50,9 @@ export class MeasurmentsComponent implements AfterViewInit {
   }
 
   public ngOnInit() {
-    this.userRole = this.authService.getRole();
-    this.loadSugarLevels();
+    this.userRole = this.authService.getRole(); // Wczytanie roli użytkownika
+    this.loadSugarLevels(); // Załadowanie tabeli z pomiarami
+    this.selectedDate = new Date(); // Dzisiejsza datat
   }
 
   ngAfterViewInit() {
@@ -73,8 +85,15 @@ export class MeasurmentsComponent implements AfterViewInit {
       .getSugarLevels()
       .then((result: SugarLevel[]) => {
         if (result) {
-          console.log(result);
           this.sugarMeasurements = result;
+          this.dataSourceSugar = new MatTableDataSource<SugarLevel>(
+            this.sugarMeasurements
+          );
+          this.dataSourceSugar.paginator = this.paginator;
+          this.dataSourceSugar.sort = this.sort;
+          this.dataSourceSugar.filter = this.selectedDate
+            ? this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')
+            : '';
         }
       })
       .catch((error) => {
@@ -90,18 +109,53 @@ export class MeasurmentsComponent implements AfterViewInit {
       });
   }
 
-  public deleteMeasurement(id: number): void {
-    if (confirm('Are you sure you want to delete this user?'))
+  public deleteSugarMeasurement(id: number): void {
+    if (confirm('Are you sure you want to delete this measurement?'))
       this.sugarService.deleteMeasurement(id).subscribe({
         next: () => this.loadSugarLevels(),
         error: (err) => console.error('Error deleting measurement: ', err),
       });
   }
 
-  public editMeasurement(sugar: SugarLevel): void {
+  public addSugarMeasurement(): void {
     const dialogRef = this.dialog.open(SugarDialogComponent, {
       width: '400px',
-      data: { value: sugar.sugar_level },
+      data: { value: 0, action: 'Add' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined) {
+        const newSugarLevel: SugarLevel = {
+          id: 0,
+          sugar_level: result,
+          measurement_date: new Date(),
+        };
+        this.sugarService
+          .addMeasurement(newSugarLevel)
+          .then((result) => {
+            if (result) {
+              this.loadSugarLevels();
+            }
+          })
+          .catch((error) => {
+            if (error.status === 403) {
+              console.log('POST 403 Forbidden');
+            } else if (error.status === 401) {
+              console.log('POST 401 Unauthorized');
+            } else {
+              alert('Wystąpił błąd: ' + error.message);
+            }
+
+            return EMPTY;
+          });
+      }
+    });
+  }
+
+  public editSugarMeasurement(sugar: SugarLevel): void {
+    const dialogRef = this.dialog.open(SugarDialogComponent, {
+      width: '400px',
+      data: { value: sugar.sugar_level, action: 'Edit' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -128,4 +182,32 @@ export class MeasurmentsComponent implements AfterViewInit {
       }
     });
   }
+  dateChanged(event: any): void {
+    this.dataSourceSugar.filter = this.selectedDate
+      ? this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')
+      : '';
+  }
+
+  public openChartDialog(): void {
+    //Filtrowanie daty
+    const sugarMeasurementsForDate = this.sugarMeasurements.filter(
+      (measurement) =>
+        new Date(measurement.measurement_date).toDateString() ===
+        this.selectedDate.toDateString()
+    );
+
+    const dialogRef = this.dialog.open(ChartDialogComponent, {
+      width: '80%',
+      data: {
+        sugarMeasurements: sugarMeasurementsForDate,
+        selectedDate: this.selectedDate,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The chart dialog was closed');
+    });
+  }
+
+  //Blood pressure
 }

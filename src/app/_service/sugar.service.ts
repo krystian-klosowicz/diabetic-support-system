@@ -15,8 +15,16 @@ export class SugarService {
   url: string = `${baseUrl}v1/sugars/`;
   userToken: string = '';
 
+  public addMeasurement(sugarMeasurement: SugarLevel): Promise<SugarLevel> {
+    const headers = this.authService.getBearerToken();
+    return firstValueFrom(
+      this.http
+        .post<SugarLevel>(`${this.url}add`, sugarMeasurement, { headers })
+        .pipe(map((response) => response))
+    );
+  }
+
   public getSugarLevels(): Promise<SugarLevel[]> {
-    console.log('Im a server. Im trying to get sugar.');
     const headers = this.authService.getBearerToken();
     return firstValueFrom(
       this.http
@@ -27,11 +35,6 @@ export class SugarService {
     );
   }
 
-  public deleteMeasurement(id: number) {
-    const headers = this.authService.getBearerToken();
-    return this.http.delete(`${this.url}${id}`, { headers });
-  }
-
   public updateMeasurement(sugarMeasurement: SugarLevel): Promise<SugarLevel> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(
@@ -39,6 +42,11 @@ export class SugarService {
         .put<SugarLevel>(`${this.url}`, sugarMeasurement, { headers })
         .pipe(map((response) => response))
     );
+  }
+
+  public deleteMeasurement(id: number) {
+    const headers = this.authService.getBearerToken();
+    return this.http.delete(`${this.url}${id}`, { headers });
   }
 
   //   public getChatById(chatId: number): Promise<ChatResponse> {

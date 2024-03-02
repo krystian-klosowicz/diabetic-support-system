@@ -67,6 +67,12 @@ mat-sidenav mat-icon {
   background-color: #fafafa;
 }
 
+.content-item {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 mat-sidenav-containter {
   height: calc(100vh - 65px);
   background-color: transparent;
@@ -94,5 +100,20 @@ mat-divider {
   mat-card {
     min-height: 94vh;
     margin: 0;
+  }
+
+  .content {
+    margin: 0;
+  }
+
+  mat-sidenav {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width: 1030px) {
+  mat-toolbar span {
+    padding-bottom: 5px;
+    overflow: hidden;
   }
 }

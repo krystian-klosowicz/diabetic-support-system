@@ -6,7 +6,7 @@
         *ngIf="sidenav.mode === 'over'"
         (click)="sidenav.toggle()"
       >
-        <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+        <mat-icon *ngIf="!sidenav.opened">subject</mat-icon>
         <mat-icon *ngIf="sidenav.opened">close</mat-icon></button
       ><mat-icon *ngIf="sidenav.mode != 'over'">vaccines</mat-icon>
       DiabeticSupportSystem</span
@@ -82,8 +82,39 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="content">
-        <div *ngIf="matItem === '1'">
-          <table matSort mat-table [dataSource]="sugarMeasurements">
+        <div *ngIf="matItem === '1'" class="content-item">
+          <button
+            mat-raised-button
+            (click)="addSugarMeasurement()"
+            style="
+              background-color: #116bb9;
+              color: white;
+              display: block;
+              text-align: center;
+              margin: 0 auto;
+              margin-bottom: 20px;
+              margin-top: 20px;
+            "
+          >
+            Add sugar level
+          </button>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Choose a date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [(ngModel)]="selectedDate"
+              (dateInput)="dateChanged($event)"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker></mat-datepicker>
+          </mat-form-field>
+          <table matSort mat-table [dataSource]="dataSourceSugar">
             <ng-container matColumnDef="sugar_level">
               <th mat-header-cell *matHeaderCellDef>Sugar level</th>
               <td mat-cell *matCellDef="let element">
@@ -111,14 +142,14 @@
                 <button
                   mat-raised-button
                   color="primary"
-                  (click)="editMeasurement(element)"
+                  (click)="editSugarMeasurement(element)"
                 >
                   Edit
                 </button>
                 <button
                   mat-raised-button
                   color="warn"
-                  (click)="deleteMeasurement(element.id)"
+                  (click)="deleteSugarMeasurement(element.id)"
                 >
                   Delete
                 </button>
@@ -132,6 +163,26 @@
               [ngClass]="{ gray: odd }"
             ></tr>
           </table>
+
+          <mat-card-footer>
+            <mat-paginator
+              [pageSizeOptions]="[10, 15, 20]"
+              showFirstLastButtons=""
+            ></mat-paginator>
+          </mat-card-footer>
+
+          <button
+            mat-raised-button
+            (click)="openChartDialog()"
+            style="
+              background-color: #777777;
+              color: white;
+              margin-top: 15px;
+              margin-bottom: 20px;
+            "
+          >
+            Check glucose chart
+          </button>
         </div>
         <div *ngIf="matItem === '2'">bb</div>
 

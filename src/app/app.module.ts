@@ -36,9 +36,10 @@ import { EditUserComponent } from './components/admin-panel/edit-user/edit-user.
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MeasurmentsComponent } from './components/measurments/measurments.component';
 import { SugarDialogComponent } from './components/measurments/sugar-dialog.component';
+import { ChartDialogComponent } from './components/measurments/chart-dialog/chart-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, EditUserComponent, MeasurmentsComponent],
+  declarations: [AppComponent, EditUserComponent, MeasurmentsComponent, ChartDialogComponent],
   imports: [
     JwtModule.forRoot({
       config: {

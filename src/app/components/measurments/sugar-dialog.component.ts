@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-edit-dialog',
   template: `
     <div class="edit-dialog-container">
-      <h2 mat-dialog-title>Edit Sugar Value</h2>
+      <h2 mat-dialog-title>{{ actionValue }} Sugar Value</h2>
       <div mat-dialog-content>
         <mat-form-field style="background-color: white;">
           <input
@@ -22,7 +22,9 @@ import { FormsModule } from '@angular/forms';
       </div>
       <div mat-dialog-actions>
         <button mat-button (click)="onCancel()" color="warn">Cancel</button>
-        <button mat-button (click)="onSave()" color="mat-error">Save</button>
+        <button mat-button (click)="onSave()" color="mat-error">
+          {{ actionValue === 'Add' ? 'Add' : 'Save' }}
+        </button>
       </div>
     </div>
   `,
@@ -58,12 +60,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class SugarDialogComponent {
   editedValue: number;
+  actionValue: string;
 
   constructor(
     public dialogRef: MatDialogRef<SugarDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { value: number }
+    @Inject(MAT_DIALOG_DATA) public data: { value: number; action: string }
   ) {
     this.editedValue = data.value;
+    this.actionValue = data.action;
   }
 
   onCancel(): void {
