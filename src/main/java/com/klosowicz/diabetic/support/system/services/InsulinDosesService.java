@@ -44,7 +44,7 @@ public class InsulinDosesService {
       List<InsulinDoses> insulinDoses = insulinDosesRepository.findAllByUser(user);
 
       return insulinDoses.stream()
-              .sorted(Comparator.comparing(InsulinDoses::getId))
+              .sorted(Comparator.comparing(InsulinDoses::getTaking_hour))
               .map(this::mapToInsulinDoseResponse)
               .collect(Collectors.toList());
   }
