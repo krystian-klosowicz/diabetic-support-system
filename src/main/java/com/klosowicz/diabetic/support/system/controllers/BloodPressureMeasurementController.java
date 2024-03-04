@@ -26,19 +26,19 @@ public class BloodPressureMeasurementController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BloodPressureResponse>> getSugarMeasurements(
+    public ResponseEntity<List<BloodPressureResponse>> getBloodPressureMeasurements(
             HttpServletRequest httpServletRequest) {
         return new ResponseEntity<List<BloodPressureResponse>>(service.getMeasurements( httpServletRequest), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<BloodPressureResponse> updateSugarMeasurement(
+    public ResponseEntity<BloodPressureResponse> updateBloodPressureMeasurement(
             HttpServletRequest httpServletRequest, @RequestBody BloodPressureUpdateRequest bloodPressureUpdateRequest) {
         return new ResponseEntity<BloodPressureResponse>(service.updateMeasurement( httpServletRequest, bloodPressureUpdateRequest), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSugarMeasurement(HttpServletRequest httpServletRequest, @PathVariable Long id) {
+    public ResponseEntity<?> deleteBloodPressureMeasurement(HttpServletRequest httpServletRequest, @PathVariable Long id) {
         service.deleteMeasurement(httpServletRequest, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
