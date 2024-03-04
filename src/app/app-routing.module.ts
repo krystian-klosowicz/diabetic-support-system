@@ -15,6 +15,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { MeasurmentsComponent } from './components/measurments/measurments.component';
+import { PatientsComponent } from './components/patients/patients.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -75,7 +76,16 @@ const routes: Routes = [
   {
     path: 'mesurments',
     component: MeasurmentsComponent,
-    title: 'Messages Page',
+    title: 'Measurements Page',
+    canActivate: [
+      (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+        inject(AuthGuard).canActivate(next, state),
+    ],
+  },
+  {
+    path: 'patients',
+    component: PatientsComponent,
+    title: 'Patients Page',
     canActivate: [
       (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
         inject(AuthGuard).canActivate(next, state),

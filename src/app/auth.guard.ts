@@ -38,6 +38,21 @@ export class AuthGuard {
           this.router.navigate(['/login']);
           return false;
         }
+      case 'measurements':
+        if (this.authService.isLoggedIn()) {
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
+
+      case 'patients':
+        if (this.authService.isLoggedIn()) {
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
       case 'admin-panel':
         if (this.authService.isLoggedIn()) {
           if (this.authService.getRole() == 'ROLE_ADMIN') return true;

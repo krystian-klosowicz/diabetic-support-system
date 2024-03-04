@@ -6,7 +6,12 @@
     <!-- Menu na większych ekranach -->
     <div fxHide fxShow.gt-xs>
       <a mat-button [routerLink]="['/home']">Home</a>
-      <a mat-button *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
+      <a
+        mat-button
+        *ngIf="userRole === 'ROLE_DOCTOR'"
+        [routerLink]="['/patients']"
+        >Patients</a
+      >
       <a
         mat-button
         *ngIf="userRole === 'ROLE_PATIENT'"
@@ -31,7 +36,12 @@
       </button>
       <mat-menu #menu="matMenu">
         <a mat-menu-item [routerLink]="['/home']" style="width: 150px">Home</a>
-        <a mat-menu-item *ngIf="userRole === 'ROLE_DOCTOR'">Patients</a>
+        <a
+          mat-menu-item
+          *ngIf="userRole === 'ROLE_DOCTOR'"
+          [routerLink]="['/patients']"
+          >Patients</a
+        >
         <a
           mat-menu-item
           *ngIf="userRole === 'ROLE_PATIENT'"

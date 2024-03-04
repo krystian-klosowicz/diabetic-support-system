@@ -103,7 +103,6 @@ export class MedicationDialogComponent {
     public data: { medication: Medication; action: string }
   ) {
     this.editedMedication = { ...data.medication };
-    console.log(this.editedMedication);
     this.actionValue = data.action;
   }
 

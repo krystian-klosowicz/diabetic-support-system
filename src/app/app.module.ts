@@ -37,6 +37,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MeasurmentsComponent } from './components/measurments/measurments.component';
 import { SugarDialogComponent } from './components/measurments/sugar-dialog.component';
 import { ChartDialogComponent } from './components/measurments/chart-dialog/chart-dialog.component';
+import { PatientsComponent } from './components/patients/patients.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ChartDialogComponent } from './components/measurments/chart-dialog/char
     EditUserComponent,
     MeasurmentsComponent,
     ChartDialogComponent,
+    PatientsComponent,
   ],
   imports: [
     JwtModule.forRoot({
