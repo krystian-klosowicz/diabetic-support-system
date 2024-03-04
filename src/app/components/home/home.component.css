@@ -16,5 +16,6 @@ mat-card {
   mat-card {
     min-height: 94vh;
     margin: 0;
+    border-radius: 0;
   }
 }

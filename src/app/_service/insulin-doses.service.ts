@@ -3,47 +3,47 @@ import { Injectable } from '@angular/core';
 import { baseUrl } from '../../environments/environment.development';
 import { AuthService } from '../auth.service';
 import { firstValueFrom, map } from 'rxjs';
-import { SugarLevel } from '../_model';
+import { InsulinDose } from '../_model/insulin-dose.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SugarService {
+export class InsulinDosesService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  url: string = `${baseUrl}v1/sugars/`;
+  url: string = `${baseUrl}v1/insulin-doses/`;
   userToken: string = '';
 
-  public addMeasurement(sugarMeasurement: SugarLevel): Promise<SugarLevel> {
+  public addInsulinDose(insulinDose: InsulinDose): Promise<InsulinDose> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(
       this.http
-        .post<SugarLevel>(`${this.url}add`, sugarMeasurement, { headers })
+        .post<InsulinDose>(`${this.url}add`, insulinDose, { headers })
         .pipe(map((response) => response))
     );
   }
 
-  public getSugarLevels(): Promise<SugarLevel[]> {
+  public getInsulinDoses(): Promise<InsulinDose[]> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(
       this.http
-        .get<SugarLevel[]>(`${this.url}`, {
+        .get<InsulinDose[]>(`${this.url}`, {
           headers,
         })
         .pipe(map((response) => response))
     );
   }
 
-  public updateMeasurement(sugarMeasurement: SugarLevel): Promise<SugarLevel> {
+  public updateInsulinDose(insulinDose: InsulinDose): Promise<InsulinDose> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(
       this.http
-        .put<SugarLevel>(`${this.url}`, sugarMeasurement, { headers })
+        .put<InsulinDose>(`${this.url}`, insulinDose, { headers })
         .pipe(map((response) => response))
     );
   }
 
-  public deleteMeasurement(id: number) {
+  public deleteInsulinDose(id: number) {
     const headers = this.authService.getBearerToken();
     return this.http.delete(`${this.url}${id}`, { headers });
   }

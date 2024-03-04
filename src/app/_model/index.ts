@@ -4,3 +4,6 @@ export * from './user.interface';
 export * from './my-profile.interface';
 export * from './address.interface';
 export * from './sugar-level.interface';
+export * from './insulin-dose.interface';
+export * from './medication.interface';
+export * from './blood-pressure.interface';

@@ -29,11 +29,11 @@ span {
 
 @media only screen and (max-width: 1030px) {
   span {
-    font-size: 2vw;
+    font-size: 4vw;
   }
 }
 
-@media only screen and (max-width: 430px) {
+@media only screen and (max-width: 630px) {
   .main-div mat-toolbar {
     font-size: 4vw;
   }

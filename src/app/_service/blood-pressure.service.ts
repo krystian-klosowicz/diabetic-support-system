@@ -3,47 +3,51 @@ import { Injectable } from '@angular/core';
 import { baseUrl } from '../../environments/environment.development';
 import { AuthService } from '../auth.service';
 import { firstValueFrom, map } from 'rxjs';
-import { SugarLevel } from '../_model';
+import { BloodPressure } from '../_model/blood-pressure.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SugarService {
+export class BloodPressureService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  url: string = `${baseUrl}v1/sugars/`;
+  url: string = `${baseUrl}v1/blood-pressures/`;
   userToken: string = '';
 
-  public addMeasurement(sugarMeasurement: SugarLevel): Promise<SugarLevel> {
+  public addBloodPressure(
+    bloodPressure: BloodPressure
+  ): Promise<BloodPressure> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(
       this.http
-        .post<SugarLevel>(`${this.url}add`, sugarMeasurement, { headers })
+        .post<BloodPressure>(`${this.url}add`, bloodPressure, { headers })
         .pipe(map((response) => response))
     );
   }
 
-  public getSugarLevels(): Promise<SugarLevel[]> {
+  public getBloodPressures(): Promise<BloodPressure[]> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(
       this.http
-        .get<SugarLevel[]>(`${this.url}`, {
+        .get<BloodPressure[]>(`${this.url}`, {
           headers,
         })
         .pipe(map((response) => response))
     );
   }
 
-  public updateMeasurement(sugarMeasurement: SugarLevel): Promise<SugarLevel> {
+  public updateBloodPressure(
+    bloodPressure: BloodPressure
+  ): Promise<BloodPressure> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(
       this.http
-        .put<SugarLevel>(`${this.url}`, sugarMeasurement, { headers })
+        .put<BloodPressure>(`${this.url}`, bloodPressure, { headers })
         .pipe(map((response) => response))
     );
   }
 
-  public deleteMeasurement(id: number) {
+  public deleteBloodPressure(id: number) {
     const headers = this.authService.getBearerToken();
     return this.http.delete(`${this.url}${id}`, { headers });
   }

@@ -39,7 +39,12 @@ import { SugarDialogComponent } from './components/measurments/sugar-dialog.comp
 import { ChartDialogComponent } from './components/measurments/chart-dialog/chart-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, EditUserComponent, MeasurmentsComponent, ChartDialogComponent],
+  declarations: [
+    AppComponent,
+    EditUserComponent,
+    MeasurmentsComponent,
+    ChartDialogComponent,
+  ],
   imports: [
     JwtModule.forRoot({
       config: {

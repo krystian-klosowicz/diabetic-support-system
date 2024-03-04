@@ -116,4 +116,8 @@ mat-divider {
     padding-bottom: 5px;
     overflow: hidden;
   }
+
+  .action-buttons button {
+    margin: 2;
+  }
 }
