@@ -41,6 +41,8 @@ public class MyProfileResponse {
 
   private DiabetesType diabetesType;
 
+  private String safetyNumber;
+
   // Doctor
   private String pwzNumber;
 }

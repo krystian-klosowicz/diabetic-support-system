@@ -117,6 +117,8 @@ public class UserService {
         patient.setLastName(response.getLastName());
         patient.setPhoneNumber(response.getPhoneNumber());
         patient.setDiabetesType(response.getDiabetesType());
+        System.out.println(response.getSafetyNumber());
+        patient.setSafetyNumber(response.getSafetyNumber());
         user = patient;
         break;
 
@@ -154,11 +156,13 @@ public class UserService {
     DoctorProfileResponse doctorProfileResponse = null;
     DiabetesType diabetesType = null;
     String pwzNumber = null;
+    String safetyNumber = null;
 
     if (user instanceof Patient) {
       Patient patient = (Patient) user;
       if (patient.getAssignedDoctor()!= null) doctorProfileResponse = DoctorProfileResponse.fromDoctor(patient.getAssignedDoctor());
       diabetesType = patient.getDiabetesType();
+      safetyNumber = patient.getSafetyNumber();
     } else if (user instanceof Doctor) {
       Doctor doctor = (Doctor) user;
       pwzNumber = doctor.getPwzNumber();
@@ -175,6 +179,7 @@ public class UserService {
         .assignedDoctor(doctorProfileResponse)
         .diabetesType(diabetesType)
         .pwzNumber(pwzNumber)
+            .safetyNumber(safetyNumber)
         .build();
   }
 

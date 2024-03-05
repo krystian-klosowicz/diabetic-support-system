@@ -20,4 +20,6 @@ public class Patient extends User {
 
   @Enumerated(EnumType.STRING)
   private DiabetesType diabetesType;
+
+  private String safetyNumber;
 }
