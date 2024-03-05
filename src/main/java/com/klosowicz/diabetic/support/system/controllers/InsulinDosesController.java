@@ -3,6 +3,7 @@ package com.klosowicz.diabetic.support.system.controllers;
 import com.klosowicz.diabetic.support.system.requests.InsulinDosesAddRequest;
 import com.klosowicz.diabetic.support.system.requests.InsulinDosesUpdateRequest;
 import com.klosowicz.diabetic.support.system.requests.responses.InsulinDosesResponse;
+import com.klosowicz.diabetic.support.system.requests.responses.MyProfileResponse;
 import com.klosowicz.diabetic.support.system.services.InsulinDosesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,12 @@ public class InsulinDosesController {
     public ResponseEntity<List<InsulinDosesResponse>> getInsulinDoses(
             HttpServletRequest httpServletRequest) {
         return new ResponseEntity<List<InsulinDosesResponse>>(service.getMeasurements( httpServletRequest), HttpStatus.OK);
+    }
+
+    @GetMapping("/get-by-user/{email}")
+    public ResponseEntity<List<InsulinDosesResponse>> getInsulinDosesByUser(
+            HttpServletRequest httpServletRequest, @PathVariable String email) {
+        return new ResponseEntity<List<InsulinDosesResponse>>(service.getMeasurementsByUser( httpServletRequest, email), HttpStatus.OK);
     }
 
     @PutMapping

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin("*")
@@ -31,16 +32,44 @@ public class UserController {
 
   @GetMapping
   public ResponseEntity<Page<User>> getUsers(
-          UserPage userPage, UserSearchCriteria userSearchCriteria) {
+      UserPage userPage, UserSearchCriteria userSearchCriteria) {
     return new ResponseEntity<>(userService.getUsers(userPage, userSearchCriteria), HttpStatus.OK);
+  }
+
+  @GetMapping("/assigned-to-doctor")
+  public ResponseEntity<List<MyProfileResponse>> getPatientsAssignedToDoctor(
+      HttpServletRequest request) {
+    return new ResponseEntity<List<MyProfileResponse>>(
+        userService.getPatientsAssignedToDoctor(request), HttpStatus.OK);
+  }
+
+  @GetMapping("/not-assigned-to-doctor")
+  public ResponseEntity<List<MyProfileResponse>> getPatientsNotAssignedToDoctor(
+      HttpServletRequest request) {
+    return new ResponseEntity<List<MyProfileResponse>>(
+        userService.getPatientsNotAssignedToDoctor(request), HttpStatus.OK);
+  }
+
+  @PutMapping("/assign-to-doctor")
+  public ResponseEntity<MyProfileResponse> assignToDoctor(
+      HttpServletRequest request, @RequestBody MyProfileResponse response) {
+    return new ResponseEntity<MyProfileResponse>(
+        userService.assignPatientToDoctor(request, response), HttpStatus.OK);
+  }
+
+  @PutMapping("/un-assign-patient")
+  public ResponseEntity<MyProfileResponse> unAssignPatient(
+      HttpServletRequest request, @RequestBody MyProfileResponse response) {
+    return new ResponseEntity<MyProfileResponse>(
+        userService.unAssignPatient(request, response), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<User> getUserById(@PathVariable Long id) {
     return userService
-            .getUserById(id)
-            .map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
+        .getUserById(id)
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @GetMapping("/my-profile")
@@ -49,16 +78,20 @@ public class UserController {
   }
 
   @PutMapping
-  public ResponseEntity<MyProfileResponse> updateUser(HttpServletRequest request, @Valid @RequestBody MyProfileResponse response) {
+  public ResponseEntity<MyProfileResponse> updateUser(
+      HttpServletRequest request, @Valid @RequestBody MyProfileResponse response) {
     return ResponseEntity.ok(userService.updateUser(request, response));
   }
 
   @PutMapping("/update-address")
-  public ResponseEntity<MyProfileResponse> updateAddress(HttpServletRequest request, @Valid @RequestBody SaveAddressRequest saveAddressRequest) {
+  public ResponseEntity<MyProfileResponse> updateAddress(
+      HttpServletRequest request, @Valid @RequestBody SaveAddressRequest saveAddressRequest) {
     return ResponseEntity.ok(userService.updateAddress(request, saveAddressRequest));
   }
+
   @PutMapping("/change-password")
-  public ResponseEntity<?> updatePassword(HttpServletRequest request, @Valid @RequestBody PasswordRequest passwordRequest) {
+  public ResponseEntity<?> updatePassword(
+      HttpServletRequest request, @Valid @RequestBody PasswordRequest passwordRequest) {
     userService.updatePassword(request, passwordRequest);
     return ResponseEntity.ok().build();
   }
@@ -78,13 +111,12 @@ public class UserController {
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteUser(@PathVariable Long id) {
     return userService
-            .getUserById(id)
-            .map(
-                    existingEmployee -> {
-                      userService.deleteUser(id);
-                      return ResponseEntity.ok().build();
-                    })
-            .orElseGet(() -> ResponseEntity.notFound().build());
+        .getUserById(id)
+        .map(
+            existingEmployee -> {
+              userService.deleteUser(id);
+              return ResponseEntity.ok().build();
+            })
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
-
 }

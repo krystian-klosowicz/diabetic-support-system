@@ -8,7 +8,11 @@ import com.klosowicz.diabetic.support.system.entities.page.UserPage;
 import com.klosowicz.diabetic.support.system.exceptions.InvalidRoleException;
 import com.klosowicz.diabetic.support.system.repositories.*;
 import com.klosowicz.diabetic.support.system.repositories.criteria.UserCriteriaRepository;
+
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.klosowicz.diabetic.support.system.requests.PasswordRequest;
 import com.klosowicz.diabetic.support.system.requests.SaveAddressRequest;
@@ -52,6 +56,41 @@ public class UserService {
     User user = userRepository.findById(userId).orElseThrow();
 
     return createProfileResponse(user);
+  }
+
+  public  List<MyProfileResponse> getPatientsAssignedToDoctor(HttpServletRequest request) {
+    Long doctorId = jwtAuthenticationFilter.getUserIdFromToken(request);
+    List<Patient> users = patientRepository.findAllByAssignedDoctorId(doctorId);
+
+    return users.stream()
+            .sorted(Comparator.comparing(User::getId))
+            .map(this::createProfileResponse)
+            .collect(Collectors.toList());
+  }
+
+  public  List<MyProfileResponse> getPatientsNotAssignedToDoctor(HttpServletRequest request) {
+    List<Patient> users = patientRepository.findAllByAssignedDoctorIsNull();
+
+    return users.stream()
+            .sorted(Comparator.comparing(User::getId))
+            .map(this::createProfileResponse)
+            .collect(Collectors.toList());
+  }
+
+  public MyProfileResponse assignPatientToDoctor(HttpServletRequest request, MyProfileResponse response) {
+    Long doctorId = jwtAuthenticationFilter.getUserIdFromToken(request);
+    Patient patient = patientRepository.findByEmail(response.getEmail());
+    patient.setAssignedDoctor(doctorRepository.findById(doctorId).orElseThrow());
+  patientRepository.save(patient);
+    return response;
+  }
+
+  public MyProfileResponse unAssignPatient(HttpServletRequest request, MyProfileResponse response) {
+    Long doctorId = jwtAuthenticationFilter.getUserIdFromToken(request);
+    Patient patient = patientRepository.findByEmail(response.getEmail());
+    patient.setAssignedDoctor(null);
+    patientRepository.save(patient);
+    return response;
   }
 
   public MyProfileResponse updateAddress(HttpServletRequest request, SaveAddressRequest response) {
@@ -138,6 +177,7 @@ public class UserService {
         .pwzNumber(pwzNumber)
         .build();
   }
+
 
   public void updatePassword(HttpServletRequest request, PasswordRequest passwordRequest) {
     User user = getUserFromToken(request);

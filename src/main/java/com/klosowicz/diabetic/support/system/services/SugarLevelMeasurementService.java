@@ -3,6 +3,7 @@ package com.klosowicz.diabetic.support.system.services;
 import com.klosowicz.diabetic.support.system.config.JwtAuthenticationFilter;
 import com.klosowicz.diabetic.support.system.entities.SugarLevelMeasurement;
 import com.klosowicz.diabetic.support.system.entities.User;
+import com.klosowicz.diabetic.support.system.entities.enums.Role;
 import com.klosowicz.diabetic.support.system.repositories.SugarLevelMeasurementRepository;
 import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 import com.klosowicz.diabetic.support.system.requests.SugarLevelAddRequest;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
 import com.klosowicz.diabetic.support.system.requests.SugarLevelUpdateRequest;
+import com.klosowicz.diabetic.support.system.requests.responses.MyProfileResponse;
 import com.klosowicz.diabetic.support.system.requests.responses.SugarLevelResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,19 +47,44 @@ public class SugarLevelMeasurementService {
     List<SugarLevelMeasurement> measurements = sugarRepository.findAllByUser(user);
 
     return measurements.stream()
-            .sorted(Comparator.comparing(SugarLevelMeasurement::getId))
-            .map(this::mapToSugarResponse)
-            .collect(Collectors.toList());
+        .sorted(Comparator.comparing(SugarLevelMeasurement::getId))
+        .map(this::mapToSugarResponse)
+        .collect(Collectors.toList());
+  }
+
+  public List<SugarLevelResponse> getMeasurementsByUser(HttpServletRequest request, String email) {
+    User adminUser = getUserFromToken(request);
+    if (adminUser.getRole() != Role.ROLE_DOCTOR)
+      throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized");
+    User patientUser =
+        userRepository
+            .findByEmail(email)
+            .orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found."));
+
+    List<SugarLevelMeasurement> measurements = sugarRepository.findAllByUser(patientUser);
+
+    return measurements.stream()
+        .sorted(Comparator.comparing(SugarLevelMeasurement::getId))
+        .map(this::mapToSugarResponse)
+        .collect(Collectors.toList());
   }
 
   public SugarLevelResponse updateMeasurement(
       HttpServletRequest request, SugarLevelUpdateRequest sugarRequest) {
     User user = getUserFromToken(request);
-    SugarLevelMeasurement measurement = sugarRepository.findById(sugarRequest.getId()).orElseThrow(() ->
-            new ResponseStatusException(HttpStatus.BAD_REQUEST, "Measurement not found with id: " + sugarRequest.getId()));
+    SugarLevelMeasurement measurement =
+        sugarRepository
+            .findById(sugarRequest.getId())
+            .orElseThrow(
+                () ->
+                    new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Measurement not found with id: " + sugarRequest.getId()));
 
     if (user != measurement.getUser()) {
-      throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to update this measurement");
+      throw new ResponseStatusException(
+          HttpStatus.FORBIDDEN, "You are not authorized to update this measurement");
     }
 
     measurement.setSugar_level(sugarRequest.getSugar_level());
@@ -68,12 +95,17 @@ public class SugarLevelMeasurementService {
 
   public void deleteMeasurement(HttpServletRequest request, Long id) {
     User user = getUserFromToken(request);
-    SugarLevelMeasurement measurement = sugarRepository.findById(id).orElseThrow(() ->
-            new ResponseStatusException(HttpStatus.BAD_REQUEST, "Measurement not found with id: " + id));
-
+    SugarLevelMeasurement measurement =
+        sugarRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "Measurement not found with id: " + id));
 
     if (user != measurement.getUser()) {
-      throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete this measurement");
+      throw new ResponseStatusException(
+          HttpStatus.FORBIDDEN, "You are not authorized to delete this measurement");
     }
     sugarRepository.delete(measurement);
   }

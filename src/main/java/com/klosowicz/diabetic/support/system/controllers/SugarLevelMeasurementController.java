@@ -2,6 +2,7 @@ package com.klosowicz.diabetic.support.system.controllers;
 
 import com.klosowicz.diabetic.support.system.requests.SugarLevelAddRequest;
 import com.klosowicz.diabetic.support.system.requests.SugarLevelUpdateRequest;
+import com.klosowicz.diabetic.support.system.requests.responses.MyProfileResponse;
 import com.klosowicz.diabetic.support.system.requests.responses.SugarLevelResponse;
 import com.klosowicz.diabetic.support.system.services.SugarLevelMeasurementService;
 import java.util.List;
@@ -30,6 +31,11 @@ public class SugarLevelMeasurementController {
         return new ResponseEntity<List<SugarLevelResponse>>(sugarService.getMeasurements( httpServletRequest), HttpStatus.OK);
     }
 
+    @GetMapping("/get-by-user/{email}")
+    public ResponseEntity<List<SugarLevelResponse>> getSugarMeasurementsByUser(
+            HttpServletRequest httpServletRequest, @PathVariable String email) {
+        return new ResponseEntity<List<SugarLevelResponse>>(sugarService.getMeasurementsByUser( httpServletRequest, email), HttpStatus.OK);
+    }
     @PutMapping
     public ResponseEntity<SugarLevelResponse> updateSugarMeasurement(
             HttpServletRequest httpServletRequest, @RequestBody SugarLevelUpdateRequest sugarLevelUpdateRequest) {

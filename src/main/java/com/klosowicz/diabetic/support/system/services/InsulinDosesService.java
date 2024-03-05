@@ -3,11 +3,13 @@ package com.klosowicz.diabetic.support.system.services;
 import com.klosowicz.diabetic.support.system.config.JwtAuthenticationFilter;
 import com.klosowicz.diabetic.support.system.entities.InsulinDoses;
 import com.klosowicz.diabetic.support.system.entities.User;
+import com.klosowicz.diabetic.support.system.entities.enums.Role;
 import com.klosowicz.diabetic.support.system.repositories.InsulinDosesRepository;
 import com.klosowicz.diabetic.support.system.repositories.UserRepository;
 import com.klosowicz.diabetic.support.system.requests.InsulinDosesAddRequest;
 import com.klosowicz.diabetic.support.system.requests.InsulinDosesUpdateRequest;
 import com.klosowicz.diabetic.support.system.requests.responses.InsulinDosesResponse;
+import com.klosowicz.diabetic.support.system.requests.responses.MyProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,8 @@ public class InsulinDosesService {
       HttpServletRequest request, InsulinDosesAddRequest addRequest) {
     User user = getUserFromToken(request);
 
-    InsulinDoses insulinDoses = InsulinDoses.builder()
+    InsulinDoses insulinDoses =
+        InsulinDoses.builder()
             .units_of_insulin(addRequest.getUnits_of_insulin())
             .taking_hour(addRequest.getTaking_hour())
             .user(user)
@@ -40,42 +43,74 @@ public class InsulinDosesService {
   }
 
   public List<InsulinDosesResponse> getMeasurements(HttpServletRequest request) {
-      User user = getUserFromToken(request);
-      List<InsulinDoses> insulinDoses = insulinDosesRepository.findAllByUser(user);
+    User user = getUserFromToken(request);
+    List<InsulinDoses> insulinDoses = insulinDosesRepository.findAllByUser(user);
 
-      return insulinDoses.stream()
-              .sorted(Comparator.comparing(InsulinDoses::getTaking_hour))
-              .map(this::mapToInsulinDoseResponse)
-              .collect(Collectors.toList());
+    return insulinDoses.stream()
+        .sorted(Comparator.comparing(InsulinDoses::getTaking_hour))
+        .map(this::mapToInsulinDoseResponse)
+        .collect(Collectors.toList());
   }
 
-  public InsulinDosesResponse updateMeasurement(HttpServletRequest request, InsulinDosesUpdateRequest updateRequest) {
-      User user = getUserFromToken(request);
-      InsulinDoses measurement = insulinDosesRepository.findById(updateRequest.getId()).orElseThrow(() ->
-              new ResponseStatusException(HttpStatus.BAD_REQUEST, "Insulin dose not found with id: " + updateRequest.getId()));
+  public List<InsulinDosesResponse> getMeasurementsByUser(
+      HttpServletRequest request, String email) {
+    User adminUser = getUserFromToken(request);
+    if (adminUser.getRole() != Role.ROLE_DOCTOR)
+      throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized");
+    User patientUser =
+        userRepository
+            .findByEmail(email)
+            .orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found."));
 
-      if (user != measurement.getUser()) {
-          throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to update this insulin dose");
-      }
+    List<InsulinDoses> measurements = insulinDosesRepository.findAllByUser(patientUser);
 
-      measurement.setUnits_of_insulin(updateRequest.getUnits_of_insulin());
-      measurement.setTaking_hour(updateRequest.getTaking_hour());
-      insulinDosesRepository.save(measurement);
-
-      return mapToInsulinDoseResponse(measurement);
+    return measurements.stream()
+        .sorted(Comparator.comparing(InsulinDoses::getId))
+        .map(this::mapToInsulinDoseResponse)
+        .collect(Collectors.toList());
   }
 
-    public void deleteMeasurement(HttpServletRequest request, Long id) {
-        User user = getUserFromToken(request);
-        InsulinDoses measurement = insulinDosesRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Insulin dose not found with id: " + id));
+  public InsulinDosesResponse updateMeasurement(
+      HttpServletRequest request, InsulinDosesUpdateRequest updateRequest) {
+    User user = getUserFromToken(request);
+    InsulinDoses measurement =
+        insulinDosesRepository
+            .findById(updateRequest.getId())
+            .orElseThrow(
+                () ->
+                    new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Insulin dose not found with id: " + updateRequest.getId()));
 
-
-        if (user != measurement.getUser()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete this insulin dose");
-        }
-        insulinDosesRepository.delete(measurement);
+    if (user != measurement.getUser()) {
+      throw new ResponseStatusException(
+          HttpStatus.FORBIDDEN, "You are not authorized to update this insulin dose");
     }
+
+    measurement.setUnits_of_insulin(updateRequest.getUnits_of_insulin());
+    measurement.setTaking_hour(updateRequest.getTaking_hour());
+    insulinDosesRepository.save(measurement);
+
+    return mapToInsulinDoseResponse(measurement);
+  }
+
+  public void deleteMeasurement(HttpServletRequest request, Long id) {
+    User user = getUserFromToken(request);
+    InsulinDoses measurement =
+        insulinDosesRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "Insulin dose not found with id: " + id));
+
+    if (user != measurement.getUser()) {
+      throw new ResponseStatusException(
+          HttpStatus.FORBIDDEN, "You are not authorized to delete this insulin dose");
+    }
+    insulinDosesRepository.delete(measurement);
+  }
 
   private InsulinDosesResponse mapToInsulinDoseResponse(InsulinDoses insulinDoses) {
     return InsulinDosesResponse.builder()
