@@ -38,6 +38,7 @@ import { MeasurmentsComponent } from './components/measurments/measurments.compo
 import { SugarDialogComponent } from './components/measurments/sugar-dialog.component';
 import { ChartDialogComponent } from './components/measurments/chart-dialog/chart-dialog.component';
 import { PatientsComponent } from './components/patients/patients.component';
+import { InsulinCalculatorComponent } from './components/insulin-calculator/insulin-calculator.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { PatientsComponent } from './components/patients/patients.component';
     MeasurmentsComponent,
     ChartDialogComponent,
     PatientsComponent,
+    InsulinCalculatorComponent,
   ],
   imports: [
     JwtModule.forRoot({

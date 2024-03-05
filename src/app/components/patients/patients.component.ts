@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MyProfile } from '../../_model';
+import { InsulinDose, MyProfile, SugarLevel } from '../../_model';
 import { PatientService } from '../../_service/patient.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,6 +11,10 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { SugarService } from '../../_service/sugar.service';
+import { InsulinDosesService } from '../../_service/insulin-doses.service';
+import { CheckMeasurementsDialogComponent } from './check-measurements-dialog.component';
+import { CheckInsulinDosesDialogComponent } from './check-insulin-doses-dialog.component';
 
 @Component({
   selector: 'app-patients',
@@ -40,11 +44,22 @@ export class PatientsComponent {
     'action',
   ];
 
+  //insulinDoses
+  dataSourceInsulin: any;
+  insulinDoses: InsulinDose[] = [];
+  insulinDisplayedColumns: string[] = [
+    'units_of_insulin',
+    'taking_hour',
+    'action',
+  ];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private patientService: PatientService,
+    private sugarService: SugarService,
+    private insuliDosesService: InsulinDosesService,
     public dialog: MatDialog
   ) {}
 
@@ -146,6 +161,39 @@ export class PatientsComponent {
     });
   }
 
+  public openCheckMeasurements(patient: MyProfile) {
+    const dialogRef = this.dialog.open(CheckMeasurementsDialogComponent, {
+      width: '1400px',
+      height: '800px',
+      data: {
+        patient: patient,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined) {
+        this.loadPatients();
+        this.loadUnAssignedPatients();
+      }
+    });
+  }
+
+  public openCheckInsulinDoses(patient: MyProfile) {
+    const dialogRef = this.dialog.open(CheckInsulinDosesDialogComponent, {
+      width: '1400px',
+      height: '800px',
+      data: {
+        patient: patient,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined) {
+        this.loadPatients();
+        this.loadUnAssignedPatients();
+      }
+    });
+  }
   public filterChange(data: Event) {
     const value = (data.target as HTMLInputElement).value;
     this.dataSourcePatients.filter = value;

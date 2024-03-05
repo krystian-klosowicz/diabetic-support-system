@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { NgbAlert, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +15,8 @@ import {
   NgbPaginationModule,
   NgbAlertModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { MyProfile } from '../../_model';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +25,7 @@ import {
   standalone: true,
   imports: [
     ToolbarComponent,
+    MatButtonModule,
     MatCardModule,
     CommonModule,
     NgbCarouselModule,
@@ -49,6 +53,9 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  user: MyProfile | undefined;
+  phoneNumber: string | null = '';
+
   constructor(
     private authService: AuthService,
     private http: HttpClient,
@@ -62,17 +69,33 @@ export class HomeComponent implements OnInit {
     config.pauseOnHover = false;
   }
 
-  public ngOnInit() {
-    // this.userService.getUsers().subscribe((response) => {
-    //   this.users = response;
-    //   this.dataSource = new MatTableDataSource<User>(this.users);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
+  encodeMessage(message: string): string {
+    return encodeURIComponent(message);
   }
 
-  // private filterChange(data: Event) {
-  //   const value = (data.target as HTMLInputElement).value;
-  //   this.dataSource.filter = value;
-  // }
+  public ngOnInit() {
+    this.loadMyProfile();
+  }
+
+  public loadMyProfile() {
+    this.userService
+      .getMyProfile()
+      .then((result) => {
+        if (result) {
+          this.user = result;
+          this.phoneNumber = this.user.safetyNumber;
+        }
+      })
+      .catch((error) => {
+        if (error.status === 403) {
+          console.log('POST 403 Forbidden');
+        } else if (error.status === 401) {
+          console.log('POST 401 Unauthorized');
+        } else {
+          alert('Wystąpił błąd: ' + error.message);
+        }
+
+        return EMPTY;
+      });
+  }
 }

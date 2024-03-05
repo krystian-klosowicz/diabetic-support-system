@@ -38,6 +38,13 @@ export class AuthGuard {
           this.router.navigate(['/login']);
           return false;
         }
+      case 'insulin-calculator':
+        if (this.authService.isLoggedIn()) {
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
       case 'measurements':
         if (this.authService.isLoggedIn()) {
           return true;

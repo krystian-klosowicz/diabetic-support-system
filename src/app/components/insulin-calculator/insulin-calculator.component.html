@@ -1,0 +1,74 @@
+<div class="main-div">
+  <app-toolbar></app-toolbar>
+  <mat-card>
+    <div class="info1">Insulin calculator: calculate your insulin dose</div>
+    <form
+      fxLayoutAlign="stretch"
+      fxLayout="column"
+      class="calculate-form"
+      [formGroup]="formGroup"
+      (ngSubmit)="onSubmit()"
+    >
+      <label>Meal</label>
+      <mat-form-field appearance="outline">
+        <mat-select placeholder="Select a meal" formControlName="meal">
+          <mat-option value="breakfast">Breakfast</mat-option>
+          <mat-option value="morning_snack">Morning Snack</mat-option>
+          <mat-option value="lunch">Lunch</mat-option>
+          <mat-option value="afternoon_snack">Afternoon Snack</mat-option>
+          <mat-option value="dinner">Dinner</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <label>Carbohydrate Exchanges (ce)</label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          type="number"
+          placeholder="Enter carbohydrate exchanges"
+          formControlName="carbohydrateExchanges"
+        />
+      </mat-form-field>
+
+      <label>Conversion Factor</label>
+      <mat-form-field appearance="outline">
+        <mat-select
+          placeholder="Select a conversion factor"
+          formControlName="conversionFactor"
+          type="number"
+        >
+          <mat-option value="0.5">0.5</mat-option>
+          <mat-option value="1">1</mat-option>
+          <mat-option value="1.5">1.5</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="2.5">2.5</mat-option>
+          <mat-option value="3">3</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <label>Correction Value (mg/dl)</label>
+      <mat-form-field appearance="outline">
+        <mat-select
+          placeholder="Select a correction value"
+          formControlName="correctionValue"
+        >
+          <mat-option value="30">30</mat-option>
+          <mat-option value="40">40</mat-option>
+          <mat-option value="50">50</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" class="transparent-button">
+        Calculate
+      </button>
+    </form>
+
+    <span class="output" *ngIf="insulin_dose !== null"
+      >Suggested insulin dose: <b>{{ insulin_dose }}</b></span
+    >
+    <div class="info1" style="margin-top: auto; font-size: 2vh">
+      Insulin calculator - use it to calculate the needed dose of insulin, which
+      helps normalize the glucose concentration in your body after a meal.
+    </div>
+  </mat-card>
+</div>

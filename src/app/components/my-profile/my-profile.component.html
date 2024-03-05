@@ -67,6 +67,14 @@
           *ngIf="user?.role === 'ROLE_PATIENT'"
           appearance="outline"
         >
+          <mat-label>Safety person number</mat-label>
+          <input matInput formControlName="safetyNumber" />
+        </mat-form-field>
+
+        <mat-form-field
+          *ngIf="user?.role === 'ROLE_PATIENT'"
+          appearance="outline"
+        >
           <mat-label>Diabetes Type</mat-label>
           <mat-select
             placeholder="Select your diabetes type"

@@ -34,6 +34,17 @@ export class InsulinDosesService {
     );
   }
 
+  public getInsulinDosesByUser(email: string): Promise<InsulinDose[]> {
+    const headers = this.authService.getBearerToken();
+    return firstValueFrom(
+      this.http
+        .get<InsulinDose[]>(`${this.url}get-by-user/${email}`, {
+          headers,
+        })
+        .pipe(map((response) => response))
+    );
+  }
+
   public updateInsulinDose(insulinDose: InsulinDose): Promise<InsulinDose> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(

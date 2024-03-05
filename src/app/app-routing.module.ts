@@ -16,6 +16,7 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
 import { MessagesComponent } from './components/messages/messages.component';
 import { MeasurmentsComponent } from './components/measurments/measurments.component';
 import { PatientsComponent } from './components/patients/patients.component';
+import { InsulinCalculatorComponent } from './components/insulin-calculator/insulin-calculator.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -41,6 +42,15 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     title: 'Home Page',
+    canActivate: [
+      (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+        inject(AuthGuard).canActivate(next, state),
+    ],
+  },
+  {
+    path: 'insulin-calculator',
+    component: InsulinCalculatorComponent,
+    title: 'Insulin calculator page',
     canActivate: [
       (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
         inject(AuthGuard).canActivate(next, state),

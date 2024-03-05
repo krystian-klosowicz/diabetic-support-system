@@ -17,6 +17,7 @@ export interface MyProfile {
   assignedDoctor: DoctorProfileResponse | null;
   diabetesType: string | null;
   pwzNumber: string | null;
+  safetyNumber: string | null;
 }
 
 interface DoctorProfileResponse {

@@ -71,6 +71,7 @@ export class MyProfileComponent implements OnInit {
       lastName: [{ value: '', disabled: true }, Validators.required],
       pesel: [{ value: '', disabled: true }, Validators.required],
       phoneNumber: [{ value: '', disabled: true }, Validators.required],
+      safetyNumber: [{ value: '', disabled: true }, Validators.required],
       diabetesType: [{ value: '', disabled: true }],
       pwzNumber: [{ value: '', disabled: true }],
     });
@@ -169,6 +170,10 @@ export class MyProfileComponent implements OnInit {
         { value: this.user?.phoneNumber, disabled: !this.isEditMode },
         Validators.required,
       ],
+      safetyNumber: [
+        { value: this.user?.safetyNumber, disabled: !this.isEditMode },
+        Validators.required,
+      ],
       diabetesType: [
         { value: this.user?.diabetesType, disabled: !this.isEditMode },
       ],
@@ -220,6 +225,10 @@ export class MyProfileComponent implements OnInit {
       ],
       phoneNumber: [
         { value: this.user?.phoneNumber, disabled: !this.isEditMode },
+        Validators.required,
+      ],
+      safetyNumber: [
+        { value: this.user?.safetyNumber, disabled: !this.isEditMode },
         Validators.required,
       ],
       diabetesType: [

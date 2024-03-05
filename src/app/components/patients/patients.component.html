@@ -51,9 +51,24 @@
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <th mat-header-cell *matHeaderCellDef style="background-color: green">
+          Action
+        </th>
         <td mat-cell *matCellDef="let element" class="action-buttons">
-          <button mat-raised-button color="primary">Check measurements</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="openCheckMeasurements(element)"
+          >
+            Sugar levels
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="openCheckInsulinDoses(element)"
+          >
+            Insulin doses
+          </button>
           <button
             mat-raised-button
             color="warn"
@@ -80,14 +95,7 @@
 
     <button
       mat-raised-button
-      style="
-        background-color: #15a345;
-        color: white;
-        margin-top: 15px;
-        margin-bottom: 20px;
-        width: 20%;
-        margin-left: auto;
-      "
+      class="addPatientButton"
       (click)="openAddPatientDialog()"
     >
       Add Patient

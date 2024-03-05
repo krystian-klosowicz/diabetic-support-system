@@ -34,6 +34,17 @@ export class SugarService {
     );
   }
 
+  public getSugarLevelsByUser(email: string): Promise<SugarLevel[]> {
+    const headers = this.authService.getBearerToken();
+    return firstValueFrom(
+      this.http
+        .get<SugarLevel[]>(`${this.url}get-by-user/${email}`, {
+          headers,
+        })
+        .pipe(map((response) => response))
+    );
+  }
+
   public updateMeasurement(sugarMeasurement: SugarLevel): Promise<SugarLevel> {
     const headers = this.authService.getBearerToken();
     return firstValueFrom(

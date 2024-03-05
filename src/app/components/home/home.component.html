@@ -1,8 +1,26 @@
 <div class="main-div">
   <app-toolbar></app-toolbar>
   <mat-card>
-    <mat-card-header> </mat-card-header>
-    <mat-card-content>Home </mat-card-content>
-    <mat-card-footer> </mat-card-footer>
+    <span class="message"
+      >If you ever feel sick or notice your sugar levels dropping, please send a
+      safety message to a loved one. Your health is important to me, and a quick
+      response can make a huge difference. Thank you for taking care of your
+      well-being!</span
+    >
+    <button mat-raised-button color="warn" class="send-button">
+      <a
+        [href]="
+          'sms:' +
+          phoneNumber +
+          '?body=' +
+          encodeMessage(
+            'I have diabetes, I feel weak, give me something sweet immediately and take me to the hospital.'
+          )
+        "
+        style="text-decoration: none; color: inherit"
+      >
+        Send safety SMS
+      </a>
+    </button>
   </mat-card>
 </div>

@@ -9,7 +9,30 @@ mat-card {
   min-width: 96vw;
   min-height: 86vh;
   margin: 2%;
-  /* padding: 1%; */
+  padding-top: 20%;
+  padding-left: 4%;
+  padding-right: 4%;
+  display: flex;
+
+  align-items: center;
+}
+
+.message {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.send-button {
+  margin-top: 5%;
+  width: 80%;
+  font-size: 1rem;
+
+  a {
+    color: white;
+  }
 }
 
 @media only screen and (max-width: 615px) {

@@ -14,7 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 @Component({
   selector: 'app-patient-dialog',
   template: `
-    <h2 mat-dialog-title>Patients</h2>
+    <h2 mat-dialog-title style="text-align: center;">Patients</h2>
     <mat-form-field appearance="outline" style="width: 20%; margin-left: auto">
       <mat-label>Find patient..</mat-label>
       <input
@@ -54,7 +54,13 @@ import { MatTableModule } from '@angular/material/table';
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element" class="action-buttons">
-          <button mat-raised-button color="warn" (click)="addPatient(element)">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="addPatient(element)"
+            style="  background-color: #15a345 !important;
+  color: white !important;border:0;border-radius:5px;width:100px;height:30px;"
+          >
             Add patient
           </button>
         </td>

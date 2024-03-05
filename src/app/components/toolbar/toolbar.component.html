@@ -6,6 +6,9 @@
     <!-- Menu na większych ekranach -->
     <div fxHide fxShow.gt-xs>
       <a mat-button [routerLink]="['/home']">Home</a>
+      <a mat-button [routerLink]="['/insulin-calculator']"
+        >Insulin calculator</a
+      >
       <a
         mat-button
         *ngIf="userRole === 'ROLE_DOCTOR'"
@@ -36,6 +39,9 @@
       </button>
       <mat-menu #menu="matMenu">
         <a mat-menu-item [routerLink]="['/home']" style="width: 150px">Home</a>
+        <a mat-menu-item [routerLink]="['/insulin-calculator']"
+          >Insulin calculator</a
+        >
         <a
           mat-menu-item
           *ngIf="userRole === 'ROLE_DOCTOR'"
